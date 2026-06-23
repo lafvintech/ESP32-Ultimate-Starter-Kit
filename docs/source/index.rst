@@ -9,17 +9,14 @@ LAFVIN Quadruped Spider Robot
 
 .. toctree::
    :maxdepth: 2
-   :caption: Quick Start Guide
+   :caption: Pre-class preparation
 
-   Programmingprogram
-   AssemblyTutorial
-   ControlMethodTutorial
-   FrequentlyAskedQuestions
+  Arduino
+  Components
 
 .. toctree::
    :maxdepth: 1
    :caption:  Experimental Course
 
-   Components
-   ArduinoIDEUserGuide
-   kitforlearningcourse
+   BasicExperiment
+   AdvancedExperiment
