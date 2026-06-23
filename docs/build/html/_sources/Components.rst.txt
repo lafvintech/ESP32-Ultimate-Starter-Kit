@@ -40,4 +40,207 @@ The ESP32 development board included in this kit provides a complete platform fo
 
 This board is the heart of your starter kit. It allows you to connect sensors, drives, displays, and communication modules, while giving you easy access to Wi‑Fi and Bluetooth for wireless control, data logging, and IoT applications.
 
-For more information, click here to view the ESP32 datasheet: `ESP32 Datasheet <https://documentation.espressif.com/esp32_datasheet_en.pdf>`_
+ESP32 Pinout
+~~~~~~~~~~~~
+
+ The ESP32 peripherals include:  18 Analog-to-Digital Converter (ADC) channels
+
+ - 3 SPI interfaces
+ - 3 UART interfaces
+ - 2 I2C interfaces
+ - 16 PWM output channels
+ - 2 Digital-to-Analog Converters (DAC)
+ - 2 I2S interfaces
+ - 10 Capacitive sensing GPIOs
+
+.. image:: _static/Component/3.esp32_2.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The ADC (analog to digital converter) and DAC (digital to analog converter) features are assigned to specific static pins. However, you can decide which pins
+are UART, I2C, SPI, PWM, etc – you just need to assign them in the code. This is possible due to the ESP32 chip’s multiplexing feature. Although you can define the pins properties on the software, there are pins
+assigned by default.
+
+- For more information, click here to view the ESP32 datasheet: `ESP32 Datasheet <https://documentation.espressif.com/esp32_datasheet_en.pdf>`_
+
+----
+
+2. MPU6050 Attitude Sensor
+--------------------------
+
+.. image:: _static/Component/4.mpu6050.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The MPU6050 is an Inertial Measurement Unit (IMU) sensor that combines a 3-axis accelerometer and 3-axis gyroscope on a single chip. It is one of the most popular motion sensors for robotics, drones, motion tracking, and gesture recognition applications.
+
+**Core Features:**
+
+- **Accelerometer:** 3-axis acceleration measurement with selectable ranges (±2g, ±4g, ±8g, ±16g).
+- **Gyroscope:** 3-axis angular velocity measurement with selectable ranges (±250°/s, ±500°/s, ±1000°/s, ±2000°/s).
+- **Temperature Sensor:** Integrated temperature sensor for thermal compensation.
+- **Communication:** I2C interface for easy connection to microcontrollers like ESP32.
+- **Resolution:** 16-bit analog-to-digital converters (ADC) for precise measurements.
+- **Low Power:** Operating voltage 3.0V to 3.6V, making it ideal for battery-powered applications.
+- **Built-in DMP:** Digital Motion Processor (on some models) for computing quaternions and orientation angles.
+
+**Applications:**
+
+- Motion tracking and orientation detection (e.g., smartphone motion sensing)
+- Robotics and drone control
+- Gesture recognition and hand tracking
+- Vibration monitoring and shock detection
+- Game controller input and VR applications
+- Postural analysis and human activity recognition
+
+**Pinout:**
+
+The MPU6050 uses the I2C protocol with two main pins:
+
+- **SDA (Serial Data):** Data line connected to ESP32's I2C SDA pin
+- **SCL (Serial Clock):** Clock line connected to ESP32's I2C SCL pin
+- **VCC:** Power supply (3.3V from ESP32)
+- **GND:** Ground connection
+
+.. note::
+
+   - The MPU6050 sensor is a powerful tool for measuring motion and orientation, but it can be sensitive to noise and requires proper calibration for accurate readings. It is recommended to use a stable power supply and minimize vibrations during measurements for best performance.       
+
+----
+
+3. DHT11 Temperature and Humidity Sensor
+--------------------------
+
+.. image:: _static/Component/5.dht11.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The DHT11 is a basic, low-cost digital temperature and humidity sensor. It uses a capacitive humidity sensor and a thermistor to measure the surrounding air, and outputs a digital signal on the data pin.
+
+**Core Features:**
+
+- **Temperature Range:** 0 to 50°C with ±2°C accuracy
+- **Humidity Range:** 20% to 90% RH with ±5% accuracy    
+- **Data Output:** Digital signal via a single-wire interface
+- **Power Supply:** 3.3V to 5V
+- **Low Power Consumption:** Ideal for battery-powered applications
+- **Compact Size:** Small form factor for easy integration into projects   
+
+**Applications:**
+
+- Environmental monitoring and weather stations
+- Home automation and smart thermostats
+- Greenhouse and agricultural monitoring
+- HVAC systems and air quality monitoring
+- Data logging and IoT sensor networks
+- Educational projects and STEM learning
+
+**Pinout:** 
+
+- **VCC:** Power supply (3.3V to 5V)
+- **GND:** Ground connection     
+- **DATA:** Digital output pin connected to ESP32 GPIO for reading temperature and humidity data
+
+.. note::
+   - The DHT11 sensor is suitable for basic temperature and humidity measurements, but it has limited accuracy and a slow response time compared to more advanced sensors. For applications requiring higher precision or faster updates, consider using the DHT22 or other digital sensors.
+
+----
+
+4. PIR Motion Sensor
+--------------------------
+
+.. image:: _static/Component/6.pir.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The PIR (Passive Infrared) Motion Sensor is a widely used device for detecting motion in various applications. It works by sensing the infrared radiation emitted by objects in its field of view, particularly the heat signature of humans or animals.
+
+**Core Features:**
+
+- **Motion Detection:** Detects movement within a specified range (typically 3-7 meters)
+- **Output Signal:** Provides a digital output signal when motion is detected
+- **Power Supply:** Operates on 5V DC power supply
+- **Operating Temperature:** Functions within a temperature range of -20°C to +70°C
+- **Sensitivity Adjustment:** Allows adjustment of detection sensitivity and delay time
+
+**Applications:**
+
+- Security systems and alarm installations
+- Automatic lighting control in residential and commercial buildings
+- Energy-efficient lighting solutions
+- Surveillance and monitoring systems
+- Smart home automation projects
+- Industrial automation and safety applications
+
+**Pinout:**
+
+- **VCC:** Power supply (5V DC)
+- **GND:** Ground connection
+- **OUT:** Digital output pin connected to ESP32 GPIO for reading motion detection status
+
+.. note::
+
+   - The PIR sensor is ideal for detecting human or animal movement but may be affected by environmental factors such as temperature changes or direct sunlight. Proper placement and calibration are essential for optimal performance.
+
+----
+
+5. Light Sensor
+--------------------------
+.. image:: _static/Component/7.light.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The Light Sensor, often based on a photoresistor (LDR) or photodiode, is a device that detects and measures the intensity of ambient light. It is commonly used in various applications to enable automatic adjustments based on lighting conditions.
+
+**Core Features:**
+
+- **Light Intensity Measurement:** Provides an analog output that varies with the intensity of light
+- **Wide Detection Range:** Can detect a broad range of light levels, from dim to bright  
+- **Power Supply:** Typically operates on 3.3V or 5V DC power supply
+- **Compact Size:** Small form factor for easy integration into projects
+
+**Applications:**
+
+- Automatic lighting control based on ambient light levels
+- Light-sensitive alarms and security systems
+- Solar tracking systems for optimizing solar panel orientation
+- Environmental monitoring and weather stations
+- Smart home automation projects
+- Educational projects and STEM learning
+
+**Pinout:**
+
+- **VCC:** Power supply (3.3V or 5V DC)
+- **GND:** Ground connection
+- **AO:** Analog output pin connected to ESP32 ADC for reading light intensity levels
+
+.. note::
+
+  - The sensor board typically features a blue adjustable resistor (potentiometer); turning it with a screwdriver allows you to adjust the trigger threshold:
+  
+  - Counter-clockwise: More sensitive (triggers even when it is only slightly dark)
+  
+  - Clockwise: Less sensitive (requires darker conditions to trigger)
+
+----
+
