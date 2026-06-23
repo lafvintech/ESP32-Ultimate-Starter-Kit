@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arduino IDE User Guide &mdash; ESP32 Ultimate Starter Kit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=8a98143a" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="Components.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ESP32 Ultimate Starter Kit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">About This Kit</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#function-introduction">Function Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#bill-of-materials">Bill of Materials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#resource-download">Resource Download</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Arduino IDE User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-arduino-ide">1. Install Arduino IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-esp8266-board-manager">2. Add ESP8266 Board Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-esp8266-core-package">3. Download  ESP8266 Core Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-libraries">4. Add Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-serial-port-tool">5. Install Serial Port Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upload-test-code">6. Upload Test Code</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ESP32 Ultimate Starter Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Arduino IDE User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Arduino.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="arduino-ide-user-guide">
+<h1>Arduino IDE User Guide<a class="headerlink" href="#arduino-ide-user-guide" title="Link to this heading"></a></h1>
+<p>Arduino IDE is a simple and easy-to-use open-source development environment that supports a variety of microcontrollers, including the ESP32. Here, you can unleash your creativity and write your own programs.</p>
+<section id="install-arduino-ide">
+<h2>1. Install Arduino IDE<a class="headerlink" href="#install-arduino-ide" title="Link to this heading"></a></h2>
+<ol class="upperalpha simple">
+<li><p>Click here to visit the <a class="reference external" href="https://www.arduino.cc/en/software/">Arduino IDE</a> website and download the installation package suitable for your computer version. This example will demonstrate using Windows.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/1.install.png"><img alt="_images/1.install.png" class="align-center" src="_images/1.install.png" style="width: 1000px;" /></a>
+<ol class="upperalpha simple" start="3">
+<li><p>Read and accept the <strong>License Agreement</strong>.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/2.install.png"><img alt="_images/2.install.png" class="align-center" src="_images/2.install.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="4">
+<li><p>Select the desired installation options.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/3.install.png"><img alt="_images/3.install.png" class="align-center" src="_images/3.install.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="5">
+<li><p>Choose the installation path. It is recommended to install the software on a non-system drive.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/4.install.png"><img alt="_images/4.install.png" class="align-center" src="_images/4.install.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="6">
+<li><p>Click Install and wait for the process to complete. Finally, click Finish.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/5.install.png"><img alt="_images/5.install.png" class="align-center" src="_images/5.install.png" style="width: 800px;" /></a>
+</section>
+<hr class="docutils" />
+<section id="add-esp8266-board-manager">
+<h2>2. Add ESP8266 Board Manager<a class="headerlink" href="#add-esp8266-board-manager" title="Link to this heading"></a></h2>
+<ol class="upperalpha simple">
+<li><p>Open the Arduino IDE, click <strong>File</strong> → <strong>Preferences</strong> in the upper left corner, and copy and paste the following address into the Additional Board Manager URLs input box.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/6.esp.png"><img alt="_images/6.esp.png" class="align-center" src="_images/6.esp.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="2">
+<li><p>After entering the URL, click OK.</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>https://www.arduino.me/package_esp32_index.json</strong></p></li>
+<li><p><strong>http://arduino.esp8266.com/stable/package_esp8266com_index.json</strong></p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/7.ESP1.png"><img alt="_images/7.ESP1.png" class="align-center" src="_images/7.ESP1.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_images/8.ESP1.png"><img alt="_images/8.ESP1.png" class="align-center" src="_images/8.ESP1.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="3">
+<li><p>After completing this step, close and reopen the Arduino IDE.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="download-esp8266-core-package">
+<h2>3. Download  ESP8266 Core Package<a class="headerlink" href="#download-esp8266-core-package" title="Link to this heading"></a></h2>
+<ol class="upperalpha simple">
+<li><p>Click on the <strong>BOARDS MANAGER</strong> icon on the right and search for <strong>“ESP8266”</strong>.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/19.ESP1.png"><img alt="_images/19.ESP1.png" class="align-center" src="_images/19.ESP1.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="2">
+<li><p>Find the core package named <strong>esp8266 by ESP8266 Community</strong>, select version <strong>2.4.2</strong>, and click the <strong>install</strong> button to install it.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/20.ESP1.png"><img alt="_images/20.ESP1.png" class="align-center" src="_images/20.ESP1.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="3">
+<li><p>The prompt for successful installation indicates that the ESP32 core package has been successfully installed.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/22.ESP1.png"><img alt="_images/22.ESP1.png" class="align-center" src="_images/22.ESP1.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>It is recommended to install the core package version 2.4.2 for this package. Using other versions may cause program or functional abnormalities</p></li>
+<li><p>During the download process of the core package, it may fail due to network failures. You can try several more times.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="add-libraries">
+<h2>4. Add Libraries<a class="headerlink" href="#add-libraries" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>The Arduino library simplifies development by encapsulating driver code, allowing users to quickly integrate sensors and modules without writing low-level functions and easily expand hardware functionality.</p></li>
+<li><p>Most of the library files in this kit are included with the Arduino IDE; only the infrared library needs to be downloaded separately. The specific download method is described below.</p></li>
+</ul>
+<hr class="docutils" />
+<ol class="upperalpha simple">
+<li><p>On the right side of the Arduino IDE interface, click the “Library Manager” icon.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/23.LIB1.png"><img alt="_images/23.LIB1.png" class="align-center" src="_images/23.LIB1.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="upperalpha simple" start="2">
+<li><p>Enter keywords in the search box to find the required library, and then click “Install” to download it.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/24.LIB.png"><img alt="_images/24.LIB.png" class="align-center" src="_images/24.LIB.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="upperalpha simple" start="3">
+<li><p>Just wait for the installation to complete.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/25.LIB.png"><img alt="_images/25.LIB.png" class="align-center" src="_images/25.LIB.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div></section>
+<hr class="docutils" />
+<section id="install-serial-port-tool">
+<h2>5. Install Serial Port Tool<a class="headerlink" href="#install-serial-port-tool" title="Link to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>After connecting the ESP8266 to the computer, a USB-to-serial driver needs to be installed to establish communication. For detailed installation steps, please click here. <span class="xref std std-ref">Install Serial Port Tool</span></p></li>
+<li><p>If you have already successfully installed the driver, you can skip this step.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="upload-test-code">
+<h2>6. Upload Test Code<a class="headerlink" href="#upload-test-code" title="Link to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>To verify that the Arduino IDE configuration is correct and that the ESP8266 development board is working properly, please use the following code to test.</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//ESP8266 Development Board Test Code</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+<span class="w"> </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ESP8266 development board successfully tested&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<ol class="upperalpha simple">
+<li><p>Copy the code above into the Arduino IDE.</p></li>
+<li><p>As shown in the image below, search for and select the corresponding development board and serial port.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/14.code1.png"><img alt="_images/14.code1.png" class="align-center" src="_images/14.code1.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_images/15.code1.png"><img alt="_images/15.code1.png" class="align-center" src="_images/15.code1.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="3">
+<li><p>Click the <strong>Upload</strong> button to upload the code to the development board.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/16.CODE1.png"><img alt="_images/16.CODE1.png" class="align-center" src="_images/16.CODE1.png" style="width: 800px;" /></a>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="4">
+<li><p>After clicking upload, the upload progress will be displayed in the output window.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/17.CODE1.png"><img alt="_images/17.CODE1.png" class="align-center" src="_images/17.CODE1.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="upperalpha simple" start="5">
+<li><p>Once the output display shows that the upload is complete, press the RST button on the ESP8266 development board to start the program.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><ol class="upperalpha simple" start="6">
+<li><p>Open the serial monitor, set the baud rate to 115200, and you will see the serial port output “ESP8266 development board successfully tested” every 2 seconds.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/18.code2.png"><img alt="_images/18.code2.png" class="align-center" src="_images/18.code2.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Congratulations! Your Arduino IDE is ready! Now you can start writing your first program!</strong></p>
+<hr class="docutils" />
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Components.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Lafvin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

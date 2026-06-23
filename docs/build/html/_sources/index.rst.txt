@@ -1,18 +1,22 @@
-Basic Starter Kit for UNO R4 WiFi
-===========================================
-
+ESP32 Ultimate Starter Kit
+=============================
 
 .. toctree::
    :maxdepth: 2
+   :caption: About This Kit
 
-   preparation/preparation
-   1_output
+   Introduction
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Pre-Class Preparation
 
+  Arduino
+  Components
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   :caption:  Experimental Course
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   BasicExperiment
+   AdvancedExperiment
