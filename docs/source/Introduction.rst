@@ -1,15 +1,15 @@
 Introduction
 ============
 
-**Dear maker friends, welcome to the learning world of the LAFVIN Quadruped Spider Robot!**
+**Dear friends, welcome to the learning world of the LAFVIN ESP32 Ultimate Starter Kit**
 
 **Please read this documentation carefully. If you encounter any problems during use, please contact our after-sales support team, and we will assist you as soon as possible.**
 
 ----
 
-**LAFVIN Quadruped Spider Robot**
+**LAFVIN ESP32 Ultimate Starter Kit**
 
-.. image:: _static/2.spider.png
+.. image:: _static/Introduction/2.FENMIAN.png
    :width: 800
    :align: center
 
@@ -18,73 +18,42 @@ Introduction
 Function Introduction
 ---------------------
 
-This quadruped spider robot, based on the ESP8266, features a multi-degree-of-freedom design and offers a wide range of flexible movements. It integrates Wi-Fi, infrared remote control, and ultrasonic obstacle avoidance, and is equipped with eight MG90 servos, supporting six postures and nine preset actions. A comprehensive curriculum is included, and open-source code supports secondary development, making it suitable for teaching, demonstrations, research, and maker projects.
+ - This ESP32 Ultimate Learning Kit is designed to provide a simple, enjoyable, and hands-on way to learn electronics, programming, and smart project development.
 
-**APP Control:**
+ - Whether you are a beginner exploring the world of coding for the first time or a maker looking to build creative DIY projects, this kit includes a wide range of carefully selected components, sensors, and modules to support step-by-step learning.
 
-The robot can be controlled via a mobile application, allowing you to easily manage its movements and functions through your smartphone.
+ - Leveraging ESP32 Wi-Fi technology, users can build interactive web-based control systems and monitor real-time sensor data directly via smartphone or computer. Learn genuine IoT development through practical smart home and automation projects.
+ 
+ - Through detailed tutorials and hands-on projects, users gain practical experience in programming, circuit design, automation, robotics, and IoT applications, while fostering problem-solving skills, creativity, and an engineering mindset.
+ 
 
-**Infrared Remote Control:**
+**Features：**
 
-The robot can also be operated using an infrared remote controller, providing an alternative method for controlling its actions.
+ All-in-One STEM Learning Kit: Designed for beginners, students, and makers, this comprehensive starter kit includes a wide range of electronic modules and sensors to help you learn programming, electronics, robotics, and IoT projects step-by-step.
 
-**Ultrasonic Obstacle Avoidance:**   
+ Includes Beginner-Friendly Tutorials: The kit comes with detailed tutorials, wiring diagrams, sample code, and project lessons to help users quickly get started with open-source platforms and ESP32 development. It is ideal for self-study, school curricula, and STEM education.
 
-The robot is equipped with an ultrasonic distance sensor that enables it to detect and avoid obstacles in its path, enhancing its navigation capabilities.
+ Learn Wi-Fi IoT Development: Unlike traditional starter kits, this kit leverages the powerful Wi-Fi capabilities of the ESP32 microcontroller. Users can build genuine web-based control systems and monitor sensor data in real-time via browsers on smartphones, tablets, or computers. Through progressive projects, users will learn to: create web control interfaces; remotely control modules like LEDs and motors; display real-time sensor data online; build smart home prototypes; and understand the fundamentals of IoT communication.
+
+ Extensive Components and Smart Modules: The kit includes a variety of popular modules—such as ultrasonic sensors, RFID modules, servo motors, MPU6050 angle sensors, OLED displays, temperature and humidity sensors, and PIR motion sensors—enabling users to build dozens of creative DIY projects right out of the box.
+
+
+**Key Projects：**
+
+ With this kit, users can create a wide range of interactive projects—over twenty in total—including an RFID smart access control system, servo motor control, real-time environmental temperature and humidity monitoring, 3D real-time animation using the MPU6050 sensor, a "Snake" game, a motion-detection alarm system, a smart home system, and various IoT wireless projects.
+
 
 ----
 
 Bill of Materials
 -----------------
 
-.. image:: _static/3.bom11.png
+.. image:: _static/Introduction/1.BOM.png
    :width: 800
    :align: center
 
-.. list-table:: Bill of Materials
-   :header-rows: 1
-   :widths: 10 40 20
-   :align: center
 
-   * - Serial Number
-     - Name
-     - Quantity
-   * - 1
-     - ESP8266 Development Board
-     - x1
-   * - 2
-     - Quadruped Spider Extension Board
-     - x1
-   * - 3
-     - Ultrasonic Distance Sensor
-     - x1
-   * - 4
-     - MG90 Servo 
-     - x8
-   * - 5
-     - Infrared Remote Controller
-     - x1
-   * - 6
-     - Custom Acrylic Plate
-     - x2
-   * - 7
-     - Micro USB Data Cable
-     - x1
-   * - 8
-     - Screw Package
-     - x1
-   * - 9
-     - Phillips Screwdriver
-     - x1
-   * - 10
-     - Cable Ties
-     - x4
-   * - 11
-     - Anti-slip Rubber Sleeves
-     - x8
-
-
-Upon receiving the kit, please first check all components against the above bill of materials. If you find any missing or damaged items, please contact our technical support team immediately.
+**Upon receiving the kit, please first check all components against the above bill of materials. If you find any missing or damaged items, please contact our technical support team immediately.**
 
 ----
 
