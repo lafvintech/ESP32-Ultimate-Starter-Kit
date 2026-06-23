@@ -52,8 +52,7 @@ With this kit, users can create a wide range of interactive projects—over twen
 
 **Target Audience：**
 
- Electronics beginners, Arduino/ESP32 learners, STEM education participants, school and classroom projects, DIY makers and hobbyists, and robotics enthusiasts.
-
+Electronics beginners, Arduino/ESP32 learners, STEM education participants, school and classroom projects, DIY makers and hobbyists, and robotics enthusiasts.
 
 ----
 

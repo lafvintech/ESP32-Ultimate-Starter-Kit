@@ -72,3 +72,19 @@ h3 {
 .wy-menu-vertical .current > a {
     transition: all 0.2s ease-in-out;
 }
+
+/* 表格样式 - 让表格占据更多宽度 */
+table.docutils {
+    width: 100%;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 列表表格特殊处理 */
+.rst-content table.docutils.align-center {
+    width: 100%;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
