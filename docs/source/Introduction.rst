@@ -40,7 +40,15 @@ Function Introduction
 
 **Key Projects：**
 
+.. image:: _static/Introduction/3.project.png
+   :width: 800
+   :align: center
+
  With this kit, users can create a wide range of interactive projects—over twenty in total—including an RFID smart access control system, servo motor control, real-time environmental temperature and humidity monitoring, 3D real-time animation using the MPU6050 sensor, a "Snake" game, a motion-detection alarm system, a smart home system, and various IoT wireless projects.
+
+**Target Audience：**
+
+ Electronics beginners, Arduino/ESP32 learners, STEM education participants, school and classroom projects, DIY makers and hobbyists, and robotics enthusiasts.
 
 
 ----
@@ -52,6 +60,100 @@ Bill of Materials
    :width: 800
    :align: center
 
+.. raw:: html
+    <div style="display:flex; justify-content:center;">
+
+.. list-table:: Bill of Materials
+    :widths: 80 20
+    :header-rows: 1
+
+    * - Components
+       - Quantity
+    * - ESP32 Development Board
+       - x1
+    * - MPU6050 Module
+       - x1
+    * - DHT11 Temperature & Humidity Sensor
+       - x1
+    * - PIR Motion Sensor
+       - x1
+    * - Light Sensor
+       - x1
+    * - Water Level Sensor
+       - x1
+    * - Joystick Module
+       - x1
+    * - Ultrasonic Distance Sensor
+       - x1
+    * - 0.96-inch OLED Display
+       - x1
+    * - RC522 RFID Module
+       - x1
+    * - IR Receiver Module
+       - x1
+    * - IR Remote Control
+       - x1
+    * - 4x4 Keypad Module
+       - x1
+    * - Single-digit 7-segment Display
+       - x1
+    * - 4-digit 7-segment Display
+       - x1
+    * - SG90 Servo Motor
+       - x1
+    * - DC Motor Module
+       - x1
+    * - DC Motor Fan Blade
+       - x1
+    * - Stepper Motor
+       - x1
+    * - ULN2003 Stepper Motor Driver Module
+       - x1
+    * - 5V Relay
+       - x1
+    * - Active Buzzer
+       - x1
+    * - Passive Buzzer
+       - x1
+    * - RGB LED Strip
+       - x1
+    * - Power Supply Module
+       - x1
+    * - 400-point Breadboard
+       - x2
+    * - 9V Battery Connector
+       - x1
+    * - 6xAA Battery Holder
+       - x1
+    * - Micro USB Cable
+       - x1
+    * - 10K Potentiometer
+       - x1
+    * - Thermistor
+       - x1
+    * - Tilt Switch
+       - x1
+    * - LEDs (Red, Yellow, Green, Blue, White)
+       - x5
+    * - Push-buttons
+       - x4
+    * - Button Caps
+       - x4
+    * - 74HC595
+       - x1
+    * - L293D
+       - x1
+    * - PN2222 NPN Transistor
+       - x1
+    * - Jumper Wire Set (65 pcs)
+       - x1
+    * - Male-to-Female Dupont Wires
+       - x20
+    * - Through-hole Resistors (10 resistance values)
+       - x10
+
+.. raw:: html
+    </div>
 
 **Upon receiving the kit, please first check all components against the above bill of materials. If you find any missing or damaged items, please contact our technical support team immediately.**
 
