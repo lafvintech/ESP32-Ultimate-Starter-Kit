@@ -44,7 +44,7 @@ Function Introduction
    :width: 800
    :align: center
 
- With this kit, users can create a wide range of interactive projects—over twenty in total—including an RFID smart access control system, servo motor control, real-time environmental temperature and humidity monitoring, 3D real-time animation using the MPU6050 sensor, a "Snake" game, a motion-detection alarm system, a smart home system, and various IoT wireless projects.
+With this kit, users can create a wide range of interactive projects—over twenty in total—including an RFID smart access control system, servo motor control, real-time environmental temperature and humidity monitoring, 3D real-time animation using the MPU6050 sensor, a "Snake" game, a motion-detection alarm system, a smart home system, and various IoT wireless projects.
 
 **Target Audience：**
 
@@ -68,7 +68,7 @@ Bill of Materials
     :header-rows: 1
 
     * - Components
-       - Quantity
+      - Quantity
     * - ESP32 Development Board
        - x1
     * - MPU6050 Module

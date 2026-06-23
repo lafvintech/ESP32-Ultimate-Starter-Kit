@@ -1,4 +1,4 @@
-LAFVIN Quadruped Spider Robot
+ESP32 Ultimate Starter Kit
 =============================
 
 .. toctree::
@@ -8,8 +8,8 @@ LAFVIN Quadruped Spider Robot
    Introduction
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Pre-class preparation
+   :maxdepth: 1
+   :caption: Pre-Class Preparation
 
   Arduino
   Components
