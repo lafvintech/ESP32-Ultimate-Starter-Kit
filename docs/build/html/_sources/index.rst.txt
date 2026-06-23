@@ -11,8 +11,8 @@ ESP32 Ultimate Starter Kit
    :maxdepth: 1
    :caption: Pre-Class Preparation
 
-  Arduino
-  Components
+   Arduino
+   Components
 
 .. toctree::
    :maxdepth: 1

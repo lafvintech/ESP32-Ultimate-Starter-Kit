@@ -47,7 +47,7 @@ F. Click Install and wait for the process to complete. Finally, click Finish.
 
 ----
 
-2. Add ESP8266 Board Manager
+2. Add ESP32 Board Manager
 ----------------------------
 
 A. Open the Arduino IDE, click **File** → **Preferences** in the upper left corner, and copy and paste the following address into the Additional Board Manager URLs input box.
@@ -81,10 +81,10 @@ C. After completing this step, close and reopen the Arduino IDE.
 
 ----
 
-3. Download  ESP8266 Core Package
+3. Download  ESP32 Core Package
 --------------------------------
 
-A. Click on the **BOARDS MANAGER** icon on the right and search for **"ESP8266"**.
+A. Click on the **BOARDS MANAGER** icon on the right and search for **"ESP32"**.
 
 .. image:: _static/arduino/19.ESP1.png
    :width: 800
@@ -92,7 +92,7 @@ A. Click on the **BOARDS MANAGER** icon on the right and search for **"ESP8266"*
 
 ----
 
-B. Find the core package named **esp8266 by ESP8266 Community**, select version **2.4.2**, and click the **install** button to install it.
+B. Find the core package named **esp32 by Espressif Systems**, select version **2.0.0**, and click the **install** button to install it.
 
 .. image:: _static/arduino/20.ESP1.png
    :width: 800
