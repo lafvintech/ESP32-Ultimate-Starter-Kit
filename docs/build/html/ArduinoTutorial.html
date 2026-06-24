@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arduino IDE Getting Started Tutorial &mdash; ESP32 Ultimate Starter Kit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fa446fe1" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Components Introduction" href="Components.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ESP32 Ultimate Starter Kit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">About This Kit</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#function-introduction">Function Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#bill-of-materials">Bill of Materials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#resource-download">Resource Download</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Pre-Class Preparation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Arduino IDE Getting Started Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-arduino-ide">1.Install Arduino IDE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-arduino-ide-on-windows">Install Arduino IDE on Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-arduino-ide-on-macos">Install Arduino IDE on MacOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-arduino-ide-on-linux">Install Arduino IDE on Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#open-the-arduino-ide">Open the Arduino IDE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-ch340-driver">2.Install CH340 Driver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-the-driver">Download the Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-the-driver">Install the Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-correct-driver-installation-in-device-manager">Checking Correct Driver Installation in Device Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-correct-driver-installation-in-arduino-ide">Checking Correct Driver Installation in Arduino IDE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-esp32-core-board">3.Install ESP32 Core Board</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#add-additional-boards-manager-url">Add Additional Boards Manager URL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-the-esp32-core-package">Download the  ESP32 Core Package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#add-libraries">4.Add Libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-libraries">Download Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#import-libraries">Import Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-libraries-using-arduino-ide">Download Libraries Using Arduino IDE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Components.html">Components Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#esp32-development-board">1. ESP32 Development Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#mpu6050-attitude-sensor">2. MPU6050 Attitude Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#dht11-sensor">3. DHT11 Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#pir-motion-sensor">4. PIR Motion Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#light-sensor">5. Light Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#water-level-sensor">6. Water Level Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ultrasonic-distance-sensor">7. Ultrasonic Distance Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ir-receiver-module-and-remote-control">8. IR Receiver Module and Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#joystick-module">9. Joystick Module</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental Course</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicExperiments.html">Basic Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#led-blinking">1. LED Blinking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#button-led">2. Button LED</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedExperiment.html">Advanced Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP and HUMI Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">2. Ultrasonic Distance Meter</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ESP32 Ultimate Starter Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Arduino IDE Getting Started Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ArduinoTutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="arduino-ide-getting-started-tutorial">
+<h1>Arduino IDE Getting Started Tutorial<a class="headerlink" href="#arduino-ide-getting-started-tutorial" title="Link to this heading"></a></h1>
+<p>The Arduino IDE is an open-source programming tool officially provided by Arduino, supporting C/C++ development.</p>
+<p>It provides users with simple and intuitive code writing, compiling, and uploading functions, making it easy to burn programs to development boards such as Arduino and ESP32.</p>
+<p>The IDE includes extensive built-in example code and supports library file extensions, allowing developers to quickly access drivers for various sensors and modules, enabling a rich set of hardware interaction features.</p>
+<p>With its cross-platform support (Windows, macOS, and Linux), the Arduino IDE is widely used in education, makerspaces, and IoT development, making it an essential tool for both beginners and advanced embedded development learners.</p>
+<hr class="docutils" />
+<section id="install-arduino-ide">
+<h2>1.Install Arduino IDE<a class="headerlink" href="#install-arduino-ide" title="Link to this heading"></a></h2>
+<p>This section will guide you through installing the <strong>Arduino IDE</strong> on Windows, macOS, and Linux systems.</p>
+<section id="install-arduino-ide-on-windows">
+<h3>Install Arduino IDE on Windows<a class="headerlink" href="#install-arduino-ide-on-windows" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Visit the official Arduino website and go to the software download page:
+<a class="reference external" href="https://www.arduino.cc/en/software/">Arduino IDE Download</a></p>
+<img alt="Arduino IDE official website" class="align-center" src="_images/2.arduino_install3.png" />
+</li>
+<li><p>Select the version that matches your computer configuration, then click the <strong>Download</strong> button to begin.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The Arduino IDE is updated frequently. To ensure compatibility, it is recommended to download the <strong>latest official version</strong>.</p></li>
+</ul>
+</div>
+<ol class="arabic" start="3">
+<li><p>Run the installer by double-clicking the downloaded <code class="docutils literal notranslate"><span class="pre">arduino-ide_xxxx.exe</span></code> file.</p></li>
+<li><p>Read and accept the <strong>License Agreement</strong>.</p>
+<img alt="License Agreement window" class="align-center" src="_static/3.Install_Arduino_IDE.png" />
+</li>
+<li><p>Select the desired installation options.</p>
+<img alt="Installation options" class="align-center" src="_static/4.Install_Arduino_IDE.png" />
+</li>
+<li><p>Choose the installation path. It is recommended to install the software on a <strong>non-system drive</strong>.</p>
+<img alt="Installation path" class="align-center" src="_static/5.Install_Arduino_IDE.png" />
+</li>
+<li><p>Click <strong>Install</strong> and wait for the process to complete. Finally, click <strong>Finish</strong>.</p>
+<img alt="Installation finished" class="align-center" src="_static/6.Install_Arduino_IDE.png" />
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="install-arduino-ide-on-macos">
+<h3>Install Arduino IDE on MacOS<a class="headerlink" href="#install-arduino-ide-on-macos" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Double-click the downloaded <code class="docutils literal notranslate"><span class="pre">arduino-ide_xxxx.dmg</span></code> file.</p></li>
+<li><p>Drag and drop <strong>Arduino IDE.app</strong> into the <strong>Applications</strong> folder.</p></li>
+<li><p>After a few seconds, you will see Arduino IDE installed successfully.</p>
+<a class="reference internal image-reference" href="_static/7.Install_Arduino_IDE.png"><img alt="Arduino IDE installation on macOS" class="align-center" src="_static/7.Install_Arduino_IDE.png" style="width: 800px;" /></a>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="install-arduino-ide-on-linux">
+<h3>Install Arduino IDE on Linux<a class="headerlink" href="#install-arduino-ide-on-linux" title="Link to this heading"></a></h3>
+<p>For Linux users, please follow the official tutorial for Arduino IDE 2.0 installation: <a class="reference external" href="https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing#linux">Linux Installation Guide</a></p>
+</section>
+<hr class="docutils" />
+<section id="open-the-arduino-ide">
+<h3>Open the Arduino IDE<a class="headerlink" href="#open-the-arduino-ide" title="Link to this heading"></a></h3>
+<p>When you open Arduino IDE for the first time:</p>
+<ul>
+<li><p>The software will automatically install the <strong>Arduino AVR Boards</strong>, built-in libraries, and other required files.</p>
+<blockquote>
+<div><img alt="First startup window" class="align-center" src="_static/8.Install_Arduino_IDE.png" />
+</div></blockquote>
+</li>
+<li><p>During installation, your <strong>firewall</strong> or <strong>security center</strong> may ask for permission to install drivers. Please allow all requests.</p>
+<blockquote>
+<div><img alt="Driver installation prompt" class="align-center" src="_static/9.Install_Arduino_IDE.png" />
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If some installations fail due to network issues, simply <strong>reopen the Arduino IDE</strong> and it will continue the remaining installation steps.</p></li>
+<li><p>The <strong>Output Window</strong> will not appear automatically after setup. It will only open when you click <strong>Verify</strong> or <strong>Upload</strong>.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="install-ch340-driver">
+<span id="id1"></span><h2>2.Install CH340 Driver<a class="headerlink" href="#install-ch340-driver" title="Link to this heading"></a></h2>
+<p>The ESP32 development board in this kit uses the <strong>CH340C USB-to-serial chip</strong>, so you must install the corresponding driver before using it.</p>
+<p>If you connect the board to the computer without installing the driver, the device will not be recognized correctly, and you may see the following interface in the <strong>Device Manager</strong>:</p>
+<a class="reference internal image-reference" href="_static/12.CH340.png"><img alt="CH340 not recognized in Device Manager" class="align-center" src="_static/12.CH340.png" style="width: 600px;" /></a>
+<hr class="docutils" />
+<section id="download-the-driver">
+<h3>Download the Driver<a class="headerlink" href="#download-the-driver" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Visit the official website of the CH340 Driver: <a class="reference external" href="https://www.wch.cn/products/ch340.html">CH340 Driver</a></p></li>
+<li><p>Select the version that matches your computer system.（This tutorial uses <strong>Windows 11</strong> as an example）.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/10.CH340.png"><img alt="_static/10.CH340.png" class="align-center" src="_static/10.CH340.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="3">
+<li><p>Select the first Windows version, go to the download page, and click the <strong>Download</strong> button.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/11.CH340.png"><img alt="_static/11.CH340.png" class="align-center" src="_static/11.CH340.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="4">
+<li><p>Alternatively, you can download the prepared installation package directly: <a class="reference external" href="https://www.dropbox.com/scl/fo/c4bb59fr42qcs9cxgexan/AIMImtqevecMqYNMJVK1ZBM?rlkey=9afntuwy2usxfxbl7xjkoirsy&amp;st=89a5bx6b&amp;dl=1">CH340 Installation Package (Windows)</a></p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="install-the-driver">
+<h3>Install the Driver<a class="headerlink" href="#install-the-driver" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>After downloading, open the driver file and click <strong>Install</strong>.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/13.CH340.png"><img alt="_static/13.CH340.png" class="align-center" src="_static/13.CH340.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="2">
+<li><p>When the installation is successful, you will see the following confirmation message:</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/14.CH340.png"><img alt="_static/14.CH340.png" class="align-center" src="_static/14.CH340.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In some cases, you may need to <strong>restart Windows</strong> after installation to ensure the driver takes effect.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="checking-correct-driver-installation-in-device-manager">
+<h3>Checking Correct Driver Installation in Device Manager<a class="headerlink" href="#checking-correct-driver-installation-in-device-manager" title="Link to this heading"></a></h3>
+<p>Once the driver is installed, connect the ESP32 board to your computer.</p>
+<p>You should see the correct name and port number appear in the <strong>Device Manager</strong> (for example: COM28).</p>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/15.CH340.png"><img alt="_static/15.CH340.png" class="align-center" src="_static/15.CH340.png" style="width: 600px;" /></a>
+</section>
+<hr class="docutils" />
+<section id="checking-correct-driver-installation-in-arduino-ide">
+<h3>Checking Correct Driver Installation in Arduino IDE<a class="headerlink" href="#checking-correct-driver-installation-in-arduino-ide" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Open the Arduino IDE.</p></li>
+<li><p>Go to <strong>Tools → Port</strong> and select the COMx port that matches the one you saw in Device Manager.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_static/16.CH340.png"><img alt="_static/16.CH340.png" class="align-center" src="_static/16.CH340.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the Arduino CH340 device does not appear in Device Manager or the Arduino IDE:
+- Uninstall the driver, restart your computer, then reinstall it.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_static/17.CH340.png"><img alt="_static/17.CH340.png" src="_static/17.CH340.png" style="width: 600px;" /></a>
+</div></blockquote>
+<ul class="simple">
+<li><p>Try a different USB port or another computer.</p></li>
+<li><p>Ensure you are using a <strong>USB cable that supports data transfer</strong> (not just charging).</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="install-esp32-core-board">
+<h2>3.Install ESP32 Core Board<a class="headerlink" href="#install-esp32-core-board" title="Link to this heading"></a></h2>
+<section id="add-additional-boards-manager-url">
+<h3>Add Additional Boards Manager URL<a class="headerlink" href="#add-additional-boards-manager-url" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Open the Arduino IDE, click <strong>File → Preferences</strong> in the upper left corner, and copy and paste the following address into the <em>Additional Board Manager URLs</em> input box.</p></li>
+<li><p>After entering the URL, click <strong>OK</strong>.</p></li>
+</ol>
+<div style="display:flex;align-items:center;gap:8px;margin:12px 0;">
+  <code id="esp32-url" style="background:#f5f5f5;padding:6px 10px;border:1px solid #ddd;border-radius:6px;">https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json</code>
+  <button onclick="navigator.clipboard.writeText(document.getElementById('esp32-url').innerText)" style="padding:4px 8px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;"> Copy</button>
+</div><div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/18.URL.png"><img alt="_static/18.URL.png" class="align-center" src="_static/18.URL.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/19.URL.png"><img alt="_static/19.URL.png" class="align-center" src="_static/19.URL.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/20.URL.png"><img alt="_static/20.URL.png" class="align-center" src="_static/20.URL.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><div class="note admonition">
+<p class="admonition-title">Precaution</p>
+<ul class="simple">
+<li><p>After completing this step, you need to close and reopen the Arduino IDE.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="download-the-esp32-core-package">
+<h3>Download the  ESP32 Core Package<a class="headerlink" href="#download-the-esp32-core-package" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Open the Arduino IDE, click the second icon on the left to open the <strong>BOARDS MANAGER</strong> page.</p>
+<a class="reference internal image-reference" href="_static/21.ESP32_CORE.png"><img alt="_static/21.ESP32_CORE.png" class="align-center" src="_static/21.ESP32_CORE.png" style="width: 600px;" /></a>
+</li>
+</ol>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="2">
+<li><p>Enter <strong>ESP32</strong> in the search box and press Enter.</p></li>
+<li><p>Find the core package titled <em>esp32 by Espressif Systems</em>, select version <strong>3.2.0</strong> from the drop-down menu, and click <strong>Install</strong> to download and install it.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_static/22.ESP32_CORE.png"><img alt="_static/22.ESP32_CORE.png" class="align-center" src="_static/22.ESP32_CORE.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="4">
+<li><p>Please wait for the download progress bar in the lower right corner to complete.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/23.ESP32_CORE.png"><img alt="_static/23.ESP32_CORE.png" class="align-center" src="_static/23.ESP32_CORE.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="5">
+<li><p>When the download is complete, the message <strong>Successfully installed platform esp32:3.2.0</strong> will be displayed.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/24.ESP32_CORE.png"><img alt="_static/24.ESP32_CORE.png" class="align-center" src="_static/24.ESP32_CORE.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><p>6. Check if the installation is successful:
+Click <strong>Tools → Board → esp32</strong> to check whether an ESP32 development board is available for selection.</p>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/25.ESP32_CORE.png"><img alt="_static/25.ESP32_CORE.png" class="align-center" src="_static/25.ESP32_CORE.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><div class="note admonition">
+<p class="admonition-title">Precaution</p>
+<ul class="simple">
+<li><p>We recommend installing ESP32 Core Package version <strong>3.2.0</strong>, or using version <strong>3.0 or later</strong>.</p></li>
+<li><p>Older versions may be incompatible with the libraries used in this tutorial, causing program errors.</p></li>
+<li><p>If you have an earlier version installed, uninstall it and then reinstall version <strong>3.2.0</strong> of the ESP32 Core Package.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="add-libraries">
+<span id="id2"></span><h2>4.Add Libraries<a class="headerlink" href="#add-libraries" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Arduino libraries can significantly simplify the development process.</p></li>
+<li><p>They encapsulate commonly used functions and hardware driver code, allowing users to simply call ready-made functions without writing complex low-level code from scratch.</p></li>
+<li><p>For example, the <strong>LiquidCrystal_I2C</strong> library allows users to drive an LCD1602 display with just a few lines of code.</p></li>
+<li><p>A wealth of community-provided third-party libraries also allows for quick integration with various sensors and modules.</p></li>
+<li><p>These library functions make it easy to interact with hardware and expand Arduino’s functionality.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="download-libraries">
+<h3>Download Libraries<a class="headerlink" href="#download-libraries" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>We’ve compiled all the libraries necessary to run this suite. Please click the link below to download them and follow the instructions to complete the installation:  <a class="reference external" href="https://www.dropbox.com/scl/fo/syf1zstu58f4xlcld2nss/ACJOi93PcIafo5yGabrprDA?rlkey=hoc2undykymrxac7z8nclpk9u&amp;st=el86zaw9&amp;dl=1">Download libraries</a></p></li>
+<li><p>Unzip the downloaded library file. The library file storage path is <strong>Code and Libraries</strong> → <strong>Libraries</strong> . Open it and confirm that it contains the library file shown in the figure below.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/26.lib2.png"><img alt="_static/26.lib2.png" class="align-center" src="_static/26.lib2.png" style="width: 700px;" /></a>
+</section>
+<hr class="docutils" />
+<section id="import-libraries">
+<h3>Import Libraries<a class="headerlink" href="#import-libraries" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Open the Arduino IDE and click <strong>Sketch → Include Library → Add .ZIP Library</strong>.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/27.lib.png"><img alt="_static/27.lib.png" class="align-center" src="_static/27.lib.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="2">
+<li><p>In the pop-up window, locate the folder of the library you just downloaded and unzipped, select it, and click <strong>Open</strong> to complete the import.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/28.lib2.png"><img alt="_static/28.lib2.png" class="align-center" src="_static/28.lib2.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><ol class="arabic simple" start="3">
+<li><p>If the library file is imported successfully, the Arduino IDE output window will display the message: <em>Library installed</em>.</p></li>
+</ol>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_static/31.lib.png"><img alt="_static/31.lib.png" class="align-center" src="_static/31.lib.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><div class="note admonition">
+<p class="admonition-title">Precaution</p>
+<ul class="simple">
+<li><p>Arduino IDE does not support importing multiple libraries at once; you must import one library at a time.</p></li>
+<li><p>If a library file already exists, a prompt will appear asking whether to overwrite it. It is recommended to confirm overwrite to avoid program errors caused by different library versions.</p></li>
+</ul>
+</div>
+<a class="reference internal image-reference" href="_static/29.lib.png"><img alt="_static/29.lib.png" class="align-center" src="_static/29.lib.png" style="width: 600px;" /></a>
+<ol class="arabic" start="4">
+<li><p>Verify that the library was imported successfully:
+Click <strong>Sketch → Include Library</strong>, scroll down to <strong>Contributed Libraries</strong>, and check whether the library files we provided are listed.</p>
+<a class="reference internal image-reference" href="_static/30.lib.png"><img alt="_static/30.lib.png" class="align-center" src="_static/30.lib.png" style="width: 600px;" /></a>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="download-libraries-using-arduino-ide">
+<h3>Download Libraries Using Arduino IDE<a class="headerlink" href="#download-libraries-using-arduino-ide" title="Link to this heading"></a></h3>
+<p>You can also download required libraries directly using the Arduino IDE.</p>
+<ol class="arabic simple">
+<li><p>On the right side of the Arduino IDE interface, click the <strong>Library Manager</strong> icon.</p></li>
+<li><p>Enter keywords in the search box to find the required library and click <strong>Install</strong> to download.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_static/32.lib.png"><img alt="_static/32.lib.png" class="align-center" src="_static/32.lib.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><hr class="docutils" />
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Components.html" class="btn btn-neutral float-right" title="Components Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Lafvin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
