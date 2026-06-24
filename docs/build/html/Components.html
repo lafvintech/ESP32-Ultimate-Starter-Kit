@@ -23,7 +23,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="AdvancedExperiment.html" />
+    <link rel="next" title="Basic Experiments" href="BasicExperiments.html" />
     <link rel="prev" title="Arduino IDE User Guide" href="Arduino.html" /> 
 </head>
 
@@ -67,14 +67,28 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Components Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#esp32-development-board">1. ESP32 Development Board</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#esp32-pinout">ESP32 Pinout</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#esp32-development-board">1. ESP32 Development Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mpu6050-attitude-sensor">2. MPU6050 Attitude Sensor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dht11-temperature-and-humidity-sensor">3. DHT11 Temperature and Humidity Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dht11-sensor">3. DHT11 Sensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pir-motion-sensor">4. PIR Motion Sensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#light-sensor">5. Light Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#water-level-sensor">6. Water Level Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ultrasonic-distance-sensor">7. Ultrasonic Distance Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ir-receiver-module-and-remote-control">8. IR Receiver Module and Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#joystick-module">9. Joystick Module</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental Course</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicExperiments.html">Basic Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#led-blinking">1. LED Blinking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#button-led">2. Button LED</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedExperiment.html">Advanced Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP and HUMI Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">2. Ultrasonic Distance Meter</a></li>
 </ul>
 </li>
 </ul>
@@ -106,8 +120,7 @@
   <section id="components-introduction">
 <h1>Components Introduction<a class="headerlink" href="#components-introduction" title="Link to this heading"></a></h1>
 <a class="reference internal image-reference" href="_images/1.fenmian.png"><img alt="_images/1.fenmian.png" class="align-center" src="_images/1.fenmian.png" style="width: 800px;" /></a>
-<div style="margin-top: 30px;"></div><p><strong>Below is the introduction to each component, which contains the operating principle of the component.</strong></p>
-<hr class="docutils" />
+<div style="margin-top: 30px;"></div><hr class="docutils" />
 <section id="esp32-development-board">
 <h2>1. ESP32 Development Board<a class="headerlink" href="#esp32-development-board" title="Link to this heading"></a></h2>
 <a class="reference internal image-reference" href="_images/2.esp32_1.png"><img alt="_images/2.esp32_1.png" class="align-center" src="_images/2.esp32_1.png" style="width: 800px;" /></a>
@@ -124,11 +137,10 @@
 <li><p><strong>Development:</strong> Supports Arduino IDE, ESP-IDF, MicroPython, and other popular firmware frameworks.</p></li>
 </ul>
 <p>This board is the heart of your starter kit. It allows you to connect sensors, drives, displays, and communication modules, while giving you easy access to Wi‑Fi and Bluetooth for wireless control, data logging, and IoT applications.</p>
-<section id="esp32-pinout">
-<h3>ESP32 Pinout<a class="headerlink" href="#esp32-pinout" title="Link to this heading"></a></h3>
+<p><strong>ESP32 Pinout</strong></p>
+<p>The ESP32 peripherals include：18 Analog-to-Digital Converter (ADC) channels</p>
 <blockquote>
-<div><p>The ESP32 peripherals include:  18 Analog-to-Digital Converter (ADC) channels</p>
-<ul class="simple">
+<div><ul class="simple">
 <li><p>3 SPI interfaces</p></li>
 <li><p>3 UART interfaces</p></li>
 <li><p>2 I2C interfaces</p></li>
@@ -146,11 +158,10 @@ assigned by default.</p>
 <li><p>For more information, click here to view the ESP32 datasheet: <a class="reference external" href="https://documentation.espressif.com/esp32_datasheet_en.pdf">ESP32 Datasheet</a></p></li>
 </ul>
 </section>
-</section>
 <hr class="docutils" />
 <section id="mpu6050-attitude-sensor">
 <h2>2. MPU6050 Attitude Sensor<a class="headerlink" href="#mpu6050-attitude-sensor" title="Link to this heading"></a></h2>
-<a class="reference internal image-reference" href="_static/Component/4.mpu6050.png"><img alt="_static/Component/4.mpu6050.png" class="align-center" src="_static/Component/4.mpu6050.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/4.mpu6050.png"><img alt="_images/4.mpu6050.png" class="align-center" src="_images/4.mpu6050.png" style="width: 300px;" /></a>
 <div style="margin-top: 30px;"></div><p>The MPU6050 is an Inertial Measurement Unit (IMU) sensor that combines a 3-axis accelerometer and 3-axis gyroscope on a single chip. It is one of the most popular motion sensors for robotics, drones, motion tracking, and gesture recognition applications.</p>
 <p><strong>Core Features:</strong></p>
 <ul class="simple">
@@ -187,9 +198,9 @@ assigned by default.</p>
 </div>
 </section>
 <hr class="docutils" />
-<section id="dht11-temperature-and-humidity-sensor">
-<h2>3. DHT11 Temperature and Humidity Sensor<a class="headerlink" href="#dht11-temperature-and-humidity-sensor" title="Link to this heading"></a></h2>
-<a class="reference internal image-reference" href="_static/Component/5.dht11.png"><img alt="_static/Component/5.dht11.png" class="align-center" src="_static/Component/5.dht11.png" style="width: 800px;" /></a>
+<section id="dht11-sensor">
+<h2>3. DHT11 Sensor<a class="headerlink" href="#dht11-sensor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/5.dht11.png"><img alt="_images/5.dht11.png" class="align-center" src="_images/5.dht11.png" style="width: 200px;" /></a>
 <div style="margin-top: 30px;"></div><p>The DHT11 is a basic, low-cost digital temperature and humidity sensor. It uses a capacitive humidity sensor and a thermistor to measure the surrounding air, and outputs a digital signal on the data pin.</p>
 <p><strong>Core Features:</strong></p>
 <ul class="simple">
@@ -211,7 +222,7 @@ assigned by default.</p>
 </ul>
 <p><strong>Pinout:</strong></p>
 <ul class="simple">
-<li><p><strong>VCC:</strong> Power supply (3.3V to 5V)</p></li>
+<li><p><strong>VCC:</strong> Power supply (3.3V or 5V)</p></li>
 <li><p><strong>GND:</strong> Ground connection</p></li>
 <li><p><strong>DATA:</strong> Digital output pin connected to ESP32 GPIO for reading temperature and humidity data</p></li>
 </ul>
@@ -221,11 +232,12 @@ assigned by default.</p>
 <li><p>The DHT11 sensor is suitable for basic temperature and humidity measurements, but it has limited accuracy and a slow response time compared to more advanced sensors. For applications requiring higher precision or faster updates, consider using the DHT22 or other digital sensors.</p></li>
 </ul>
 </div>
+<p>For more information, click here to view the DHT11 datasheet: <a class="reference external" href="https://www.mouser.com/datasheet/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf?srsltid=AfmBOooi92JcYF4XryfVGxzN6rWYdG9Y2aPWRpiw7p7HqvUF11LQB6y_">DHT11 Datasheet</a></p>
 </section>
 <hr class="docutils" />
 <section id="pir-motion-sensor">
 <h2>4. PIR Motion Sensor<a class="headerlink" href="#pir-motion-sensor" title="Link to this heading"></a></h2>
-<a class="reference internal image-reference" href="_static/Component/6.pir.png"><img alt="_static/Component/6.pir.png" class="align-center" src="_static/Component/6.pir.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/6.pir.png"><img alt="_images/6.pir.png" class="align-center" src="_images/6.pir.png" style="width: 300px;" /></a>
 <div style="margin-top: 30px;"></div><p>The PIR (Passive Infrared) Motion Sensor is a widely used device for detecting motion in various applications. It works by sensing the infrared radiation emitted by objects in its field of view, particularly the heat signature of humans or animals.</p>
 <p><strong>Core Features:</strong></p>
 <ul class="simple">
@@ -235,7 +247,8 @@ assigned by default.</p>
 <li><p><strong>Operating Temperature:</strong> Functions within a temperature range of -20°C to +70°C</p></li>
 <li><p><strong>Sensitivity Adjustment:</strong> Allows adjustment of detection sensitivity and delay time</p></li>
 </ul>
-<p><strong>Applications:</strong></p>
+<a class="reference internal image-reference" href="_images/6.pir2.png"><img alt="_images/6.pir2.png" class="align-center" src="_images/6.pir2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Applications:</strong></p>
 <ul class="simple">
 <li><p>Security systems and alarm installations</p></li>
 <li><p>Automatic lighting control in residential and commercial buildings</p></li>
@@ -246,7 +259,7 @@ assigned by default.</p>
 </ul>
 <p><strong>Pinout:</strong></p>
 <ul class="simple">
-<li><p><strong>VCC:</strong> Power supply (5V DC)</p></li>
+<li><p><strong>VCC:</strong> Power supply (3.3V or 5V DC)</p></li>
 <li><p><strong>GND:</strong> Ground connection</p></li>
 <li><p><strong>OUT:</strong> Digital output pin connected to ESP32 GPIO for reading motion detection status</p></li>
 </ul>
@@ -260,7 +273,7 @@ assigned by default.</p>
 <hr class="docutils" />
 <section id="light-sensor">
 <h2>5. Light Sensor<a class="headerlink" href="#light-sensor" title="Link to this heading"></a></h2>
-<a class="reference internal image-reference" href="_static/Component/7.light.png"><img alt="_static/Component/7.light.png" class="align-center" src="_static/Component/7.light.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/7.light.png"><img alt="_images/7.light.png" class="align-center" src="_images/7.light.png" style="width: 500px;" /></a>
 <div style="margin-top: 30px;"></div><p>The Light Sensor, often based on a photoresistor (LDR) or photodiode, is a device that detects and measures the intensity of ambient light. It is commonly used in various applications to enable automatic adjustments based on lighting conditions.</p>
 <p><strong>Core Features:</strong></p>
 <ul class="simple">
@@ -292,6 +305,127 @@ assigned by default.</p>
 <li><p>Clockwise: Less sensitive (requires darker conditions to trigger)</p></li>
 </ul>
 </div>
+</section>
+<hr class="docutils" />
+<section id="water-level-sensor">
+<h2>6. Water Level Sensor<a class="headerlink" href="#water-level-sensor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/8.water.png"><img alt="_images/8.water.png" class="align-center" src="_images/8.water.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p>The Water Level Sensor included in this kit is a simple resistive/analog probe-type sensor module that can detect water presence and provide an analog voltage proportional to the conductivity (used as a proxy for level)</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>The probe consists of a series of metal traces that change the effective resistance when immersed in water. The sensor board uses this change in resistance as part of a voltage divider to produce an analog voltage at the <cite>S</cite> pin.</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Analog output (AO):</strong> Variable voltage proportional to water contact/conductivity (connect to ESP32 ADC)</p></li>
+<li><p><strong>Power:</strong> 3.3V - 5V compatible (use 3.3V with ESP32 to avoid ADC overrange)</p></li>
+</ul>
+<p><strong>Pinout:</strong></p>
+<ul class="simple">
+<li><p><strong>VCC:</strong> 3.3V (or 5V) power input — use 3.3V when reading AO with ESP32 ADC</p></li>
+<li><p><strong>GND:</strong> Ground</p></li>
+<li><p><strong>AO:</strong> Analog output — connect to an ESP32 ADC-capable pin (e.g., <cite>GPIO34</cite>, <cite>GPIO35</cite>, etc.)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>When immersing in water, lower it slowly and vertically; under no circumstances should the end with the circuit board come into contact with the water.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ultrasonic-distance-sensor">
+<h2>7. Ultrasonic Distance Sensor<a class="headerlink" href="#ultrasonic-distance-sensor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/9.hcsr04.png"><img alt="_images/9.hcsr04.png" class="align-center" src="_images/9.hcsr04.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><p>The HC-SR04 is an ultrasonic distance sensor commonly used to measure the distance to an object by sending an ultrasonic pulse and measuring the echo time.</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>The module transmits a short 40 kHz ultrasonic burst via the <cite>TRIG</cite> pin. The sound wave travels until it hits an object and reflects back. The module’s <cite>ECHO</cite> pin goes high for the duration between sending and receiving the pulse.</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Range:</strong> Typically 2 cm to 400 cm (depending on environment)</p></li>
+<li><p><strong>Accuracy:</strong> 3 mm to 1 cm under good conditions</p></li>
+<li><p><strong>Interface:</strong> Digital <cite>TRIG</cite> (input) and <cite>ECHO</cite> (output) pins</p></li>
+<li><p><strong>Operating voltage:</strong> 5V</p></li>
+</ul>
+<p><strong>Pinout and connections:</strong></p>
+<ul class="simple">
+<li><p><strong>VCC:</strong> 5V power (HC-SR04 requires 5V)</p></li>
+<li><p><strong>GND:</strong> Ground</p></li>
+<li><p><strong>TRIG:</strong> Trigger input (digital output from ESP32)</p></li>
+<li><p><strong>ECHO:</strong> Echo output</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The HC-SR04 expects a 10 µs HIGH on <cite>TRIG</cite> to start a measurement, then the <cite>ECHO</cite> pin will go HIGH for a time proportional to distance.</p></li>
+<li><p>For stable readings, take multiple samples and average; filter out spikes and timeouts.</p></li>
+<li><p>Avoid using the sensor outdoors in heavy wind, rain, or when surfaces are highly absorbent to ultrasound.</p></li>
+</ul>
+</div>
+</section>
+<section id="ir-receiver-module-and-remote-control">
+<h2>8. IR Receiver Module and Remote Control<a class="headerlink" href="#ir-receiver-module-and-remote-control" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_static/Component/10.ir.png"><img alt="_static/Component/10.ir.png" class="align-center" src="_static/Component/10.ir.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p>This kit includes an infrared (IR) receiver module  and a simple IR remote. The receiver demodulates the 38 kHz carrier used by most remote controls and outputs a digital pulse train representing the encoded button commands.</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>The remote sends coded IR signals (commonly NEC, RC5, or other protocols) by modulating a 38 kHz IR carrier. The receiver module filters and demodulates the carrier and outputs the raw pulse timings on its <cite>OUT</cite> pin. A microcontroller decodes these timings into button codes using an IR decoding library.</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Interface:</strong> Simple digital <cite>OUT</cite> pin with active-low pulses</p></li>
+<li><p><strong>Carrier:</strong> Typically 38 kHz (module tuned to this frequency)</p></li>
+<li><p><strong>Power:</strong> 3.3V – 5V</p></li>
+</ul>
+<p><strong>Pinout and connections:</strong></p>
+<ul class="simple">
+<li><p><strong>VCC:</strong> 3.3V or 5V supply</p></li>
+<li><p><strong>GND:</strong> Ground</p></li>
+<li><p><strong>OUT / DATA:</strong> Digital output — connect to an ESP32 GPIO (with interrupt capability) to capture pulse timings</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Use an IR decoding library (e.g., <cite>IRremote</cite> for Arduino/ESP32 or <cite>esp32_ir</cite> ports) to decode protocols like NEC.</p></li>
+<li><p>The output is typically active LOW (pulse when carrier detected); you should capture pulse lengths to decode the command.</p></li>
+<li><p>Avoid pointing multiple remotes at the receiver simultaneously.</p></li>
+<li><p>Infrared works best in line-of-sight; sunlight and strong IR sources can interfere.</p></li>
+</ul>
+</div>
+</section>
+<section id="joystick-module">
+<h2>9. Joystick Module<a class="headerlink" href="#joystick-module" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/11.joystick.png"><img alt="_images/11.joystick.png" class="align-center" src="_images/11.joystick.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p>A typical joystick module in the kit provides two potentiometers (X and Y axes) and a push-button (switch) on the joystick knob. It behaves like two analog inputs plus one digital switch.</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>Each axis is a variable resistor (potentiometer) that outputs a voltage between 0V and VCC proportionally to the joystick position. The button is a simple momentary switch.</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Axes:</strong> Two analog outputs (<cite>VRx</cite>, <cite>VRy</cite>) for X and Y</p></li>
+<li><p><strong>Switch:</strong> One digital output (<cite>SW</cite>) activated when the joystick is pressed</p></li>
+<li><p><strong>Power:</strong> 3.3V or 5V compatible</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/11.joystick2.png"><img alt="_images/11.joystick2.png" class="align-center" src="_images/11.joystick2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Pinout and connections:</strong></p>
+<ul class="simple">
+<li><p><strong>VCC:</strong> 3.3V</p></li>
+<li><p><strong>GND:</strong> Ground</p></li>
+<li><p><strong>VRx:</strong> Analog output for X-axis → ESP32 ADC pin (e.g., <cite>GPIO32</cite>)</p></li>
+<li><p><strong>VRy:</strong> Analog output for Y-axis → ESP32 ADC pin (e.g., <cite>GPIO33</cite>)</p></li>
+<li><p><strong>SW:</strong> Digital switch output → any GPIO with pull-up (e.g., <cite>GPIO14</cite>)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Read <cite>VRx</cite> and <cite>VRy</cite> using ADC and map the values to a joystick range (e.g., 0..1023 or 0..4095). Center position often yields a mid-scale value; apply deadzone filtering to ignore small variations.</p></li>
+<li><p>Configure the <cite>SW</cite> pin with an internal pull-up and detect LOW for pressed state.</p></li>
+<li><p>For better stability, apply simple smoothing (moving average) to analog readings.</p></li>
+</ul>
+</div>
 <hr class="docutils" />
 </section>
 </section>
@@ -301,7 +435,7 @@ assigned by default.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="Arduino.html" class="btn btn-neutral float-left" title="Arduino IDE User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="AdvancedExperiment.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="BasicExperiments.html" class="btn btn-neutral float-right" title="Basic Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

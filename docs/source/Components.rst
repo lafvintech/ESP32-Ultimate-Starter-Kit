@@ -9,8 +9,6 @@ Components Introduction
 
    <div style="margin-top: 30px;"></div>
 
-**Below is the introduction to each component, which contains the operating principle of the component.**
-
 ----
 
 
@@ -40,10 +38,9 @@ The ESP32 development board included in this kit provides a complete platform fo
 
 This board is the heart of your starter kit. It allows you to connect sensors, drives, displays, and communication modules, while giving you easy access to Wi‑Fi and Bluetooth for wireless control, data logging, and IoT applications.
 
-ESP32 Pinout
-~~~~~~~~~~~~
+**ESP32 Pinout**
 
- The ESP32 peripherals include:  18 Analog-to-Digital Converter (ADC) channels
+The ESP32 peripherals include：18 Analog-to-Digital Converter (ADC) channels
 
  - 3 SPI interfaces
  - 3 UART interfaces
@@ -73,7 +70,7 @@ assigned by default.
 --------------------------
 
 .. image:: _static/Component/4.mpu6050.png
-   :width: 800
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -116,11 +113,11 @@ The MPU6050 uses the I2C protocol with two main pins:
 
 ----
 
-3. DHT11 Temperature and Humidity Sensor
---------------------------
+3. DHT11 Sensor
+---------------
 
 .. image:: _static/Component/5.dht11.png
-   :width: 800
+   :width: 200
    :align: center
 
 .. raw:: html
@@ -149,20 +146,22 @@ The DHT11 is a basic, low-cost digital temperature and humidity sensor. It uses 
 
 **Pinout:** 
 
-- **VCC:** Power supply (3.3V to 5V)
+- **VCC:** Power supply (3.3V or 5V)
 - **GND:** Ground connection     
 - **DATA:** Digital output pin connected to ESP32 GPIO for reading temperature and humidity data
 
 .. note::
    - The DHT11 sensor is suitable for basic temperature and humidity measurements, but it has limited accuracy and a slow response time compared to more advanced sensors. For applications requiring higher precision or faster updates, consider using the DHT22 or other digital sensors.
 
+For more information, click here to view the DHT11 datasheet: `DHT11 Datasheet <https://www.mouser.com/datasheet/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf?srsltid=AfmBOooi92JcYF4XryfVGxzN6rWYdG9Y2aPWRpiw7p7HqvUF11LQB6y_>`_
+
 ----
 
 4. PIR Motion Sensor
---------------------------
+--------------------
 
 .. image:: _static/Component/6.pir.png
-   :width: 800
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -179,6 +178,14 @@ The PIR (Passive Infrared) Motion Sensor is a widely used device for detecting m
 - **Operating Temperature:** Functions within a temperature range of -20°C to +70°C
 - **Sensitivity Adjustment:** Allows adjustment of detection sensitivity and delay time
 
+.. image:: _static/Component/6.pir2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
 **Applications:**
 
 - Security systems and alarm installations
@@ -190,7 +197,7 @@ The PIR (Passive Infrared) Motion Sensor is a widely used device for detecting m
 
 **Pinout:**
 
-- **VCC:** Power supply (5V DC)
+- **VCC:** Power supply (3.3V or 5V DC)
 - **GND:** Ground connection
 - **OUT:** Digital output pin connected to ESP32 GPIO for reading motion detection status
 
@@ -201,9 +208,10 @@ The PIR (Passive Infrared) Motion Sensor is a widely used device for detecting m
 ----
 
 5. Light Sensor
---------------------------
+----------------
+
 .. image:: _static/Component/7.light.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -244,3 +252,158 @@ The Light Sensor, often based on a photoresistor (LDR) or photodiode, is a devic
 
 ----
 
+6. Water Level Sensor
+-----------------------
+
+.. image:: _static/Component/8.water.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The Water Level Sensor included in this kit is a simple resistive/analog probe-type sensor module that can detect water presence and provide an analog voltage proportional to the conductivity (used as a proxy for level) 
+
+**Working principle:**
+
+- The probe consists of a series of metal traces that change the effective resistance when immersed in water. The sensor board uses this change in resistance as part of a voltage divider to produce an analog voltage at the `S` pin.
+
+**Core features:**
+
+- **Analog output (AO):** Variable voltage proportional to water contact/conductivity (connect to ESP32 ADC)
+- **Power:** 3.3V - 5V compatible (use 3.3V with ESP32 to avoid ADC overrange)
+
+**Pinout:**
+
+- **VCC:** 3.3V (or 5V) power input — use 3.3V when reading AO with ESP32 ADC
+- **GND:** Ground
+- **AO:** Analog output — connect to an ESP32 ADC-capable pin (e.g., `GPIO34`, `GPIO35`, etc.)
+
+.. note::
+
+  - When immersing in water, lower it slowly and vertically; under no circumstances should the end with the circuit board come into contact with the water.
+
+----
+
+7. Ultrasonic Distance Sensor 
+-----------------------------
+
+.. image:: _static/Component/9.hcsr04.png
+   :width: 400
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The HC-SR04 is an ultrasonic distance sensor commonly used to measure the distance to an object by sending an ultrasonic pulse and measuring the echo time.
+
+**Working principle:**
+
+- The module transmits a short 40 kHz ultrasonic burst via the `TRIG` pin. The sound wave travels until it hits an object and reflects back. The module's `ECHO` pin goes high for the duration between sending and receiving the pulse. 
+
+**Core features:**
+
+- **Range:** Typically 2 cm to 400 cm (depending on environment)
+- **Accuracy:** 3 mm to 1 cm under good conditions
+- **Interface:** Digital `TRIG` (input) and `ECHO` (output) pins
+- **Operating voltage:** 5V 
+
+**Pinout and connections:**
+
+- **VCC:** 5V power (HC-SR04 requires 5V)
+- **GND:** Ground
+- **TRIG:** Trigger input (digital output from ESP32)
+- **ECHO:** Echo output 
+
+.. note::
+
+ - The HC-SR04 expects a 10 µs HIGH on `TRIG` to start a measurement, then the `ECHO` pin will go HIGH for a time proportional to distance.
+ - For stable readings, take multiple samples and average; filter out spikes and timeouts.
+ - Avoid using the sensor outdoors in heavy wind, rain, or when surfaces are highly absorbent to ultrasound.
+
+
+8. IR Receiver Module and Remote Control
+----------------------------------------
+
+.. image:: _static/Component/10.ir.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+This kit includes an infrared (IR) receiver module  and a simple IR remote. The receiver demodulates the 38 kHz carrier used by most remote controls and outputs a digital pulse train representing the encoded button commands.
+
+**Working principle:**
+
+- The remote sends coded IR signals (commonly NEC, RC5, or other protocols) by modulating a 38 kHz IR carrier. The receiver module filters and demodulates the carrier and outputs the raw pulse timings on its `OUT` pin. A microcontroller decodes these timings into button codes using an IR decoding library.
+
+**Core features:**
+
+- **Interface:** Simple digital `OUT` pin with active-low pulses
+- **Carrier:** Typically 38 kHz (module tuned to this frequency)
+- **Power:** 3.3V – 5V 
+
+**Pinout and connections:**
+
+- **VCC:** 3.3V or 5V supply
+- **GND:** Ground
+- **OUT / DATA:** Digital output — connect to an ESP32 GPIO (with interrupt capability) to capture pulse timings
+
+.. note::
+
+ - Use an IR decoding library (e.g., `IRremote` for Arduino/ESP32 or `esp32_ir` ports) to decode protocols like NEC.
+ - The output is typically active LOW (pulse when carrier detected); you should capture pulse lengths to decode the command.
+ - Avoid pointing multiple remotes at the receiver simultaneously.
+ - Infrared works best in line-of-sight; sunlight and strong IR sources can interfere.
+
+
+9. Joystick Module
+------------------
+
+.. image:: _static/Component/11.joystick.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+A typical joystick module in the kit provides two potentiometers (X and Y axes) and a push-button (switch) on the joystick knob. It behaves like two analog inputs plus one digital switch.
+
+**Working principle:**
+
+- Each axis is a variable resistor (potentiometer) that outputs a voltage between 0V and VCC proportionally to the joystick position. The button is a simple momentary switch.
+
+**Core features:**
+
+- **Axes:** Two analog outputs (`VRx`, `VRy`) for X and Y
+- **Switch:** One digital output (`SW`) activated when the joystick is pressed
+- **Power:** 3.3V or 5V compatible 
+
+.. image:: _static/Component/11.joystick2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Pinout and connections:**
+
+- **VCC:** 3.3V
+- **GND:** Ground
+- **VRx:** Analog output for X-axis → ESP32 ADC pin (e.g., `GPIO32`)
+- **VRy:** Analog output for Y-axis → ESP32 ADC pin (e.g., `GPIO33`)
+- **SW:** Digital switch output → any GPIO with pull-up (e.g., `GPIO14`)
+
+.. note::
+
+ - Read `VRx` and `VRy` using ADC and map the values to a joystick range (e.g., 0..1023 or 0..4095). Center position often yields a mid-scale value; apply deadzone filtering to ignore small variations.
+ - Configure the `SW` pin with an internal pull-up and detect LOW for pressed state.
+ - For better stability, apply simple smoothing (moving average) to analog readings.
+
+----

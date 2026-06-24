@@ -15,8 +15,8 @@ ESP32 Ultimate Starter Kit
    Components
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption:  Experimental Course
 
-   BasicExperiment
+   BasicExperiments
    AdvancedExperiment

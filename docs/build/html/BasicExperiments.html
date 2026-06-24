@@ -6,11 +6,11 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; ESP32 Ultimate Starter Kit  documentation</title>
+  <title>Basic Experiments &mdash; ESP32 Ultimate Starter Kit  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=8a98143a" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fa446fe1" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -22,7 +22,9 @@
       <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Advanced Experiments" href="AdvancedExperiment.html" />
+    <link rel="prev" title="Components Introduction" href="Components.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,14 +55,40 @@
 </ul>
 </li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Pre-Class Preparation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Arduino.html">Arduino IDE User Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Arduino.html#install-arduino-ide">1. Install Arduino IDE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#add-esp8266-board-manager">2. Add ESP8266 Board Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#download-esp8266-core-package">3. Download  ESP8266 Core Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Arduino.html#add-esp32-board-manager">2. Add ESP32 Board Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Arduino.html#download-esp32-core-package">3. Download  ESP32 Core Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Arduino.html#add-libraries">4. Add Libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Arduino.html#install-serial-port-tool">5. Install Serial Port Tool</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Arduino.html#upload-test-code">6. Upload Test Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Components.html">Components Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#esp32-development-board">1. ESP32 Development Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#mpu6050-attitude-sensor">2. MPU6050 Attitude Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#dht11-sensor">3. DHT11 Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#pir-motion-sensor">4. PIR Motion Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#light-sensor">5. Light Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#water-level-sensor">6. Water Level Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ultrasonic-distance-sensor">7. Ultrasonic Distance Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ir-receiver-module-and-remote-control">8. IR Receiver Module and Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#joystick-module">9. Joystick Module</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental Course</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#led-blinking">1. LED Blinking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#button-led">2. Button LED</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedExperiment.html">Advanced Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP and HUMI Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">2. Ultrasonic Distance Meter</a></li>
 </ul>
 </li>
 </ul>
@@ -79,7 +107,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Basic Experiments</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/BasicExperiments.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -89,11 +117,150 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
+  <section id="basic-experiments">
+<h1>Basic Experiments<a class="headerlink" href="#basic-experiments" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="_static/project/BASIC/1.WEB.png"><img alt="_static/project/BASIC/1.WEB.png" class="align-center" src="_static/project/BASIC/1.WEB.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p>This introductory chapter guides you through the process of building fun, interactive devices—capable of visual, physical, and auditory responses—using a carefully selected range of common and engaging components such as LEDs, buzzers, buttons, and sensors. Through a series of hands-on experiments that progress from simple to complex, you will quickly familiarize yourself with hardware wiring, programming logic, and debugging techniques, rapidly transforming from a mere observer into a maker.</p>
+<hr class="docutils" />
+<section id="led-blinking">
+<h2>1. LED Blinking<a class="headerlink" href="#led-blinking" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>In this experiment, you will learn how to control an LED using the ESP32 microcontroller. You will write a simple program to make the LED blink at regular intervals, introducing you to basic programming concepts and GPIO pin control.</p></li>
+</ul>
+<p><strong>Materials Needed:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ESP32 Development Board</p></li>
+<li><p>LED</p></li>
+<li><p>Resistor (220Ω)</p></li>
+<li><p>Breadboard and Jumper Wires</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Wiring Diagram:</strong></p>
+<a class="reference internal image-reference" href="_static/project/BASIC/1.blinking.png"><img alt="_static/project/BASIC/1.blinking.png" class="align-center" src="_static/project/BASIC/1.blinking.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Example code:</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define the LED connection pin</span>
+<span class="cp">#define LED_PIN 2</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="c1">// Set GPIO2 to output mode</span>
+<span class="n">pinMode</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="c1">// Turn on the LED</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+
+<span class="c1">// Delay for 1 second</span>
+<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+
+<span class="c1">// Turn off the LED</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+
+<span class="c1">// Delay for 1 second</span>
+<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Display Effect:</strong></p>
+<a class="reference internal image-reference" href="_static/project/BASIC/1.blinking2.png"><img alt="_static/project/BASIC/1.blinking2.png" class="align-center" src="_static/project/BASIC/1.blinking2.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><ul class="simple">
+<li><p>The LED light will continuously turn on and off at one-second intervals—lighting up, dimming, lighting up again, dimming again—creating a ceaseless breathing or flashing rhythm.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="button-led">
+<h2>2. Button LED<a class="headerlink" href="#button-led" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>This experiment aims to teach two core programming techniques: key debouncing and state toggling. Two independent keys will control the on/off state of red and yellow LEDs respectively.</p></li>
+<li><p>You will learn how to use <strong>`digitalRead()`</strong> to capture the rising edge trigger of a key <strong>(i.e., the instant it’s pressed)</strong> , and how to implement the logic of “state toggling once per press” using a state flag <strong>(bool variable)</strong> .</p></li>
+<li><p>Simultaneously, simple software delay debouncing is incorporated into the code, allowing you to understand the signal jitter problem caused by mechanical keys at the instant they are pressed and its solution.</p></li>
+</ul>
+<p><strong>Materials Needed:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ESP32 Development Board</p></li>
+<li><p>Button (2 PCS)</p></li>
+<li><p>LED (Yellow、Red)</p></li>
+<li><p>Resistor (220Ω)</p></li>
+<li><p>Breadboard and Jumper Wires</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Wiring Diagram:</strong></p>
+<a class="reference internal image-reference" href="_static/project/BASIC/2.buttonled.png"><img alt="_static/project/BASIC/2.buttonled.png" class="align-center" src="_static/project/BASIC/2.buttonled.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Example code:</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// LED pins</span>
+<span class="cp">#define RED_LED     13</span>
+<span class="cp">#define YELLOW_LED  12</span>
+
+<span class="c1">// Button pins</span>
+<span class="cp">#define BUTTON1     18</span>
+<span class="cp">#define BUTTON2     19</span>
+
+<span class="c1">// LED state variables</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">redState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">yellowState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="c1">// Save previous button states</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">lastButton1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOW</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">lastButton2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOW</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">RED_LED</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">YELLOW_LED</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">BUTTON1</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">BUTTON2</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">   </span><span class="c1">// Read current button states</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">currentButton1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">BUTTON1</span><span class="p">);</span>
+<span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">currentButton2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">BUTTON2</span><span class="p">);</span>
+
+<span class="w">   </span><span class="c1">// ===== Button 1: Control red LED =====</span>
+<span class="w">   </span><span class="c1">// Detect rising edge (LOW to HIGH: button pressed)</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lastButton1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LOW</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">currentButton1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">HIGH</span><span class="p">)</span>
+<span class="w">   </span><span class="p">{</span>
+<span class="w">       </span><span class="n">redState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">redState</span><span class="p">;</span>
+<span class="w">       </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">RED_LED</span><span class="p">,</span><span class="w"> </span><span class="n">redState</span><span class="p">);</span>
+<span class="w">       </span><span class="n">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span><span class="w">  </span><span class="c1">// Simple debounce</span>
+<span class="w">   </span><span class="p">}</span>
+
+<span class="w">   </span><span class="c1">// ===== Button 2: Control yellow LED =====</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lastButton2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LOW</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">currentButton2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">HIGH</span><span class="p">)</span>
+<span class="w">   </span><span class="p">{</span>
+<span class="w">       </span><span class="n">yellowState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">yellowState</span><span class="p">;</span>
+<span class="w">       </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">YELLOW_LED</span><span class="p">,</span><span class="w"> </span><span class="n">yellowState</span><span class="p">);</span>
+<span class="w">       </span><span class="n">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span><span class="w">  </span><span class="c1">// Simple debounce</span>
+<span class="w">   </span><span class="p">}</span>
+
+<span class="w">   </span><span class="c1">// Save current states</span>
+<span class="w">   </span><span class="n">lastButton1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentButton1</span><span class="p">;</span>
+<span class="w">   </span><span class="n">lastButton2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentButton2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Display Effect:</strong></p>
+<a class="reference internal image-reference" href="_static/project/BASIC/2.buttonled2.png"><img alt="_static/project/BASIC/2.buttonled2.png" class="align-center" src="_static/project/BASIC/2.buttonled2.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><ul class="simple">
+<li><p>Pressing button 1 (GPIO18): The red LED’s state toggles—it turns on if currently off, and off if currently on, toggling each time it’s pressed.</p></li>
+<li><p>Pressing button 2 (GPIO19): The yellow LED follows the same toggling logic, without interfering with each other.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Components.html" class="btn btn-neutral float-left" title="Components Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AdvancedExperiment.html" class="btn btn-neutral float-right" title="Advanced Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
