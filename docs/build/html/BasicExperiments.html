@@ -191,7 +191,8 @@
 <p><strong>Wiring Diagram:</strong></p>
 <a class="reference internal image-reference" href="_static/project/BASIC/2.buttonled.png"><img alt="_static/project/BASIC/2.buttonled.png" class="align-center" src="_static/project/BASIC/2.buttonled.png" style="width: 800px;" /></a>
 <div style="margin-top: 30px;"></div><p><strong>Example code:</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// LED pins</span>
+<div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+<div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// LED pins</span>
 <span class="cp">#define RED_LED     13</span>
 <span class="cp">#define YELLOW_LED  12</span>
 
@@ -244,7 +245,29 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>Display Effect:</strong></p>
+</div>
+<div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+  <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ 展开全部代码</button>
+</div>
+</div>
+
+<style>
+#code-container-dht { transition: max-height 0.4s ease-in-out; }
+</style>
+
+<script>
+function toggleCode(containerId, buttonId) {
+  const container = document.getElementById(containerId);
+  const btn = document.getElementById(buttonId);
+  if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+    container.style.maxHeight = 'none';
+    btn.textContent = '✕ Collapse Code';
+  } else {
+    container.style.maxHeight = '420px';
+    btn.textContent = '▼ Expand All Code';
+  }
+}
+</script><div style="margin-top: 30px;"></div><p><strong>Display Effect:</strong></p>
 <a class="reference internal image-reference" href="_static/project/BASIC/2.buttonled2.png"><img alt="_static/project/BASIC/2.buttonled2.png" class="align-center" src="_static/project/BASIC/2.buttonled2.png" style="width: 800px;" /></a>
 <div style="margin-top: 30px;"></div><ul class="simple">
 <li><p>Pressing button 1 (GPIO18): The red LED’s state toggles—it turns on if currently off, and off if currently on, toggling each time it’s pressed.</p></li>

@@ -362,6 +362,9 @@ This experiment is a core project in our introductory practical course on the In
    }
    </script>
 
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
 **Display Effect:**
 
