@@ -465,16 +465,513 @@ function toggleCode(containerId, buttonId) {
   }
 }
 </script><div style="margin-top: 30px;"></div><p><strong>Display Effect:</strong></p>
-<a class="reference internal image-reference" href="_static/project/IOT/1.DHT112.png"><img alt="_static/project/IOT/1.DHT112.png" class="align-center" src="_static/project/IOT/1.DHT112.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/1.dht112.png"><img alt="_images/1.dht112.png" class="align-center" src="_images/1.dht112.png" style="width: 800px;" /></a>
 <div style="margin-top: 30px;"></div><ul class="simple">
-<li><p>The system will automatically create a Wi-Fi hotspot named ESP32-DHT11.</p></li>
-<li><p>After connecting to this Wi-Fi network using your mobile phone or computer, enter the IP address 192.168.4.1 in your browser</p></li>
+<li><p>The system will automatically create a Wi-Fi hotspot named <strong>ESP32-DHT11</strong>.</p></li>
+<li><p>After connecting to this Wi-Fi network using your mobile phone or computer, enter the IP address <strong>192.168.4.1</strong> in your browser</p></li>
 <li><p>To open a beautifully designed temperature and humidity monitoring panel to view real-time temperature and humidity data.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
 <section id="ultrasonic-distance-meter">
 <h2>2. Ultrasonic Distance Meter<a class="headerlink" href="#ultrasonic-distance-meter" title="Link to this heading"></a></h2>
+<p>This experiment is an advanced project for IoT sensor applications, aiming to learn how to combine an ultrasonic ranging module (HC-SR04) with an ESP32 web server to build a real-time wireless ranging and monitoring system. You will master the following key skills:</p>
+<ul class="simple">
+<li><p>Driving principle and ranging implementation of the HC-SR04 ultrasonic sensor ( <strong>pulseIn()</strong> for precise echo time measurement) .</p></li>
+<li><p>Temperature-compensated ranging algorithm: Calculates the actual distance using the speed of sound (0.0343 cm/μs) and handles invalid data (out of range, no echo, etc.)</p></li>
+<li><p>Timed sampling mechanism: Uses a <strong>millis()</strong> non-blocking timer to collect data at fixed intervals (100ms) to maintain smooth system response</p></li>
+<li><p>Web server and JSON API design: Returns structured data through the /data interface, achieving complete separation of front-end and back-end</p></li>
+<li><p>AJAX real-time data refresh: The front-end automatically requests the latest data every 300ms, updating the page without page refresh</p></li>
+<li><p>Responsive UI design and visual feedback: Distance value animation, status prompts, threshold alarms (buzzer trigger + page warning for &lt;20cm)</p></li>
+<li><p>Buzzer linkage control: The buzzer automatically sounds an alarm when an object gets too close, achieving a closed loop of “perception-judgment-execution”.</p></li>
+</ul>
+<p><strong>Materials Needed:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ESP32 Development Board</p></li>
+<li><p>HC-SR04 Ultrasonic Sensor</p></li>
+<li><p>Active Buzzer</p></li>
+<li><p>Breadboard and Jumper Wires</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Wiring Diagram:</strong></p>
+<a class="reference internal image-reference" href="_static/project/IOT/1.dht11.png"><img alt="_static/project/IOT/1.dht11.png" class="align-center" src="_static/project/IOT/1.dht11.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Example code:</strong></p>
+<div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+<div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;WiFi.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;WebServer.h&gt;</span>
+
+<span class="c1">// WiFi hotspot</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">ssid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ESP32-Distance-Meter&quot;</span><span class="p">;</span>
+
+<span class="c1">// Ultrasonic pins</span>
+<span class="cp">#define TRIG_PIN 5</span>
+<span class="cp">#define ECHO_PIN 18</span>
+
+<span class="c1">// Buzzer pin</span>
+<span class="cp">#define BUZZER_PIN 4</span>
+
+<span class="n">WebServer</span><span class="w"> </span><span class="nf">server</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
+
+<span class="c1">// Distance variables</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">distance_cm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">lastMeasurement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">MEASURE_INTERVAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">measurementError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="c1">// Measure distance</span>
+<span class="kt">float</span><span class="w"> </span><span class="nf">measureDistance</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">pulseIn</span><span class="p">(</span><span class="n">ECHO_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">,</span><span class="w"> </span><span class="mi">30000</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">duration</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">duration</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.0343</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">400.0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">distance</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// HTML page</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">htmlPage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">rawliteral(</span>
+
+<span class="s">&lt;!DOCTYPE html&gt;</span>
+<span class="s">&lt;html lang=&quot;en&quot;&gt;</span>
+
+<span class="s">&lt;head&gt;</span>
+
+<span class="s">&lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+
+<span class="s">&lt;meta name=&quot;viewport&quot;</span>
+<span class="s">content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
+
+<span class="s">&lt;title&gt;Distance Meter&lt;/title&gt;</span>
+
+<span class="s">&lt;style&gt;</span>
+
+<span class="s">*{</span>
+<span class="s">    margin:0;</span>
+<span class="s">    padding:0;</span>
+<span class="s">    box-sizing:border-box;</span>
+<span class="s">}</span>
+
+<span class="s">body{</span>
+<span class="s">    font-family:&#39;Courier New&#39;, monospace;</span>
+<span class="s">    background:#f5f7fb;</span>
+<span class="s">    min-height:100vh;</span>
+<span class="s">    display:flex;</span>
+<span class="s">    justify-content:center;</span>
+<span class="s">    align-items:center;</span>
+<span class="s">}</span>
+
+<span class="s">.container{</span>
+
+<span class="s">    background:white;</span>
+
+<span class="s">    padding:50px;</span>
+
+<span class="s">    border-radius:32px;</span>
+
+<span class="s">    border:1px solid #e5e7eb;</span>
+
+<span class="s">    box-shadow:</span>
+<span class="s">    0 10px 30px rgba(0,0,0,0.06);</span>
+
+<span class="s">    text-align:center;</span>
+<span class="s">}</span>
+
+<span class="s">.title{</span>
+
+<span class="s">    font-size:20px;</span>
+
+<span class="s">    color:#666;</span>
+
+<span class="s">    margin-bottom:20px;</span>
+
+<span class="s">    letter-spacing:2px;</span>
+<span class="s">}</span>
+
+<span class="s">.distance{</span>
+
+<span class="s">    display:flex;</span>
+
+<span class="s">    justify-content:center;</span>
+
+<span class="s">    align-items:flex-end;</span>
+
+<span class="s">    flex-wrap:nowrap;</span>
+
+<span class="s">    white-space:nowrap;</span>
+
+<span class="s">    line-height:1;</span>
+<span class="s">}</span>
+
+<span class="s">.value{</span>
+
+<span class="s">    font-size:180px;</span>
+
+<span class="s">    font-weight:bold;</span>
+
+<span class="s">    color:#111;</span>
+
+<span class="s">    font-variant-numeric: tabular-nums;</span>
+<span class="s">}</span>
+
+<span class="s">.unit{</span>
+
+<span class="s">    font-size:42px;</span>
+
+<span class="s">    color:#666;</span>
+
+<span class="s">    margin-left:10px;</span>
+
+<span class="s">    margin-bottom:18px;</span>
+<span class="s">}</span>
+
+<span class="s">.status{</span>
+
+<span class="s">    margin-top:20px;</span>
+
+<span class="s">    font-size:14px;</span>
+
+<span class="s">    color:#888;</span>
+<span class="s">}</span>
+
+<span class="s">.alert{</span>
+
+<span class="s">    color:#ff3b30;</span>
+
+<span class="s">    font-weight:bold;</span>
+<span class="s">}</span>
+
+<span class="s">@keyframes blink{</span>
+
+<span class="s">    0%{opacity:1;}</span>
+
+<span class="s">    50%{opacity:0.6;}</span>
+
+<span class="s">    100%{opacity:1;}</span>
+<span class="s">}</span>
+
+<span class="s">.update{</span>
+<span class="s">    animation:blink 0.2s ease;</span>
+<span class="s">}</span>
+
+<span class="s">.footer{</span>
+
+<span class="s">    margin-top:25px;</span>
+
+<span class="s">    font-size:13px;</span>
+
+<span class="s">    color:#999;</span>
+<span class="s">}</span>
+
+<span class="s">@media (max-width:600px){</span>
+
+<span class="s">    .container{</span>
+<span class="s">        padding:35px;</span>
+<span class="s">    }</span>
+
+<span class="s">    .value{</span>
+<span class="s">        font-size:90px;</span>
+<span class="s">    }</span>
+
+<span class="s">    .unit{</span>
+<span class="s">        font-size:28px;</span>
+
+<span class="s">        margin-bottom:10px;</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+
+<span class="s">&lt;/style&gt;</span>
+
+<span class="s">&lt;/head&gt;</span>
+
+<span class="s">&lt;body&gt;</span>
+
+<span class="s">&lt;div class=&quot;container&quot;&gt;</span>
+
+<span class="s">&lt;div class=&quot;title&quot;&gt;</span>
+<span class="s">ESP32 DISTANCE METER</span>
+<span class="s">&lt;/div&gt;</span>
+
+<span class="s">&lt;div class=&quot;distance&quot;&gt;</span>
+
+<span class="s">&lt;span id=&quot;value&quot; class=&quot;value&quot;&gt;0.0&lt;/span&gt;</span>
+
+<span class="s">&lt;span class=&quot;unit&quot;&gt;cm&lt;/span&gt;</span>
+
+<span class="s">&lt;/div&gt;</span>
+
+<span class="s">&lt;div id=&quot;status&quot; class=&quot;status&quot;&gt;</span>
+<span class="s">Monitoring...</span>
+<span class="s">&lt;/div&gt;</span>
+
+<span class="s">&lt;div class=&quot;footer&quot;&gt;</span>
+<span class="s">Real-time Ultrasonic Measurement</span>
+<span class="s">&lt;/div&gt;</span>
+
+<span class="s">&lt;/div&gt;</span>
+
+<span class="s">&lt;script&gt;</span>
+
+<span class="s">function updateDistance()</span>
+<span class="s">{</span>
+<span class="s">    fetch(&#39;/data&#39;)</span>
+
+<span class="s">    .then(response =&gt; response.json())</span>
+
+<span class="s">    .then(data =&gt; {</span>
+
+<span class="s">        const valueSpan =</span>
+<span class="s">        document.getElementById(&#39;value&#39;);</span>
+
+<span class="s">        const status =</span>
+<span class="s">        document.getElementById(&#39;status&#39;);</span>
+
+<span class="s">        if(data.error)</span>
+<span class="s">        {</span>
+<span class="s">            valueSpan.innerHTML=&#39;--&#39;;</span>
+
+<span class="s">            status.innerHTML =</span>
+<span class="s">            &#39;Out of Range&#39;;</span>
+<span class="s">        }</span>
+<span class="s">        else</span>
+<span class="s">        {</span>
+<span class="s">            valueSpan.innerHTML =</span>
+<span class="s">            data.distance.toFixed(1);</span>
+
+<span class="s">            valueSpan.classList.add(&#39;update&#39;);</span>
+
+<span class="s">            setTimeout(() =&gt;</span>
+<span class="s">            valueSpan.classList.remove(&#39;update&#39;),</span>
+<span class="s">            200);</span>
+
+<span class="s">            if(data.distance &lt; 20)</span>
+<span class="s">            {</span>
+<span class="s">                status.innerHTML =</span>
+<span class="s">                &#39;⚠ Object Too Close&#39;;</span>
+
+<span class="s">                status.classList.add(&#39;alert&#39;);</span>
+<span class="s">            }</span>
+<span class="s">            else</span>
+<span class="s">            {</span>
+<span class="s">                status.innerHTML =</span>
+<span class="s">                &#39;Monitoring...&#39;;</span>
+
+<span class="s">                status.classList.remove(&#39;alert&#39;);</span>
+<span class="s">            }</span>
+<span class="s">        }</span>
+<span class="s">    })</span>
+
+<span class="s">    .catch(error =&gt; {</span>
+
+<span class="s">        document.getElementById(&#39;value&#39;)</span>
+<span class="s">        .innerHTML=&#39;--&#39;;</span>
+<span class="s">    });</span>
+<span class="s">}</span>
+
+<span class="s">updateDistance();</span>
+
+<span class="s">setInterval(updateDistance, 300);</span>
+
+<span class="s">&lt;/script&gt;</span>
+<span class="s">&lt;/body&gt;</span>
+<span class="s">&lt;/html&gt;</span>
+
+<span class="dl">)rawliteral</span><span class="s">&quot;</span><span class="p">;</span>
+
+<span class="c1">// Main page</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">handleRoot</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;text/html&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">htmlPage</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// JSON API</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">handleData</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">measurementError</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">distance_cm</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">error</span><span class="se">\&quot;</span><span class="s">:</span><span class="se">\&quot;</span><span class="s">Out of range</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;,</span><span class="se">\&quot;</span><span class="s">distance</span><span class="se">\&quot;</span><span class="s">:0&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">error</span><span class="se">\&quot;</span><span class="s">:null&quot;</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;,</span><span class="se">\&quot;</span><span class="s">distance</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">        </span><span class="n">String</span><span class="p">(</span><span class="n">distance_cm</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;}&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;application/json&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">json</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 404</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">handleNotFound</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;text/plain&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;404: Not Found&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Pin setup</span>
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ECHO_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// AP mode</span>
+<span class="w">    </span><span class="n">WiFi</span><span class="p">.</span><span class="n">mode</span><span class="p">(</span><span class="n">WIFI_AP</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">IPAddress</span><span class="w"> </span><span class="n">local_ip</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span><span class="mi">168</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">IPAddress</span><span class="w"> </span><span class="n">gateway</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span><span class="mi">168</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">IPAddress</span><span class="w"> </span><span class="n">subnet</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">WiFi</span><span class="p">.</span><span class="n">softAPConfig</span><span class="p">(</span>
+<span class="w">        </span><span class="n">local_ip</span><span class="p">,</span>
+<span class="w">        </span><span class="n">gateway</span><span class="p">,</span>
+<span class="w">        </span><span class="n">subnet</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Start hotspot</span>
+<span class="w">    </span><span class="n">WiFi</span><span class="p">.</span><span class="n">softAP</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ESP32 Hotspot Started&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;SSID: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;IP Address: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">softAPIP</span><span class="p">());</span>
+
+<span class="w">    </span><span class="c1">// Web routes</span>
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">handleRoot</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="s">&quot;/data&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">handleData</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">onNotFound</span><span class="p">(</span><span class="n">handleNotFound</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Start server</span>
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Web Server Started&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">server</span><span class="p">.</span><span class="n">handleClient</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">currentMillis</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">millis</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">currentMillis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lastMeasurement</span>
+<span class="w">       </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">MEASURE_INTERVAL</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">measuredDistance</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">measureDistance</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">measuredDistance</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">distance_cm</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">measuredDistance</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">measurementError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Buzzer alert</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">distance_cm</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">measurementError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">lastMeasurement</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">currentMillis</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+  <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+</div>
+</div>
+
+<style>
+#code-container-dht { transition: max-height 0.4s ease-in-out; }
+</style>
+
+<script>
+function toggleCode(containerId, buttonId) {
+  const container = document.getElementById(containerId);
+  const btn = document.getElementById(buttonId);
+  if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+    container.style.maxHeight = 'none';
+    btn.textContent = '✕ Collapse Code';
+  } else {
+    container.style.maxHeight = '420px';
+    btn.textContent = '▼ Expand All Code';
+  }
+}
+</script><div style="margin-top: 30px;"></div><p><strong>Display Effect:</strong></p>
+<a class="reference internal image-reference" href="_images/2.hcsr042.png"><img alt="_images/2.hcsr042.png" class="align-center" src="_images/2.hcsr042.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><ul class="simple">
+<li><p>After flashing the program, the ESP32 will automatically create a Wi-Fi hotspot named <strong>ESP32-Distance-Meter</strong> .</p></li>
+<li><p>After connecting to this Wi-Fi network using your mobile phone or computer, enter <strong>192.168.4.1</strong> in your browser to open a minimalist real-time distance measurement dashboard:</p></li>
+<li><p>The buzzer will sound an alarm when the distance is less than 20cm, and a notification will be displayed on the page.</p></li>
+</ul>
+<hr class="docutils" />
 </section>
 </section>
 
