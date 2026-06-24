@@ -1,6 +1,15 @@
 Arduino IDE Getting Started Tutorial
 ====================================
 
+.. image:: _static/arduino/1.arduinoide.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
 The Arduino IDE is an open-source programming tool officially provided by Arduino, supporting C/C++ development. 
 
 It provides users with simple and intuitive code writing, compiling, and uploading functions, making it easy to burn programs to development boards such as Arduino and ESP32. 
@@ -11,7 +20,7 @@ With its cross-platform support (Windows, macOS, and Linux), the Arduino IDE is 
 
 ----
 
-1.Install Arduino IDE
+1. Install Arduino IDE
 -------------------------
 
 This section will guide you through installing the **Arduino IDE** on Windows, macOS, and Linux systems.  
@@ -20,42 +29,66 @@ This section will guide you through installing the **Arduino IDE** on Windows, m
 Install Arduino IDE on Windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Visit the official Arduino website and go to the software download page:  
-   `Arduino IDE Download <https://www.arduino.cc/en/software/>`_
+1.1 Visit the official Arduino website and go to the software download page: `Download Arduino IDE <https://www.arduino.cc/en/software/>`_
 
    .. image:: _static/arduino/2.arduino_install3.png
       :alt: Arduino IDE official website
       :align: center
 
-2. Select the version that matches your computer configuration, then click the **Download** button to begin.  
+1.2 Select the version that matches your computer configuration, then click the **Download** button to begin.  
 
 .. note::
 
    - The Arduino IDE is updated frequently. To ensure compatibility, it is recommended to download the **latest official version**.
 
-3. Run the installer by double-clicking the downloaded ``arduino-ide_xxxx.exe`` file.  
+1.3 Run the installer by double-clicking the downloaded ``arduino-ide_xxxx.exe`` file.  
 
-4. Read and accept the **License Agreement**.  
+1.4 Read and accept the **License Agreement**.  
 
-   .. image:: _static/arduino/3.Install_Arduino_IDE.png
+.. image:: _static/arduino/3.Install_Arduino_IDE.png
       :alt: License Agreement window
       :align: center
 
-5. Select the desired installation options.  
+.. raw:: html
 
-   .. image:: _static/arduino/4.Install_Arduino_IDE.png
+   <div style="margin-top: 30px;"></div>
+
+1.5 Select the desired installation options.  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+.. image:: _static/arduino/4.Install_Arduino_IDE.png
       :alt: Installation options
       :align: center
 
-6. Choose the installation path. It is recommended to install the software on a **non-system drive**.  
+.. raw:: html
 
-   .. image:: _static/arduino/5.Install_Arduino_IDE.png
+   <div style="margin-top: 30px;"></div>
+
+1.6 Choose the installation path. It is recommended to install the software on a **non-system drive**.  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+.. image:: _static/arduino/5.Install_Arduino_IDE.png
       :alt: Installation path
       :align: center
 
-7. Click **Install** and wait for the process to complete. Finally, click **Finish**.  
+.. raw:: html
 
-   .. image:: _static/arduino/6.Install_Arduino_IDE.png
+   <div style="margin-top: 30px;"></div>
+
+1.7 Click **Install** and wait for the process to complete. Finally, click **Finish**.  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+.. image:: _static/arduino/6.Install_Arduino_IDE.png
       :alt: Installation finished
       :align: center
 
@@ -63,11 +96,12 @@ Install Arduino IDE on Windows
 
 Install Arduino IDE on MacOS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Double-click the downloaded ``arduino-ide_xxxx.dmg`` file.  
 
-2. Drag and drop **Arduino IDE.app** into the **Applications** folder.  
+- Double-click the downloaded ``arduino-ide_xxxx.dmg`` file.  
 
-3. After a few seconds, you will see Arduino IDE installed successfully.  
+- Drag and drop **Arduino IDE.app** into the **Applications** folder.  
+
+- After a few seconds, you will see Arduino IDE installed successfully.  
 
    .. image:: _static/arduino/7.Install_Arduino_IDE.png
       :width: 800
@@ -79,7 +113,7 @@ Install Arduino IDE on MacOS
 Install Arduino IDE on Linux
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For Linux users, please follow the official tutorial for Arduino IDE 2.0 installation: `Linux Installation Guide <https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing#linux>`_
+- For Linux users, please follow the official tutorial for Arduino IDE 2.0 installation: `Linux Installation Guide <https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing#linux>`_
 
 ----
 
@@ -90,16 +124,29 @@ When you open Arduino IDE for the first time:
 
 - The software will automatically install the **Arduino AVR Boards**, built-in libraries, and other required files.  
 
-   .. image:: _static/arduino/8.Install_Arduino_IDE.png
+.. image:: _static/arduino/8.Install_Arduino_IDE.png
       :alt: First startup window
       :align: center
 
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
 - During installation, your **firewall** or **security center** may ask for permission to install drivers. Please allow all requests.  
 
-   .. image:: _static/arduino/9.Install_Arduino_IDE.png
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+.. image:: _static/arduino/9.Install_Arduino_IDE.png
       :alt: Driver installation prompt
       :align: center
 
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
 .. note::
 
@@ -108,137 +155,28 @@ When you open Arduino IDE for the first time:
 
 ----
 
-.. _install_ch340_driver:
+.. _Install Serial Port Tool:
 
-2.Install CH340 Driver
-----------------------
+2. Install Serial Port Tool
+------------------------
 
-The ESP32 development board in this kit uses the **CH340C USB-to-serial chip**, so you must install the corresponding driver before using it.  
+This kit uses an ESP32 board with a CP2102 USB-to-UART bridge. Ensure the CP2102 driver is installed on your computer before connecting the board, or the serial port will not be detected. Connect the board, press Win+X to open Device Manager, and verify the driver is installed. If not, use the link below to download and install it.
 
-If you connect the board to the computer without installing the driver, the device will not be recognized correctly, and you may see the following interface in the **Device Manager**:  
-
-.. image:: _static/arduino/12.CH340.png
-   :alt: CH340 not recognized in Device Manager
-   :width: 600
-   :align: center
-
-----
-
-Download the Driver
-~~~~~~~~~~~~~~~~~~~~
-
-1. Visit the official website of the CH340 Driver: `CH340 Driver <https://www.wch.cn/products/ch340.html>`_  
-
-2. Select the version that matches your computer system.（This tutorial uses **Windows 11** as an example）.
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-.. image:: _static/arduino/10.CH340.png
-   :width: 600
+.. image:: _static/arduino/10.CP2102.png
+   :width: 800
    :align: center
 
 .. raw:: html
 
    <div style="margin-top: 30px;"></div>
 
-3. Select the first Windows version, go to the download page, and click the **Download** button.  
+- Click here to access the official driver download page `download CP210X <https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads>`_
 
-.. raw:: html
+- For detailed download and installation instructions, please watch the video below.
 
-   <div style="margin-top: 30px;"></div>
+.. video:: _static/arduino/driver_ins.mp4
+    :width: 100%
 
-.. image:: _static/arduino/11.CH340.png
-   :width: 600
-   :align: center
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-4. Alternatively, you can download the prepared installation package directly: `CH340 Installation Package (Windows) <https://www.dropbox.com/scl/fo/c4bb59fr42qcs9cxgexan/AIMImtqevecMqYNMJVK1ZBM?rlkey=9afntuwy2usxfxbl7xjkoirsy&st=89a5bx6b&dl=1>`_
-
-----
-
-Install the Driver
-~~~~~~~~~~~~~~~~~~~~
-
-1. After downloading, open the driver file and click **Install**.  
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-.. image:: _static/arduino/13.CH340.png
-   :width: 600
-   :align: center
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-2. When the installation is successful, you will see the following confirmation message:  
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-.. image:: _static/arduino/14.CH340.png
-   :width: 600
-   :align: center
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-.. note::
-
-   In some cases, you may need to **restart Windows** after installation to ensure the driver takes effect.  
-
-----
-
-Checking Correct Driver Installation in Device Manager
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Once the driver is installed, connect the ESP32 board to your computer.  
-
-You should see the correct name and port number appear in the **Device Manager** (for example: COM28).  
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-.. image:: _static/arduino/15.CH340.png
-   :width: 600
-   :align: center
-
-----
-
-Checking Correct Driver Installation in Arduino IDE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Open the Arduino IDE.  
-
-2. Go to **Tools → Port** and select the COMx port that matches the one you saw in Device Manager.  
-
-.. image:: _static/arduino/16.CH340.png
-   :width: 600
-   :align: center
-
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-   
-.. note::
-
-   If the Arduino CH340 device does not appear in Device Manager or the Arduino IDE:  
-   - Uninstall the driver, restart your computer, then reinstall it.  
-     .. image:: _static/arduino/17.CH340.png
-        :width: 600  
-   - Try a different USB port or another computer.  
-   - Ensure you are using a **USB cable that supports data transfer** (not just charging).  
 
 ----
 
@@ -248,16 +186,21 @@ Checking Correct Driver Installation in Arduino IDE
 Add Additional Boards Manager URL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Open the Arduino IDE, click **File → Preferences** in the upper left corner, and copy and paste the following address into the *Additional Board Manager URLs* input box.  
-
-2. After entering the URL, click **OK**.  
+- Open the Arduino IDE, click **File → Preferences** in the upper left corner, and copy and paste the following address into the *Additional Board Manager URLs* input box.  
 
 .. raw:: html
 
-   <div style="display:flex;align-items:center;gap:8px;margin:12px 0;">
-     <code id="esp32-url" style="background:#f5f5f5;padding:6px 10px;border:1px solid #ddd;border-radius:6px;">https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json</code>
-     <button onclick="navigator.clipboard.writeText(document.getElementById('esp32-url').innerText)" style="padding:4px 8px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;"> Copy</button>
-   </div>
+   <div style="margin-top: 30px;"></div>
+
+- After entering the URL, click **OK**.  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Copy and paste the following link into it: 
+
+ - **https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json**
 
 .. raw:: html
 
@@ -297,7 +240,7 @@ Add Additional Boards Manager URL
 Download the  ESP32 Core Package 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Open the Arduino IDE, click the second icon on the left to open the **BOARDS MANAGER** page.  
+- Open the Arduino IDE, click the second icon on the left to open the **BOARDS MANAGER** page.  
 
    .. image:: _static/arduino/21.ESP32_CORE.png
       :width: 600
@@ -307,9 +250,13 @@ Download the  ESP32 Core Package
 
    <div style="margin-top: 30px;"></div>
 
-2. Enter **ESP32** in the search box and press Enter.  
+- Enter **ESP32** in the search box and press Enter.  
 
-3. Find the core package titled *esp32 by Espressif Systems*, select version **3.2.0** from the drop-down menu, and click **Install** to download and install it.  
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Find the core package titled *esp32 by Espressif Systems*, select version **3.2.0** from the drop-down menu, and click **Install** to download and install it.  
 
 
 .. image:: _static/arduino/22.ESP32_CORE.png
@@ -320,7 +267,7 @@ Download the  ESP32 Core Package
 
    <div style="margin-top: 30px;"></div>
 
-4. Please wait for the download progress bar in the lower right corner to complete.  
+- Please wait for the download progress bar in the lower right corner to complete.  
 
 .. raw:: html
 
@@ -334,7 +281,7 @@ Download the  ESP32 Core Package
 
    <div style="margin-top: 30px;"></div>
 
-5. When the download is complete, the message **Successfully installed platform esp32:3.2.0** will be displayed.  
+- When the download is complete, the message **Successfully installed platform esp32:3.2.0** will be displayed.  
 
 .. raw:: html
 
@@ -348,8 +295,9 @@ Download the  ESP32 Core Package
 
    <div style="margin-top: 30px;"></div>
 
-6. Check if the installation is successful:  
-Click **Tools → Board → esp32** to check whether an ESP32 development board is available for selection.  
+- Check if the installation is successful:  
+
+ Click **Tools → Board → esp32** to check whether an ESP32 development board is available for selection.  
 
 .. raw:: html
 
@@ -367,15 +315,17 @@ Click **Tools → Board → esp32** to check whether an ESP32 development board 
    :class: note
 
    - We recommend installing ESP32 Core Package version **3.2.0**, or using version **3.0 or later**.  
+
    - Older versions may be incompatible with the libraries used in this tutorial, causing program errors.  
+
    - If you have an earlier version installed, uninstall it and then reinstall version **3.2.0** of the ESP32 Core Package.  
 
 ----
 
 .. _Add Libraries:
 
-4.Add Libraries
----------------
+4. Add Libraries
+----------------
 
 - Arduino libraries can significantly simplify the development process.  
 - They encapsulate commonly used functions and hardware driver code, allowing users to simply call ready-made functions without writing complex low-level code from scratch.  
@@ -388,9 +338,9 @@ Click **Tools → Board → esp32** to check whether an ESP32 development board 
 Download Libraries
 ~~~~~~~~~~~~~~~~~~
 
-1. We've compiled all the libraries necessary to run this suite. Please click the link below to download them and follow the instructions to complete the installation:  `Download libraries <https://www.dropbox.com/scl/fo/syf1zstu58f4xlcld2nss/ACJOi93PcIafo5yGabrprDA?rlkey=hoc2undykymrxac7z8nclpk9u&st=el86zaw9&dl=1>`_
+- We've compiled all the libraries necessary to run this suite. Please click the link below to download them and follow the instructions to complete the installation:  `Download libraries <https://www.dropbox.com/scl/fo/syf1zstu58f4xlcld2nss/ACJOi93PcIafo5yGabrprDA?rlkey=hoc2undykymrxac7z8nclpk9u&st=el86zaw9&dl=1>`_
 
-2. Unzip the downloaded library file. The library file storage path is **Code and Libraries** → **Libraries** . Open it and confirm that it contains the library file shown in the figure below. 
+- Unzip the downloaded library file. The library file storage path is **Code and Libraries** → **Libraries** . Open it and confirm that it contains the library file shown in the figure below. 
 
 .. raw:: html
 
@@ -405,7 +355,7 @@ Download Libraries
 Import Libraries
 ~~~~~~~~~~~~~~~~
 
-1. Open the Arduino IDE and click **Sketch → Include Library → Add .ZIP Library**.  
+- Open the Arduino IDE and click **Sketch → Include Library → Add .ZIP Library**.  
 
 .. raw:: html
 
@@ -419,7 +369,7 @@ Import Libraries
 
    <div style="margin-top: 30px;"></div>
 
-2. In the pop-up window, locate the folder of the library you just downloaded and unzipped, select it, and click **Open** to complete the import.  
+- In the pop-up window, locate the folder of the library you just downloaded and unzipped, select it, and click **Open** to complete the import.  
 
 .. raw:: html
 
@@ -433,7 +383,7 @@ Import Libraries
 
    <div style="margin-top: 30px;"></div>
 
-3. If the library file is imported successfully, the Arduino IDE output window will display the message: *Library installed*.  
+- If the library file is imported successfully, the Arduino IDE output window will display the message: *Library installed*.  
 
 .. raw:: html
 
@@ -457,8 +407,21 @@ Import Libraries
    :width: 600
    :align: center
 
-4. Verify that the library was imported successfully:  
-   Click **Sketch → Include Library**, scroll down to **Contributed Libraries**, and check whether the library files we provided are listed.  
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Verify that the library was imported successfully:  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Click **Sketch → Include Library**, scroll down to **Contributed Libraries**, and check whether the library files we provided are listed.  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
    .. image:: _static/arduino/30.lib.png
       :width: 600
@@ -471,8 +434,13 @@ Download Libraries Using Arduino IDE
 
 You can also download required libraries directly using the Arduino IDE.  
 
-1. On the right side of the Arduino IDE interface, click the **Library Manager** icon.  
-2. Enter keywords in the search box to find the required library and click **Install** to download.  
+- On the right side of the Arduino IDE interface, click the **Library Manager** icon.  
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Enter keywords in the search box to find the required library and click **Install** to download.  
 
 .. image:: _static/arduino/32.lib.png
    :width: 600
