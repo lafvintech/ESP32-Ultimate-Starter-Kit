@@ -424,13 +424,12 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 
 .. list-table:: 
    :header-rows: 1
-   :widths: 10 20 20 25 25
+   :widths: 10 20 20 25 
 
    * - No.
      - Component
      - Pin
      - Connect to
-     - Note
    * - 1
      - HC-SR04 Ultrasonic
      - VCC
