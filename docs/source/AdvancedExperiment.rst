@@ -420,6 +420,48 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 
    <div style="margin-top: 30px;"></div>
 
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+     - Note
+   * - 1
+     - HC-SR04 Ultrasonic
+     - VCC
+     - 5V
+     -
+   * - 1
+     - HC-SR04 Ultrasonic
+     - GND
+     - GND
+     -
+   * - 1
+     - HC-SR04 Ultrasonic
+     - TRIG
+     - GPIO 5
+     -
+   * - 1
+     - HC-SR04 Ultrasonic
+     - ECHO
+     - GPIO 18
+     -
+   * - 2
+     - Buzzer
+     - Positive (+)
+     - GPIO 4
+     -
+   * - 2
+     - Buzzer
+     - Negative (-)
+     - GND
+     -
+
 **Example code:**
 
 .. raw:: html
