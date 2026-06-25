@@ -400,5 +400,282 @@ This introductory chapter guides you through the process of building fun, intera
 
 ----
 
-4.
---------
+4. Tilt alarm
+--------------
+
+This experiment is a practical project applying embedded state machines. It aims to teach you how to detect device displacement using a tilt switch (ball switch) and build a complete security alarm system. You will master the following core skills:
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Tilt switch
+ - Button (1 PCS) 
+ - Active Buzzer
+ - LED
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/4.tilt.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - Tilt Switch
+     - One pin
+     - GPIO 23
+   * - 1
+     - Tilt Switch
+     - Other pin
+     - GND
+   * - 2
+     - LED
+     - Anode (long leg)
+     - GPIO 5
+   * - 2
+     - LED
+     - Cathode (short leg)
+     - GND
+   * - 3
+     - Active Buzzer
+     - Positive (+)
+     - GPIO 18
+   * - 3
+     - Active Buzzer
+     - Negative (-)
+     - GND
+   * - 4
+     - Reset Button
+     - One pin
+     - GPIO 19
+   * - 4
+     - Reset Button
+     - Other pin
+     - GND
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ // Pin definitions
+ const int tiltPin = 23;      // Tilt switch (LOW when tilted)
+ const int ledPin = 5;        // LED indicator
+ const int buzzerPin = 18;    // Active buzzer
+ const int resetPin = 19;     // Reset button
+
+ // State variables
+ bool isArmed = false;
+ bool alarmTriggered = false;
+ unsigned long armStartTime = 0;
+ unsigned long alarmStartTime = 0;
+ int lastTiltState = HIGH;
+
+ // Timing constants
+ const int ARM_DELAY = 5000;           // 5 seconds arming delay
+ const int TILT_DEBOUNCE = 50;         // Debounce time for tilt switch
+ const int LED_BLINK_INTERVAL = 200;   // LED blink interval when alarm triggered
+
+ void setup() {
+   Serial.begin(115200);
+   
+   pinMode(tiltPin, INPUT_PULLUP);
+   pinMode(resetPin, INPUT_PULLUP);
+   pinMode(ledPin, OUTPUT);
+   pinMode(buzzerPin, OUTPUT);
+   
+   digitalWrite(ledPin, LOW);
+   digitalWrite(buzzerPin, LOW);
+   
+   startArming();
+   
+   Serial.println("=== Simple Burglar Alarm Started ===");
+   Serial.println("Arming in 5 seconds. Please place the device properly!");
+ }
+
+ void loop() {
+   // Check reset button anytime
+   if (digitalRead(resetPin) == LOW) {
+     resetAlarm();
+     delay(300);
+   }
+   
+   // If alarm is triggered, handle it first
+   if (alarmTriggered) {
+     handleAlarm();
+     return;
+   }
+   
+   // Handle arming countdown
+   if (!isArmed && !alarmTriggered && (armStartTime > 0)) {
+     handleArmingCountdown();
+     return;
+   }
+   
+   // When armed, monitor the tilt switch
+   if (isArmed && !alarmTriggered) {
+     checkTiltAndTrigger();
+   }
+ }
+
+ // Start the arming sequence
+ void startArming() {
+   isArmed = false;
+   alarmTriggered = false;
+   armStartTime = millis();
+   digitalWrite(ledPin, LOW);
+   digitalWrite(buzzerPin, LOW);
+ }
+
+ // Handle the 5-second countdown before arming
+ void handleArmingCountdown() {
+   unsigned long elapsed = millis() - armStartTime;
+   
+   if (elapsed >= ARM_DELAY) {
+     // Countdown finished, system armed
+     isArmed = true;
+     digitalWrite(ledPin, LOW);
+     Serial.println(">>> System Armed <<<");
+     Serial.println("Do not move the device!");
+   } else {
+     // Blink LED during countdown
+     if ((elapsed / 250) % 2 == 0) {
+       digitalWrite(ledPin, HIGH);
+     } else {
+       digitalWrite(ledPin, LOW);
+     }
+     
+     // Print remaining time every second
+     static int lastPrintedSecond = -1;
+     int remaining = (ARM_DELAY - elapsed) / 1000 + 1;
+     int currentSecond = remaining;
+     if (currentSecond != lastPrintedSecond) {
+       Serial.print("Arming countdown: ");
+       Serial.print(currentSecond);
+       Serial.println(" seconds");
+       lastPrintedSecond = currentSecond;
+     }
+   }
+ }
+
+ // Check tilt switch state change with debouncing
+ void checkTiltAndTrigger() {
+   int currentState = digitalRead(tiltPin);
+   
+   if (currentState != lastTiltState) {
+     delay(TILT_DEBOUNCE);
+     currentState = digitalRead(tiltPin);
+     
+     if (currentState != lastTiltState) {
+       // State changed: LOW means tilted/moved
+       if (currentState == LOW) {
+         Serial.println("*** Movement detected! Triggering alarm! ***");
+         triggerAlarm();
+       }
+       lastTiltState = currentState;
+     }
+   }
+ }
+
+ // Trigger the alarm
+ void triggerAlarm() {
+   alarmTriggered = true;
+   isArmed = false;
+   alarmStartTime = millis();
+   
+   Serial.print("Alarm triggered at: ");
+   Serial.print(millis() / 1000);
+   Serial.println(" seconds");
+ }
+
+ // Handle alarm actions: LED blinking and buzzer sounding
+ void handleAlarm() {
+   unsigned long now = millis();
+   
+   // Rapid LED blinking
+   if ((now / LED_BLINK_INTERVAL) % 2 == 0) {
+     digitalWrite(ledPin, HIGH);
+   } else {
+     digitalWrite(ledPin, LOW);
+   }
+   
+   // Continuous buzzer sound
+   digitalWrite(buzzerPin, HIGH);
+ }
+
+ // Reset the alarm and re-arm the system
+ void resetAlarm() {
+   if (alarmTriggered) {
+     Serial.println(">>> Alarm Reset <<<");
+     digitalWrite(buzzerPin, LOW);
+     digitalWrite(ledPin, LOW);
+   }
+   
+   Serial.println("Re-arming...");
+   startArming();
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/4.tilt.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- After the program is burned, the system automatically enters a 5-second arming countdown, during which the LED flashes rapidly. After the countdown ends, the system enters an alert state, the LED turns off, and the device remains stationary.
+
+- If the device tilts or moves, an alarm is immediately triggered. The LED flashes rapidly, the buzzer sounds continuously, and the alarm time is output via the serial port. Pressing the reset button clears the alarm, and the system re-enters the 5-second arming countdown.
+
+----
