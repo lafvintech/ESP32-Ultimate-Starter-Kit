@@ -1,7 +1,7 @@
 Basic Experiments
 =================
 
-.. image:: _static/project/BASIC/1.WEB.png
+.. image:: _static/project/BASIC/0.basic.png
    :width: 800
    :align: center
 
