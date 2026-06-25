@@ -98,9 +98,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 - The LED light will continuously turn on and off at one-second intervals—lighting up, dimming, lighting up again, dimming again—creating a ceaseless breathing or flashing rhythm.
 
-
 ----
-
 
 2. PWM LED
 ----------
@@ -159,28 +157,41 @@ This introductory chapter guides you through the process of building fun, intera
 
 .. code-block:: cpp
 
- // Define the LED connection pin
- #define LED_PIN 2
+ // Potentiometer is connected to GPIO 4 (Analog ADC2_CH0)
+ const int potPin = 4;
+ // LED is connected to GPIO 5 (PWM capable)
+ const int ledPin = 5;
 
- void setup()
- {
- // Set GPIO2 to output mode
- pinMode(LED_PIN, OUTPUT);
+ // variable for storing the potentiometer value
+ int potValue = 0;
+ // variable for storing the LED brightness
+ int brightness = 0;
+
+ void setup() {
+   Serial.begin(115200);
+   // Set LED pin as output
+   pinMode(ledPin, OUTPUT);
+   delay(1000);
  }
 
- void loop()
- {
- // Turn on the LED
- digitalWrite(LED_PIN, HIGH);
-
- // Delay for 1 second
- delay(1000);
-
- // Turn off the LED
- digitalWrite(LED_PIN, LOW);
-
- // Delay for 1 second
- delay(1000);
+ void loop() {
+   // Reading potentiometer value (0 - 4095 for ESP32 ADC)
+   potValue = analogRead(potPin);
+   
+   // Map potentiometer value to LED brightness range (0 - 255)
+   // PWM uses 8-bit resolution (0 = off, 255 = fully on)
+   brightness = map(potValue, 0, 4095, 0, 255);
+   
+   // Set LED brightness via PWM
+   analogWrite(ledPin, brightness);
+   
+   // Print both values to serial monitor
+   Serial.print("Potentiometer: ");
+   Serial.print(potValue);
+   Serial.print(" -> LED Brightness: ");
+   Serial.println(brightness);
+   
+   delay(50);  // Small delay for stable reading
  }
 
 
@@ -197,6 +208,7 @@ This introductory chapter guides you through the process of building fun, intera
 - Rotating the potentiometer clockwise gradually brightens the LED until it reaches its brightest point.
 
 - Rotating the potentiometer counter-clockwise gradually dims the LED until it goes completely off.
+
 ----
 
 
@@ -387,3 +399,6 @@ This introductory chapter guides you through the process of building fun, intera
 - Pressing button 2 (GPIO19): The yellow LED follows the same toggling logic, without interfering with each other.
 
 ----
+
+4.
+--------
