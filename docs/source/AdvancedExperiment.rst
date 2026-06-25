@@ -46,6 +46,29 @@ This experiment is a core project in our introductory practical course on the In
 
    <div style="margin-top: 30px;"></div>
 
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - DHT11 Sensor
+     - VCC
+     - 3.3V
+   * - 1
+     - DHT11 Sensor
+     - GND
+     - GND
+   * - 1
+     - DHT11 Sensor
+     - DATA
+     - GPIO 15
+
 **Example code:**
 
 .. raw:: html
@@ -368,7 +391,7 @@ This experiment is a core project in our introductory practical course on the In
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/1.DHT112.png
+.. image:: _static/project/IOT/1.dht112.png
    :width: 800
    :align: center
 
