@@ -39,7 +39,7 @@ This experiment is a core project in our introductory practical course on the In
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/1.dht11.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -392,7 +392,7 @@ This experiment is a core project in our introductory practical course on the In
 **Display Effect:**
 
 .. image:: _static/project/IOT/1.dht112.png
-   :width: 800
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -436,7 +436,7 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/2.hcsr04.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -447,7 +447,7 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 
 .. list-table:: 
    :header-rows: 1
-   :widths: 10 20 20 25 
+   :widths: 10 20 20 25
 
    * - No.
      - Component
@@ -457,32 +457,27 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
      - HC-SR04 Ultrasonic
      - VCC
      - 5V
-     -
    * - 1
      - HC-SR04 Ultrasonic
      - GND
      - GND
-     -
    * - 1
      - HC-SR04 Ultrasonic
      - TRIG
      - GPIO 5
-     -
    * - 1
      - HC-SR04 Ultrasonic
      - ECHO
      - GPIO 18
-     -
    * - 2
      - Buzzer
      - Positive (+)
      - GPIO 4
-     -
    * - 2
      - Buzzer
      - Negative (-)
      - GND
-     -
+
 
 **Example code:**
 
