@@ -39,7 +39,7 @@ This experiment is a core project in our introductory practical course on the In
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/1.dht11.png
-   :width: 800
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -413,7 +413,7 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/2.hcsr04.png
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
