@@ -102,7 +102,7 @@ This introductory chapter guides you through the process of building fun, intera
 ----
 
 
-1. PWM LED
+2. PWM LED
 ----------
 
 - This experiment is a classic introductory project on analog signal acquisition and PWM output control. It aims to teach how to combine the ESP32's ADC analog input with PWM pulse width modulation output to achieve stepless adjustment of light brightness using a physical knob.
@@ -116,7 +116,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 **Wiring Diagram:**
 
-.. image:: _static/project/BASIC/1.BLINK_LED.png
+.. image:: _static/project/BASIC/3.PWM_LED.png
    :width: 700
    :align: center
 
@@ -186,7 +186,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/1.blinking.gif
+.. image:: _static/project/BASIC/3.PWM_LED2.gif
    :width: 500
    :align: center
 
