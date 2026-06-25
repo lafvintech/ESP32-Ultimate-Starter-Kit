@@ -38,7 +38,7 @@ This experiment is a core project in our introductory practical course on the In
 
 **Wiring Diagram:**
 
-.. image:: _static/project/IOT/1.dht11.png
+.. image:: _static/project/IOT/1.DHT11.png
    :width: 600
    :align: center
 
@@ -978,3 +978,4 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 - The buzzer will sound an alarm when the distance is less than 20cm, and a notification will be displayed on the page.
 
 ----
+
