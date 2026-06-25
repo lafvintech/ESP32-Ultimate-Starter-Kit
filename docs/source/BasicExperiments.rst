@@ -134,7 +134,7 @@ This introductory chapter guides you through the process of building fun, intera
      - Connect to
    * - 1
      - Potentiometer
-     - Left
+     - Right
      - GND
    * - 1
      - Potentiometer
@@ -142,7 +142,7 @@ This introductory chapter guides you through the process of building fun, intera
      - GPIO 4
    * - 1
      - Potentiometer
-     - Right
+     - Left
      - 3.3V
    * - 2
      - LED
