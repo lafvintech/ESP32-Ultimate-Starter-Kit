@@ -101,7 +101,106 @@ This introductory chapter guides you through the process of building fun, intera
 
 ----
 
-2. Button LED
+
+1. PWM LED
+----------
+
+- This experiment is a classic introductory project on analog signal acquisition and PWM output control. It aims to teach how to combine the ESP32's ADC analog input with PWM pulse width modulation output to achieve stepless adjustment of light brightness using a physical knob.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - LED
+ - potentiometer 10k 
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/1.BLINK_LED.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - Potentiometer
+     - Left
+     - GND
+   * - 1
+     - Potentiometer
+     - Middle (Wiper)
+     - GPIO 4
+   * - 1
+     - Potentiometer
+     - Right
+     - 3.3V
+   * - 2
+     - LED
+     - Anode (long leg)
+     - GPIO 5
+   * - 2
+     - LED
+     - Cathode (short leg)
+     - GND
+
+**Example code:**
+
+.. code-block:: cpp
+
+ // Define the LED connection pin
+ #define LED_PIN 2
+
+ void setup()
+ {
+ // Set GPIO2 to output mode
+ pinMode(LED_PIN, OUTPUT);
+ }
+
+ void loop()
+ {
+ // Turn on the LED
+ digitalWrite(LED_PIN, HIGH);
+
+ // Delay for 1 second
+ delay(1000);
+
+ // Turn off the LED
+ digitalWrite(LED_PIN, LOW);
+
+ // Delay for 1 second
+ delay(1000);
+ }
+
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/1.blinking.gif
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Rotating the potentiometer clockwise gradually brightens the LED until it reaches its brightest point.
+
+- Rotating the potentiometer counter-clockwise gradually dims the LED until it goes completely off.
+----
+
+
+3. Button LED
 -------------
 
 - This experiment aims to teach two core programming techniques: key debouncing and state toggling. Two independent keys will control the on/off state of red and yellow LEDs respectively. 
