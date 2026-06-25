@@ -66,7 +66,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/1.blinking2.png
+.. image:: _static/project/BASIC/1.blinking.gif
    :width: 800
    :align: center
 
