@@ -106,10 +106,9 @@ This introductory chapter guides you through the process of building fun, intera
 
    <div style="margin-top: 30px;"></div>
 
-Wiring Table
-=============
+**Wiring Table**
 
-.. list-table:: ESP32 Wiring Reference
+.. list-table:: 
    :header-rows: 1
    :widths: 10 20 20 25 25
 
@@ -159,37 +158,7 @@ Wiring Table
      - GPIO 19
      - with 10kΩ to GND
 
-Pin Map
--------
 
-.. list-table::
-   :header-rows: 1
-   :widths: 20 30
-
-   * - Pin
-     - Function
-   * - GPIO 13
-     - Red LED
-   * - GPIO 12
-     - Yellow LED
-   * - GPIO 18
-     - Button 1
-   * - GPIO 19
-     - Button 2
-   * - 3.3V
-     - Button power
-   * - GND
-     - Common ground
-
-Wiring Diagram
---------------
-
-::
-
-    3.3V ── Button ── GPIO 18/19 ── 10kΩ ── GND
-
-    GPIO 13 ── 220Ω ── LED Red(+) ── LED Red(-) ── GND
-    GPIO 12 ── 220Ω ── LED Yellow(+) ── LED Yellow(-) ── GND
 
 **Example code:**
 
