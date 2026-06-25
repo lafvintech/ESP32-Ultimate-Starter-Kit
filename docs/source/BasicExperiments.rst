@@ -35,6 +35,28 @@ This introductory chapter guides you through the process of building fun, intera
 
    <div style="margin-top: 30px;"></div>
 
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+     - Note
+   * - 1
+     - LED
+     - Anode (long leg)
+     - GPIO 4
+     - series 220Ω
+   * - 1
+     - LED
+     - Cathode (short leg)
+     - GND
+     -
+
 **Example code:**
 
 .. code-block:: cpp
