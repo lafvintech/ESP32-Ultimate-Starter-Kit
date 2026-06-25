@@ -106,6 +106,91 @@ This introductory chapter guides you through the process of building fun, intera
 
    <div style="margin-top: 30px;"></div>
 
+Wiring Table
+=============
+
+.. list-table:: ESP32 Wiring Reference
+   :header-rows: 1
+   :widths: 10 20 20 25 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+     - Note
+   * - 1
+     - Red LED
+     - Anode (long leg)
+     - GPIO 13
+     - series 220Ω
+   * - 1
+     - Red LED
+     - Cathode (short leg)
+     - GND
+     -
+   * - 2
+     - Yellow LED
+     - Anode (long leg)
+     - GPIO 12
+     - series 220Ω
+   * - 2
+     - Yellow LED
+     - Cathode (short leg)
+     - GND
+     -
+   * - 3
+     - Button 1
+     - Either pin
+     - 3.3V
+     -
+   * - 3
+     - Button 1
+     - Other pin
+     - GPIO 18
+     - with 10kΩ to GND
+   * - 4
+     - Button 2
+     - Either pin
+     - 3.3V
+     -
+   * - 4
+     - Button 2
+     - Other pin
+     - GPIO 19
+     - with 10kΩ to GND
+
+Pin Map
+-------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 30
+
+   * - Pin
+     - Function
+   * - GPIO 13
+     - Red LED
+   * - GPIO 12
+     - Yellow LED
+   * - GPIO 18
+     - Button 1
+   * - GPIO 19
+     - Button 2
+   * - 3.3V
+     - Button power
+   * - GND
+     - Common ground
+
+Wiring Diagram
+--------------
+
+::
+
+    3.3V ── Button ── GPIO 18/19 ── 10kΩ ── GND
+
+    GPIO 13 ── 220Ω ── LED Red(+) ── LED Red(-) ── GND
+    GPIO 12 ── 220Ω ── LED Yellow(+) ── LED Yellow(-) ── GND
+
 **Example code:**
 
 .. raw:: html
