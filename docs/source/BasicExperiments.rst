@@ -99,7 +99,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Wiring Diagram:**
 
 .. image:: _static/project/BASIC/2.buttonled.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -200,7 +200,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Display Effect:**
 
 .. image:: _static/project/BASIC/2.buttonled2.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
