@@ -115,7 +115,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Wiring Diagram:**
 
 .. image:: _static/project/BASIC/3.PWM_LED.png
-   :width: 700
+   :width: 500
    :align: center
 
 .. raw:: html
