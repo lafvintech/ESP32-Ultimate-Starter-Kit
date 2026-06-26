@@ -400,7 +400,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 ----
 
-3. TEMP And HUMI Detection
+4. TEMP And HUMI Detection
 --------------------------
 
 This experiment is an introductory project on digital sensor driving and data acquisition, aiming to teach how to use ESP32 to read DHT11 temperature and humidity sensors and view environmental data in real time through a serial monitor.
@@ -524,7 +524,7 @@ This experiment is an introductory project on digital sensor driving and data ac
 **Display Effect:**
 
 .. image:: _static/project/BASIC/5.DHT11.png
-   :width: 500
+   :width: 800
    :align: center
 
 .. raw:: html
