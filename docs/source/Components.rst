@@ -407,3 +407,94 @@ A typical joystick module in the kit provides two potentiometers (X and Y axes) 
  - For better stability, apply simple smoothing (moving average) to analog readings.
 
 ----
+
+10. RC522 RFID Module
+---------------------
+
+.. image:: _static/Component/12.mfrc522.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The RC522 is a highly integrated 13.56MHz RFID reader/writer module based on the MFRC522 chip from NXP. It supports ISO/IEC 14443 A/MIFARE communication protocol and is widely used for contactless identification and access control applications. The module communicates with the host controller via SPI interface, enabling fast and reliable data exchange.
+
+**Working principle:**
+
+- The RC522 generates a 13.56MHz electromagnetic field through its antenna coil. When a compatible RFID card or tag enters this field, it draws power from the field and modulates the carrier wave to transmit its unique UID (Unique Identifier) and data. The RC522 demodulates the received signal, decodes the data, and makes it available through the SPI bus.
+
+**Core features:**
+
+- **Frequency:** 13.56MHz industrial, scientific, and medical (ISM) band
+- **Supported cards:** MIFARE Classic 1K/4K, MIFARE Ultralight, NTAG series, and other ISO/IEC 14443 A compliant tags
+- **Communication:** SPI interface (up to 10 MHz clock speed)
+- **Read/Write:** Supports reading UID, reading and writing data blocks, and authentication
+- **Operating distance:** Up to 5cm (depending on antenna design and tag type)
+- **Power:** 3.3V supply (5V tolerant inputs with proper level shifting)
+
+**Pinout and connections:**
+
+- **SDA (SS):** SPI Slave Select → ESP32 GPIO (e.g., `GPIO5`)
+- **SCK:** SPI Clock → ESP32 SCK (e.g., `GPIO18`)
+- **MOSI:** SPI Master Out Slave In → ESP32 MOSI (e.g., `GPIO23`)
+- **MISO:** SPI Master In Slave Out → ESP32 MISO (e.g., `GPIO19`)
+- **IRQ:** Interrupt Request (optional) → ESP32 GPIO (e.g., `GPIO4`)
+- **RST:** Reset pin → ESP32 GPIO (e.g., `GPIO22`)
+- **3.3V:** 3.3V power supply
+- **GND:** Ground
+
+.. note::
+
+ - The RC522 is a 3.3V logic device. While its inputs are 5V tolerant, it is recommended to use a level shifter for the SPI lines when interfacing with 5V logic microcontrollers to ensure reliable communication and long-term stability.
+ - The module requires a stable 3.3V supply. Insufficient current (especially when reading/writing) may cause communication failures — ensure your power source can deliver at least 100mA.
+ - Always call `PCD_Init()` in your initialization routine. If the `PCD_PerformSelfTest()` fails, check the wiring, especially the antenna connections.
+ - When reading multiple cards, implement anti-collision logic (built into the MFRC522 library) to handle situations where multiple tags are in the field simultaneously.
+ - The antenna tuning capacitors are pre‑adjusted on most modules — avoid modifying them unless you have proper RF equipment.
+
+----
+
+11. 0.96-inch OLED Display 
+--------------------------
+
+.. image:: _static/Component/13.0.96oled.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The 0.96-inch OLED display module based on the SSD1306 driver IC is a compact, high-contrast monochrome display widely used in embedded projects. Unlike traditional LCDs, OLED (Organic Light-Emitting Diode) technology emits its own light, eliminating the need for a backlight and enabling deeper blacks, faster response times, and lower power consumption. The module typically supports either I²C or SPI interface, with I²C being the most common variant in hobbyist kits.
+
+**Working principle:**
+
+- The SSD1306 is a single-chip CMOS OLED driver with a built-in controller and 128×64 pixels of SRAM display buffer. It receives pixel data from the host via I²C or SPI, stores it in its internal GDDRAM (Graphic Display Data RAM), and constantly refreshes the OLED panel by driving the individual pixels with the corresponding voltage levels. Each pixel is either ON (emitting light) or OFF, making the display inherently monochrome (usually white, blue, or yellow).
+
+**Core features:**
+
+- **Resolution:** 128 × 64 pixels (some variants are 128 × 32)
+- **Display size:** 0.96 inches (diagonal)
+- **Interface:** I²C (most common) or 4-wire SPI (4-Wire SPI)
+- **Driver IC:** SSD1306
+- **Viewing angle:** ~160° (excellent visibility from all directions)
+- **Refresh rate:** Can exceed 100Hz (limited by communication speed)
+- **Power consumption:** Extremely low — ~20mA during normal operation, less than 10µA in sleep mode
+- **Operating voltage:** 3.0V ~ 5.5V (board usually includes a voltage regulator)
+
+
+**Pinout and connections:**
+
+- **VCC:** 3.3V ~ 5V power supply
+- **GND:** Ground
+- **SCL:** I²C Clock line → ESP32 SCL (e.g., `GPIO22`)
+- **SDA:** I²C Data line → ESP32 SDA (e.g., `GPIO21`)
+
+.. note::
+
+ - I²C address is typically `0x3C` . 
+ - For I²C, the maximum clock speed is 400kHz (Fast Mode) — 100kHz is more stable for longer wiring.
+ - The display orientation can be changed via software — `setRotation()` or `flipScreenVertically()` functions are available in most libraries.
+
+----
