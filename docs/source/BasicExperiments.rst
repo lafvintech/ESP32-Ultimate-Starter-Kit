@@ -738,7 +738,6 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 
 - When any RFID card or tag approaches the reader, the serial port will immediately output the card's unique UID (hexadecimal format). After the card is removed, the system continues to wait for the next card to arrive, achieving continuous scanning and identification.
 
-
 ----
 
 
