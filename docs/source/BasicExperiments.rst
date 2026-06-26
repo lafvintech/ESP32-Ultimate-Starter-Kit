@@ -741,7 +741,7 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 ----
 
 
-6. Tilt alarm
+6. Tilt Alarm
 --------------
 
 This experiment is a practical project applying embedded state machines. It aims to teach you how to detect device displacement using a tilt switch (ball switch) and build a complete security alarm system. You will master the following core skills:
