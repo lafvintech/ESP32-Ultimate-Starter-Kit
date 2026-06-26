@@ -531,7 +531,7 @@ This experiment is an introductory project on digital sensor driving and data ac
 
    <div style="margin-top: 30px;"></div>
 
-- After programming, open the serial monitor (baud rate 115200). The system will automatically collect the current ambient temperature and humidity data every 2 seconds and print it out in a clear, separated format. 
+- After programming, open the serial monitor **(baud rate 115200)**. The system will automatically collect the current ambient temperature and humidity data every 2 seconds and print it out in a clear, separated format. 
 
 - If the sensor connection is normal and the reading is successful, the current temperature and humidity values ​​will be displayed.
 
