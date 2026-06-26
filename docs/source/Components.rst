@@ -1364,7 +1364,7 @@ You can learn more about resistor from Wiki: `Resistor - Wikipedia <https://en.w
 ------------------
 
 .. image:: _static/Component/26.10K.png
-   :width: 700
+   :width: 100
    :align: center
 
 .. raw:: html
@@ -1382,7 +1382,7 @@ Regardless of their different shapes, sizes, and resistance values, all potentio
 Below is the circuit symbol typically used to represent a potentiometer. 
 
 .. image:: _static/Component/26.10K2.png
-   :width: 700
+   :width: 100
    :align: center
 
 .. raw:: html
@@ -1411,7 +1411,7 @@ The functions of a potentiometer in a circuit include:
 --------------
 
 .. image:: _static/Component/27.TILT.png
-   :width: 700
+   :width: 100
    :align: center
 
 .. raw:: html
