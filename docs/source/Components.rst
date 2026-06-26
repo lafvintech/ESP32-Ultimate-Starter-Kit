@@ -1172,7 +1172,7 @@ Here are schematics showing how to interface a unipolar stepper motor to four co
 -------
 
 .. image:: _static/Component/23.LED.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1184,7 +1184,7 @@ A semiconductor light-emitting diode (LED) is a component that converts electric
 Due to the diode's unidirectional conductivity, current flows in the direction of the arrow shown in its circuit symbol. To illuminate the LED, you must supply positive voltage to the anode and negative voltage to the cathode.
 
 .. image:: _static/Component/23.LED2.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1213,7 +1213,7 @@ Here is the detailed introduction for the LED: `led_wiki <https://en.wikipedia.o
 -----------
 
 .. image:: _static/Component/24.button.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1225,7 +1225,7 @@ Buttons are essential components used to control electronic devices, typically f
 The internal structure of such a button is illustrated below. The symbol shown on the right is commonly used to represent a button in circuit diagrams.
 
 .. image:: _static/Component/24.button2.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1237,7 +1237,7 @@ Since the pin 1 is connected to pin 2, and pin 3 to pin 4, when the button is pr
 In this kit, we provide two types of buttons. The one mentioned earlier is a small button, and there is also a large button. They have the same principle, only different in size.
 
 .. image:: _static/Component/24.button3.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1252,7 +1252,7 @@ In this kit, we provide two types of buttons. The one mentioned earlier is a sma
 -------------
 
 .. image:: _static/Component/25.res.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1264,7 +1264,7 @@ A resistor is an electronic component that restricts the flow of current in a ci
 There are two commonly used symbols to represent resistors in circuit diagrams. The resistance value is typically indicated on the resistor itself. When you encounter these symbols in a circuit schematic, they denote a resistor.
 
 .. image:: _static/Component/25.res2.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1277,7 +1277,7 @@ Their relationship can be shown as follows: 1 MΩ=1000 KΩ, 1 KΩ = 1000 Ω. Nor
 When using a resistor, we need to know its resistance first. Here are two methods: you can observe the bands on the resistor, or use a multimeter to measure the resistance. You are recommended to use the first method as it is more convenient and faster. 
 
 .. image:: _static/Component/25.res3.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1324,7 +1324,7 @@ if it's larger than any other band gaps, then you can read from the opposite sid
 Let’s see how to read the resistance value of a 5-band resistor as shown below.
 
 .. image:: _static/Component/25.res4.png
-   :width: 700
+   :width: 300
    :align: center
 
 .. raw:: html
