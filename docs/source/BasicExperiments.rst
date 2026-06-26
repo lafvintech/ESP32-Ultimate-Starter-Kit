@@ -400,7 +400,144 @@ This introductory chapter guides you through the process of building fun, intera
 
 ----
 
-4. Tilt alarm
+3. TEMP And HUMI Detection
+--------------------------
+
+This experiment is an introductory project on digital sensor driving and data acquisition, aiming to teach how to use ESP32 to read DHT11 temperature and humidity sensors and view environmental data in real time through a serial monitor.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - DHT11 Sensor
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/1.DHT11.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - DHT11 Sensor
+     - VCC
+     - 3.3V
+   * - 1
+     - DHT11 Sensor
+     - GND
+     - GND
+   * - 1
+     - DHT11 Sensor
+     - DATA
+     - GPIO 15
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <DHT.h>
+
+ #define DHTPIN 15      // GPIO pin
+ #define DHTTYPE DHT11  // Sensor type
+
+ DHT dht(DHTPIN, DHTTYPE);
+
+ void setup() {
+   Serial.begin(115200);
+   dht.begin();
+   Serial.println("DHT11 Temperature & Humidity Sensor Started");
+ }
+
+ void loop() {
+   delay(2000);  // Read every 2 seconds
+   
+   float humidity = dht.readHumidity();
+   float temperature = dht.readTemperature();  // Celsius
+   
+   // Check if reading is successful
+   if (isnan(humidity) || isnan(temperature)) {
+     Serial.println("Sensor read failed!");
+     return;
+   }
+   
+   // Serial output
+   Serial.println("====================");
+   Serial.print("Temperature: ");
+   Serial.print(temperature);
+   Serial.println(" °C");
+   
+   Serial.print("Humidity: ");
+   Serial.print(humidity);
+   Serial.println(" %");
+   Serial.println("====================");
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/5.DHT11.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- After programming, open the serial monitor (baud rate 115200). The system will automatically collect the current ambient temperature and humidity data every 2 seconds and print it out in a clear, separated format. 
+
+- If the sensor connection is normal and the reading is successful, the current temperature and humidity values ​​will be displayed.
+
+----
+
+5. Tilt alarm
 --------------
 
 This experiment is a practical project applying embedded state machines. It aims to teach you how to detect device displacement using a tilt switch (ball switch) and build a complete security alarm system. You will master the following core skills:
