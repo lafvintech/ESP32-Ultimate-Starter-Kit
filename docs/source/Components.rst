@@ -1167,3 +1167,195 @@ Here are schematics showing how to interface a unipolar stepper motor to four co
    <div style="margin-top: 30px;"></div>
 
 ----
+
+23. LED
+-------
+
+.. image:: _static/Component/23.LED.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+A semiconductor light-emitting diode (LED) is a component that converts electrical energy into light energy through PN junctions. LEDs can be classified by wavelength into laser diodes, infrared LEDs, and visible LEDs, the latter being commonly referred to simply as LEDs.
+
+Due to the diode's unidirectional conductivity, current flows in the direction of the arrow shown in its circuit symbol. To illuminate the LED, you must supply positive voltage to the anode and negative voltage to the cathode.
+
+.. image:: _static/Component/23.LED2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+An LED has two pins. The longer one is the anode, and shorter one, the cathode. Pay attention not to connect them inversely. There is fixed forward voltage drop in the LED, so it cannot be connected with the circuit directly because the supply voltage can outweigh this drop and cause the LED to be burnt. The forward voltage of the red, yellow, and green LED is 1.8 V and that of the white one is 2.6 V. Most LEDs can withstand a maximum current of 20 mA, so we need to connect a current limiting resistor in series.                   
+
+The formula of the resistance value is as follows:
+
+    R = (Vsupply – VD)/I
+
+**R** stands for the resistance value of the current limiting resistor, **Vsupply** for voltage supply, **VD** for voltage drop and **I** for the working current of the LED.
+
+Here is the detailed introduction for the LED: `led_wiki <https://en.wikipedia.org/wiki/Light-emitting_diode>`_.
+
+----
+
+24. Button
+-----------
+
+.. image:: _static/Component/24.button.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+Buttons are essential components used to control electronic devices, typically functioning as switches to either complete or interrupt circuits. Despite their variety in sizes and shapes, the 6mm mini-button depicted in the accompanying images is our focus here. Within this button, pin 1 is connected to pin 2, and pin 3 is connected to pin 4. Therefore, you only need to establish a connection between pin 1 (or pin 2) and pin 3 (or pin 4) to operate it.
+
+The internal structure of such a button is illustrated below. The symbol shown on the right is commonly used to represent a button in circuit diagrams.
+
+.. image:: _static/Component/24.button2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+Since the pin 1 is connected to pin 2, and pin 3 to pin 4, when the button is pressed, the 4 pins are connected, thus closing the circuit.
+
+In this kit, we provide two types of buttons. The one mentioned earlier is a small button, and there is also a large button. They have the same principle, only different in size.
+
+.. image:: _static/Component/24.button3.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+----
+
+.. _cpn_resistor:
+
+25. Resistor
+-------------
+
+.. image:: _static/Component/25.res.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+A resistor is an electronic component that restricts the flow of current in a circuit. A fixed resistor has a set resistance value that cannot be altered, whereas a potentiometer or variable resistor has an adjustable resistance.
+
+There are two commonly used symbols to represent resistors in circuit diagrams. The resistance value is typically indicated on the resistor itself. When you encounter these symbols in a circuit schematic, they denote a resistor.
+
+.. image:: _static/Component/25.res2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Ω** is the unit of resistance and the larger units include KΩ, MΩ, etc. 
+Their relationship can be shown as follows: 1 MΩ=1000 KΩ, 1 KΩ = 1000 Ω. Normally, the value of resistance is marked on it. 
+
+When using a resistor, we need to know its resistance first. Here are two methods: you can observe the bands on the resistor, or use a multimeter to measure the resistance. You are recommended to use the first method as it is more convenient and faster. 
+
+.. image:: _static/Component/25.res3.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+As shown in the card, each color stands for a number. 
+
+.. list-table::
+
+   * - Black
+     - Brown
+     - Red
+     - Orange
+     - Yellow
+     - Green
+     - Blue
+     - Violet
+     - Grey
+     - White
+     - Gold
+     - Silver
+   * - 0
+     - 1
+     - 2
+     - 3
+     - 4
+     - 5
+     - 6
+     - 7
+     - 8
+     - 9
+     - 0.1
+     - 0.01
+
+The 4- and 5-band resistors are frequently used, on which there are 4 and 5 chromatic bands. 
+
+Normally, when you get a resistor, you may find it hard to decide which end to start for reading the color. 
+The tip is that the gap between the 4th and 5th band will be comparatively larger.
+
+Therefore, you can observe the gap between the two chromatic bands at one end of the resistor; 
+if it's larger than any other band gaps, then you can read from the opposite side. 
+
+Let’s see how to read the resistance value of a 5-band resistor as shown below.
+
+.. image:: _static/Component/25.res4.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+So for this resistor, the resistance should be read from left to right. 
+The value should be in this format: 1st Band 2nd Band 3rd Band x 10^Multiplier (Ω) and the permissible error is ±Tolerance%. 
+So the resistance value of this resistor is 2(red) 2(red) 0(black) x 10^0(black) Ω = 220 Ω, 
+and the permissible error is ± 1% (brown). 
+
+.. list-table::Common resistor color band
+    :header-rows: 1
+
+    * - Resistor 
+      - Color Band  
+    * - 10Ω   
+      - brown black black silver brown
+    * - 100Ω   
+      - brown black black black brown
+    * - 220Ω 
+      - red red black black brown
+    * - 330Ω 
+      - orange orange black black brown
+    * - 1kΩ 
+      - brown black black brown brown
+    * - 2kΩ 
+      - red black black brown brown
+    * - 5.1kΩ 
+      - green brown black brown brown
+    * - 10kΩ 
+      - brown black black red brown 
+    * - 100kΩ 
+      - brown black black orange brown 
+    * - 1MΩ 
+      - brown black black green brown 
+
+You can learn more about resistor from Wiki: `Resistor - Wikipedia <https://en.wikipedia.org/wiki/Resistor>`_.
+
+----
