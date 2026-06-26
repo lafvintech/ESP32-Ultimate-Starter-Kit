@@ -891,7 +891,7 @@ The buzzer has two pins:
 ---------------
 
 .. image:: _static/Component/18.servo.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -917,7 +917,7 @@ The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely u
 - **Operating temperature:** -10°C ~ +50°C
 
 .. image:: _static/Component/18.servo2.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -938,7 +938,7 @@ The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely u
 **PWM signal specifications:**
 
 .. image:: _static/Component/18.servo3.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -959,7 +959,7 @@ The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely u
 ------------
 
 .. image:: _static/Component/20.motor1.png
-   :width: 800
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -982,7 +982,7 @@ A DC motor consists of two parts, the fixed part of the motor called the **stato
 The key to generating motion is to position the armature within the magnetic field of the permanent magnet (whose field extends from the north pole to the south pole). The interaction of the magnetic field and the moving charged particles (the current-carrying wire generates the magnetic field) produces the torque that rotates the armature.
 
 .. image:: _static/Component/20.motor2.png
-   :width: 800
+   :width: 600
    :align: center
 
 .. raw:: html
