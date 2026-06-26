@@ -197,7 +197,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/3.PWM_LED2.gif
+.. image:: _static/project/BASIC/3.PWM_LED.gif
    :width: 500
    :align: center
 
