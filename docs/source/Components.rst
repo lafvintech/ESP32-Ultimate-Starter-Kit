@@ -1004,7 +1004,7 @@ This continuous reversal essentially converts the DC power from the battery to A
 **Stepper Motor**
 
 .. image:: _static/Component/22.stepper.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1072,7 +1072,7 @@ Stepper Motor 28BYJ-48 Parameters
 The bipolar stepper motor usually has four wires coming out of it. Unlike unipolar steppers, bipolar steppers have no common center connection. They have two independent sets of coils instead. You can distinguish them from unipolar steppers by measuring the resistance between the wires. You should find two pairs of wires with equal resistance. If you’ve got the leads of your meter connected to two wires that are not connected (i.e. not attached to the same coil), you should see infinite resistance (or no continuity).
 
 .. image:: _static/Component/22.stepper2.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1083,7 +1083,7 @@ The bipolar stepper motor usually has four wires coming out of it. Unlike unipol
 **ULN2003 Driver Board**
 
 .. image:: _static/Component/22.stepper3.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1110,22 +1110,25 @@ The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout
 Lead Wire Color
 ^^^^^^^^^^^^^^^
 
+Lead Wire Color
+^^^^^^^^^^^^^^^
+
 .. list-table:: 28BYJ-48 Lead Wire Color Mapping
    :header-rows: 1
    :widths: 10 10 10 10 10 10 10 10 10
 
-   * - Wire
-     - Pin 1
-     - Pin 2
-     - Pin 3
-     - Pin 4
-     - Pin 5
-     - Pin 6
-     - Pin 7
-     - Pin 8
+   * - 
+     - 1
+     - 2
+     - 3
+     - 4
+     - 5
+     - 6
+     - 7
+     - 8
    * - 4 ORG (Orange)
-     - Connected
-     - Connected
+     - -
+     - -
      - 
      - 
      - 
@@ -1159,11 +1162,11 @@ Lead Wire Color
      - 
      - 
      - 
-
+     
 Here are schematics showing how to interface a unipolar stepper motor to four controller pins using a ULN2003A, and showing how to interface using four com.
 
 .. image:: _static/Component/22.stepper4.png
-   :width: 800
+   :width: 700
    :align: center
 
 .. raw:: html
