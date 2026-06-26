@@ -687,3 +687,219 @@ To help you get to know how 7-segment displays(Common Cathode) display Numbers, 
         - 0x71
 
 ----
+
+
+
+17. 4-Digit 7-Segment Display
+-----------------------------
+
+4-Digit 7-segment display consists of four 7- segment displays working
+together.
+
+.. image:: _static/Component/17.4-DIGIT.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The 4-digtal 7-segment display works independently. It uses the
+principle of human visual persistence to quickly display the characters
+of each 7-segment in a loop to form continuous strings.
+
+For example, when "1234" is displayed on the display, "1" is displayed
+on the first 7-segment, and "234" is not displayed. After a period of
+time, the second 7-segment shows "2", the 1st 3th 4th of 7-segment does
+not show, and so on, the four digital display show in turn. This process
+is very short (typically 5ms), and because of the optical afterglow
+effect and the principle of visual residue, we can see four characters
+at the same time.
+
+.. image:: _static/Component/17.4-DIGIT2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Codes** 
+
+To help you get to know how 7-segment displays(Common Cathode) display Numbers, we have drawn the following table. Numbers are the number 0-F displayed on the 7-segment display; (DP) GFEDCBA refers to the corresponding LED set to 0 or 1, For example, 00111111 means that DP and G are set to 0, while others are set to 1. Therefore, the number 0 is displayed on the 7-segment display, while HEX Code corresponds to hexadecimal number.
+
+.. list-table:: Glyph Code
+    :widths: 20 20 20
+    :header-rows: 1
+
+    *   - Numbers	
+        - Binary Code
+        - Hex Code  
+    *   - 0	
+        - 00111111	
+        - 0x3f
+    *   - 1	
+        - 00000110	
+        - 0x06
+    *   - 2	
+        - 01011011	
+        - 0x5b
+    *   - 3	
+        - 01001111	
+        - 0x4f
+    *   - 4	
+        - 01100110	
+        - 0x66
+    *   - 5	
+        - 01101101	
+        - 0x6d
+    *   - 6	
+        - 01111101	
+        - 0x7d
+    *   - 7	
+        - 00000111	
+        - 0x07
+    *   - 8	
+        - 01111111	
+        - 0x7f
+    *   - 9	
+        - 01101111	
+        - 0x6f
+    *   - A	
+        - 01110111	
+        - 0x77
+    *   - B
+        - 01111100	
+        - 0x7c
+    *   - C	
+        - 00111001	
+        - 0x39
+    *   - D	
+        - 01011110	
+        - 0x5e
+    *   - E	
+        - 01111001	
+        - 0x79
+    *   - F	
+        - 01110001	
+        - 0x71
+
+----
+
+18. WS2812 RGB 8 LEDs Strip
+-----------------------
+
+.. image:: _static/Component/19.rgb.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The WS2812 RGB 8 LEDs Strip is composed of 8 RGB LEDs. 
+Only one pin is required to control all the LEDs. Each RGB LED has a WS2812 chip, which can be controlled independently. 
+It can realize 256-level brightness display and complete true color display of 16,777,216 colors. 
+At the same time, the pixel contains an intelligent digital interface data latch signal shaping amplifier drive circuit, 
+and a signal shaping circuit is built in to effectively ensure the color height of the pixel point light Consistent.
+
+It is flexible, can be docked, bent, and cut at will, and the back is equipped with adhesive tape, which can be fixed on the uneven surface at will, and can be installed in a narrow space.
+
+**Features**
+
+* Work Voltage: DC5V
+* IC: One IC drives one RGB LED
+* Consumption: 0.3w each LED
+* Working Temperature: -15-50
+* Color: Full color RGB
+* RGB Type: 5050RGB(Built-in IC WS2812B)
+* Light Strip Thickness: 2mm
+* Each LED can be controlled individually
+
+**WS2812B Introdction**
+
+* `WS2812B Datasheet <https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf>`_
+
+WS2812B is a intelligent control LED light source that the control circuit and RGB chip are integrated in
+a package of 5050 components. It internal include intelligent digital port data latch and signal reshaping amplification drive circuit. Also include a precision internal oscillator and a 12V voltage programmable constant current control part, effectively ensuring the pixel point light color height consistent.
+
+The data transfer protocol use single NZR communication mode. After the pixel power-on reset, the DIN
+port receive data from controller, the first pixel collect initial 24bit data then sent to the internal data latch,
+the other data which reshaping by the internal signal reshaping amplification circuit sent to the next cascade
+pixel through the DO port. After transmission for each pixel, the signal to reduce 24bit. pixel adopt auto resha
+-ping transmit technology, making the pixel cascade number is not limited the signal transmission, only depend
+on the speed of signal transmission.
+
+LED with low driving voltage, environmental protection and energy saving, high brightness, scattering angle is large, good consistency, low power, long life and other advantages. The control chip integrated in LED
+above becoming more simple circuit, small volume, convenient installation.
+
+----
+
+19. Servo Motor
+---------------
+
+.. image:: _static/Component/18.servo.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely used in robotics, RC models, and educational projects. It belongs to the class of positional rotation servos, where the output shaft rotates to a specific angular position based on the width of the input PWM (Pulse Width Modulation) signal. With a stall torque of approximately 1.8 kg·cm at 5V and a weight of just 9 grams, it is ideal for small-scale mechanisms like robotic arms, pan/tilt camera mounts, and micro-vehicle steering.
+
+**Working principle:**
+
+- Inside the SG90, there is a DC motor, a potentiometer (feedback potentiometer) attached to the output shaft, a gear reduction train, and a control circuit. The control circuit generates a reference voltage from the potentiometer that corresponds to the current shaft position. It continuously compares this feedback voltage with the target position derived from the incoming PWM signal. If there is a difference, the motor rotates in the appropriate direction until the feedback matches the target, achieving closed-loop position control. The PWM signal has a fixed period of 20ms (50Hz), and the pulse width (typically 0.5ms to 2.5ms) determines the target angle.
+
+**Core features:**
+
+- **Operating voltage:** 4.8V ~ 6.0V (5V recommended)
+- **Stall torque:** 1.8 kg·cm @ 5V (approx. 0.18 N·m)
+- **Speed:** 0.1 sec/60° @ 5V (no load)
+- **Rotation range:** 0° ~ 180° (some variants support 0° ~ 360° continuous rotation)
+- **Dead band width:** 5 µs (the minimum pulse width change that produces a response)
+- **Weight:** 9g (including cables and connector)
+- **Dimensions:** 23 × 12.2 × 29 mm
+- **Connector:** 3-pin JR-style female header (compatible with standard servo extensions)
+- **Operating temperature:** -10°C ~ +50°C
+
+.. image:: _static/Component/18.servo2.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Pinout and connections:**
+
+- **Brown/Black:** Ground (GND) → ESP32 GND
+- **Red:** Power (VCC) → 5V external power supply (do not power from ESP32's 3.3V pin)
+- **Orange/Yellow:** Signal (PWM input) → ESP32 GPIO with PWM capability (e.g., `GPIO13`)
+
+.. warning::
+
+ - **Never power the SG90 directly from the ESP32's 3.3V pin!** The servo can draw peak currents of 200~400mA during operation, far exceeding the ESP32's 3.3V regulator capacity (typically 150mA). This can cause voltage drops, resets, or permanent damage to the board. Always use a separate 5V power source with adequate current capability (at least 1A if driving multiple servos). Connect the grounds (ESP32 GND and servo power supply GND) together to ensure a common reference.
+
+**PWM signal specifications:**
+
+- **Period:** 20ms (50Hz) — standard for analog servos
+- **Pulse width range:** 0.5ms ~ 2.5ms (typically maps to 0° ~ 180°)
+- **Common mapping (most libraries):**
+  - 0° → 0.5ms → duty cycle 2.5% (for 50Hz)
+  - 90° → 1.5ms → duty cycle 7.5%
+  - 180° → 2.5ms → duty cycle 12.5%
+- **Actual range may vary** between individual units — it is recommended to calibrate the minimum and maximum values for each servo.
+
+.. image:: _static/Component/18.servo3.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+----
+
