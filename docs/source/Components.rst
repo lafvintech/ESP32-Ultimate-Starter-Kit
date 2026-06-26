@@ -1197,7 +1197,13 @@ The formula of the resistance value is as follows:
 
     R = (Vsupply – VD)/I
 
-**R** stands for the resistance value of the current limiting resistor, **Vsupply** for voltage supply, **VD** for voltage drop and **I** for the working current of the LED.
+**R** stands for the resistance value of the current limiting resistor.
+
+**Vsupply** for voltage supply.
+
+**VD** for voltage drop.
+
+**I** for the working current of the LED.
 
 Here is the detailed introduction for the LED: `led_wiki <https://en.wikipedia.org/wiki/Light-emitting_diode>`_.
 
