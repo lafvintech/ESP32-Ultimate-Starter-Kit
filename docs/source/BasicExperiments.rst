@@ -115,7 +115,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Wiring Diagram:**
 
 .. image:: _static/project/BASIC/3.PWM_LED.png
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -232,7 +232,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Wiring Diagram:**
 
 .. image:: _static/project/BASIC/2.buttonled.png
-   :width: 700
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -414,7 +414,7 @@ This experiment is an introductory project on digital sensor driving and data ac
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/1.DHT11.png
-   :width: 600
+   :width: 700
    :align: center
 
 .. raw:: html
