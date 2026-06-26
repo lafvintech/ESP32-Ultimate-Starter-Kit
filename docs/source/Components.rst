@@ -1132,7 +1132,7 @@ The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout
      - 
      - 
      - 
-     - 
+     - -
      - 
      - 
      - 
@@ -1141,8 +1141,8 @@ The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout
      - 
      - 
      - 
-     - 
-     - 
+     - -
+     - -
      - 
      - 
      - 
@@ -1152,9 +1152,9 @@ The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout
      - 
      - 
      - 
-     - 
-     - 
-     - 
+     - -
+     - -
+     - -
 
 Here are schematics showing how to interface a unipolar stepper motor to four controller pins using a ULN2003A, and showing how to interface using four com.
 
