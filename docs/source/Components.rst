@@ -1019,10 +1019,9 @@ The speed of the motor shafts rotation is directly related to the frequency of t
 
 One of the most significant advantages of a stepper motor is its ability to be accurately controlled in an open loop system. Open loop control means no feedback information about position is needed. This type of control eliminates the need for expensive sensing and feedback devices such as optical encoders.Your position is known simply by keeping track of the input step pulses
 
-Stepper Motor 28BYJ-48 Parameters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Stepper Motor 28BYJ-48 Parameters**
 
-.. list-table:: 28BYJ-48 Stepper Motor Specifications
+.. list-table:: 
    :header-rows: 1
    :widths: 30 35 30 35
 
@@ -1107,13 +1106,7 @@ The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout
 
 **The sequence would go like this:**
 
-Lead Wire Color
-^^^^^^^^^^^^^^^
-
-Lead Wire Color
-^^^^^^^^^^^^^^^
-
-.. list-table:: 28BYJ-48 Lead Wire Color Mapping
+.. list-table:: 
    :header-rows: 1
    :widths: 10 10 10 10 10 10 10 10 10
 
@@ -1162,7 +1155,7 @@ Lead Wire Color
      - 
      - 
      - 
-     
+
 Here are schematics showing how to interface a unipolar stepper motor to four controller pins using a ULN2003A, and showing how to interface using four com.
 
 .. image:: _static/Component/22.stepper4.png
