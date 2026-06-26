@@ -835,7 +835,59 @@ above becoming more simple circuit, small volume, convenient installation.
 
 ----
 
-19. Servo Motor
+19. Active/Passive Buzzer
+------------------------
+
+.. image:: _static/Component/21.actbuzzer.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**What is a Buzzer?**
+
+A buzzer is an electronic device that makes a beeping sound when electricity flows through it. They're used in many everyday devices like alarm clocks, microwaves, and toys to create sounds or alerts.
+
+**Active vs. Passive Buzzers - What's the Difference?**
+
+There are two main types of buzzers:
+
+1. **Active Buzzer** (We're using this one!)
+   - Has a built-in circuit that creates sound automatically
+   - Just needs simple on/off power to work
+   - Produces a single, fixed tone
+   - Easy to identify: Usually has black tape covering it
+
+2. **Passive Buzzer**
+   - Has no built-in sound generator
+   - Requires changing signals (like music notes) to make different sounds
+   - Can produce different tones and simple melodies
+   - Easy to identify: Usually has a green circuit board visible
+
+**Connecting the Buzzer**
+
+.. image:: _static/Component/21.actbuzzer2.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The buzzer has two pins:
+- The longer pin is positive (+) called the anode
+- The shorter pin is negative (-) called the cathode
+
+.. warning::
+   Make sure to connect the pins correctly! If you mix them up, the buzzer won't make any sound.
+
+----
+
+
+20. Servo Motor
 ---------------
 
 .. image:: _static/Component/18.servo.png
@@ -885,14 +937,6 @@ The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely u
 
 **PWM signal specifications:**
 
-- **Period:** 20ms (50Hz) — standard for analog servos
-- **Pulse width range:** 0.5ms ~ 2.5ms (typically maps to 0° ~ 180°)
-- **Common mapping (most libraries):**
-  - 0° → 0.5ms → duty cycle 2.5% (for 50Hz)
-  - 90° → 1.5ms → duty cycle 7.5%
-  - 180° → 2.5ms → duty cycle 12.5%
-- **Actual range may vary** between individual units — it is recommended to calibrate the minimum and maximum values for each servo.
-
 .. image:: _static/Component/18.servo3.png
    :width: 800
    :align: center
@@ -901,5 +945,229 @@ The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely u
 
    <div style="margin-top: 30px;"></div>
 
+- **Period:** 20ms (50Hz) — standard for analog servos
+- **Pulse width range:** 0.5ms ~ 2.5ms (typically maps to 0° ~ 180°)
+- **Common mapping (most libraries):**
+  - 0° → 0.5ms → duty cycle 2.5% (for 50Hz)
+  - 90° → 1.5ms → duty cycle 7.5%
+  - 180° → 2.5ms → duty cycle 12.5%
+- **Actual range may vary** between individual units — it is recommended to calibrate the minimum and maximum values for each servo.
+
 ----
 
+21. DC Motor
+------------
+
+.. image:: _static/Component/20.motor1.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+This is a 3V DC motor. When you give a high level and a low level to each of the 2 terminals, it will rotate.
+
+* **Size**: 25*20*15MM
+* **Operation Voltage**: 1-6V
+* **Free-run Current** (3V): 70m
+* **A Free-run Speed** (3V): 13000RPM
+* **Stall Current** (3V): 800mA
+* **Shaft Diameter**: 2mm
+
+Direct current (DC) motor is a continuous actuator that converts electrical energy into mechanical energy. DC motors make rotary pumps, fans, compressors, impellers, and other devices work by producing continuous angular rotation.
+
+A DC motor consists of two parts, the fixed part of the motor called the **stator** and the internal part of the motor called the **rotor** (or **armature** of a DC motor) that rotates to produce motion.
+The key to generating motion is to position the armature within the magnetic field of the permanent magnet (whose field extends from the north pole to the south pole). The interaction of the magnetic field and the moving charged particles (the current-carrying wire generates the magnetic field) produces the torque that rotates the armature.
+
+.. image:: _static/Component/20.motor2.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+Current flows from the positive terminal of the battery through the circuit, through the copper brushes to the commutator, and then to the armature.
+But because of the two gaps in the commutator, this flow reverses halfway through each complete rotation.
+This continuous reversal essentially converts the DC power from the battery to AC, allowing the armature to experience torque in the right direction at the right time to maintain rotation.
+
+* `DC Motor - MagLab <https://nationalmaglab.org/education/magnet-academy/watch-play/interactive/dc-motor>`_
+* `Fleming's left-hand rule for motors - Wikipedia <https://en.wikipedia.org/wiki/Fleming%27s_left-hand_rule_for_motors>`_
+
+----
+
+22. Stepper Motor And ULN2003 Driver Board
+------------------------------------------
+
+**Stepper Motor**
+
+.. image:: _static/Component/22.stepper.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+A stepper motor is an electromechanical device which converts electrical pulses into discrete mechanical movements. The shaft or spindle of a stepper motor rotates in discrete step increments when electrical command pulses are applied to it in the proper sequence.
+
+The motors rotation has several direct relationships to these applied input pulses. The sequence of the applied pulses is directly related to the direction of motor shafts rotation.
+
+The speed of the motor shafts rotation is directly related to the frequency of the input pulses and the length of rotation is directly related to the number of input pulses applied.
+
+One of the most significant advantages of a stepper motor is its ability to be accurately controlled in an open loop system. Open loop control means no feedback information about position is needed. This type of control eliminates the need for expensive sensing and feedback devices such as optical encoders.Your position is known simply by keeping track of the input step pulses
+
+Stepper Motor 28BYJ-48 Parameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 28BYJ-48 Stepper Motor Specifications
+   :header-rows: 1
+   :widths: 30 35 30 35
+
+   * - Parameter
+     - Value/Specification
+     - Parameter
+     - Value/Specification
+   * - Model
+     - 28BYJ-48
+     - In-traction Torque
+     - >34.3mN.m (120Hz)
+   * - Rated voltage
+     - 5VDC
+     - Self-positioning Torque
+     - >34.3mN.m
+   * - Number of Phase
+     - 4
+     - Friction torque
+     - 600–1200 gf.cm
+   * - Speed Variation Ratio
+     - 1/64
+     - Pull in torque
+     - 300 gf.cm
+   * - Stride Angle
+     - 5.625°/64
+     - Insulated resistance
+     - >10MΩ (500V)
+   * - Frequency
+     - 100Hz
+     - Insulated electricity power
+     - 600VAC/1mA/1s
+   * - DC resistance
+     - 50Ω±7% (25°C)
+     - Insulation grade
+     - A
+   * - Idle In-traction Frequency
+     - >600Hz
+     - Rise in Temperature
+     - <40K (120Hz)
+   * - Idle Out-traction Frequency
+     - >1000Hz
+     - Noise
+     - <35dB (120Hz, No load, 10cm)
+
+**Interfacing circuits**
+
+The bipolar stepper motor usually has four wires coming out of it. Unlike unipolar steppers, bipolar steppers have no common center connection. They have two independent sets of coils instead. You can distinguish them from unipolar steppers by measuring the resistance between the wires. You should find two pairs of wires with equal resistance. If you’ve got the leads of your meter connected to two wires that are not connected (i.e. not attached to the same coil), you should see infinite resistance (or no continuity).
+
+.. image:: _static/Component/22.stepper2.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**ULN2003 Driver Board**
+
+.. image:: _static/Component/22.stepper3.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Size: 42mmx30mm
+
+- Use ULN2003 driver chip, 500mA
+
+- A. B. C. D LED indicating the four phase stepper motor working condition.
+
+- White jack is the four phase stepper motor standard jack.
+
+- Power pins are separated
+
+- We kept the rest pins of the ULN2003 chip for your further prototyping.
+
+
+The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout for ULN2003A transistor array chip. The ULN2003A contains seven Darlington transistor drivers and is somewhat like having seven TIP120 transistors all in one package. The ULN2003A can pass up to 500 mA per channel and has an internal voltage drop of about 1V when on. It also contains internal clamp diodes to dissipate voltage spikes when driving inductive loads. To control the stepper, apply voltage to each of the coils in a specific sequence.
+
+**The sequence would go like this:**
+
+Lead Wire Color
+^^^^^^^^^^^^^^^
+
+.. list-table:: 28BYJ-48 Lead Wire Color Mapping
+   :header-rows: 1
+   :widths: 10 10 10 10 10 10 10 10 10
+
+   * - Wire
+     - Pin 1
+     - Pin 2
+     - Pin 3
+     - Pin 4
+     - Pin 5
+     - Pin 6
+     - Pin 7
+     - Pin 8
+   * - 4 ORG (Orange)
+     - Connected
+     - Connected
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+   * - 3 YEL (Yellow)
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+   * - 2 PIK (Pink)
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+   * - 1 BLU (Blue)
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+     - 
+
+Here are schematics showing how to interface a unipolar stepper motor to four controller pins using a ULN2003A, and showing how to interface using four com.
+
+.. image:: _static/Component/22.stepper4.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+----
