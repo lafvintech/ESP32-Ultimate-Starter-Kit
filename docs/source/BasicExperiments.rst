@@ -1390,3 +1390,150 @@ This experiment is a practical project applying embedded state machines. It aims
 
 ----
 
+8. 0.96 Inch Display
+--------------------
+
+This experiment is an introductory project for OLED display and scrolling special effects. It aims to learn how to use ESP32 to drive the SSD1306 OLED screen and realize the horizontal scrolling animation effect of text. You will master the following core skills:
+
+ - SSD1306 OLED driver: Initialize the OLED display of the I2C interface through the Adafruit_SSD1306 library and understand the configuration of the I2C address (0x3C/0x3D)
+
+ - Display buffer operation: learn basic display functions such as clearDisplay() to clear the screen, setCursor() to position, println() to output text, etc.
+
+ - Scroll effect control: Use startsscrollright() and startsscrollleft() to achieve smooth left and right scrolling of screen text, and stop scrolling through stopsscroll()
+
+ - Scroll area setting: Understand the meaning of the row address parameters in startsscrollright(0x00, 0x0F) (0x00~0x0F is 16 lines in the full screen), and master the setting of the local scroll area
+
+ - Serial port debugging: Output the initialization status through Serial.println() to facilitate troubleshooting hardware connection problems
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 0.96 Inch Display
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/10.OLED.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - 0.96 OLED
+     - VCC
+     - 3.3V
+   * - 1
+     - 0.96 OLED
+     - GND
+     - GND
+   * - 1
+     - 0.96 OLED
+     - SCL
+     - GPIO 22
+   * - 1
+     - 0.96 OLED
+     - SDA
+     - GPIO 21
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+  #include <Adafruit_GFX.h>
+ #include <Adafruit_SSD1306.h>
+ // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+ #include <Wire.h>
+ #define SCREEN_HEIGHT 64 // OLED display height, in pixels
+ #define SCREEN_WIDTH 128 // OLED display width, in pixels
+ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+ void setup() {
+   Serial.begin(115200);
+   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) 
+   { 
+     Serial.println(F("SSD1306 allocation failed"));
+     for(;;);
+   }
+   delay(2000);
+   display.clearDisplay();
+   display.setTextSize(2);
+   display.setTextColor(WHITE);
+   display.setCursor(0, 30);
+   // Display static text
+   display.println("LAFVIN");
+   display.display(); 
+   delay(100);
+ }
+ void loop() {
+   // Scroll in various directions, pausing in-between:
+   display.startscrollright(0x00, 0x0F);
+   delay(7000);
+   display.stopscroll();
+   delay(1000);
+   display.startscrollleft(0x00, 0x0F);
+   delay(7000);
+   display.stopscroll();
+   delay(1000);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/10.OLED.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is burned, the text **LAFVIN** is displayed in the center of the OLED screen (font size 2, approximately in the middle of the screen). After waiting for 2 seconds, the text starts to scroll to the right for 7 seconds, pauses for 1 second, then scrolls to the left for 7 seconds, pauses for 1 second, and so on, forming a dynamic display effect.
+
+----
