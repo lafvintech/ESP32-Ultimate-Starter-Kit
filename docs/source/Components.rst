@@ -1529,6 +1529,50 @@ When EN is HIGH: - If input A is HIGH → output Y is HIGH - If input A is LOW �
 
 ----
 
+29. Thermistor
+--------------
+
+.. image:: _static/Component/29.the.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+A **thermistor** is a temperature-sensitive resistor whose resistance changes significantly with temperature. The component shown above is a typical **NTC (Negative Temperature Coefficient) thermistor**, which is widely used for temperature measurement and environmental monitoring in embedded systems.
+
+**Features**
+
+- High sensitivity to temperature changes
+- Fast response time
+- Compact size and lightweight
+- Low cost and easy to use
+- Compatible with Arduino, ESP32, STM32, and other microcontrollers
+
+**Working Principle**
+
+An NTC thermistor decreases its resistance as the surrounding temperature increases. By measuring the voltage across the thermistor in a voltage divider circuit, a microcontroller can calculate the ambient temperature.
+
+```
+Temperature ↑ → Resistance ↓
+Temperature ↓ → Resistance ↑
+```
+
+
+**Typical ESP32 Connection**
+
+| Thermistor Lead | ESP32 Connection |
+|-----------------|------------------|
+| One Lead | 3.3V (through a resistor) |
+| Other Lead | ADC Pin (e.g., GPIO34) |
+| GND | Connected through the fixed resistor to form a voltage divider |
+
+
+The NTC thermistor is one of the most widely used temperature sensors in embedded electronics. It offers a simple, low-cost solution for temperature monitoring and is ideal for projects based on ESP32, Arduino, and other microcontroller platforms.
+
+----
+
 
 
 
