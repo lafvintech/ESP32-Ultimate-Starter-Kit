@@ -1669,7 +1669,7 @@ Modules such as motors require additional power, especially during startup and s
 
 This power supply module operates using a 9V battery and provides both 3.3V and 5V outputs.
 
-.. image:: _static/Component/33.power.png
+.. image:: _static/Component/33.power2.png
    :width: 500
    :align: center
 
