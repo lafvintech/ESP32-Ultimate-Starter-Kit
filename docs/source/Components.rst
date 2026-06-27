@@ -1437,7 +1437,7 @@ The tilt switch used here is a ball-type switch containing a metal ball inside. 
 The operating principle is straightforward. When the switch is tilted at a specific angle, the internal ball rolls and makes contact with the two terminals connected to the external pins, thereby completing the circuit. If the switch is not tilted, the ball stays away from the contacts, breaking the circuit.
 
 .. image:: _static/Component/27.TILT2.png
-   :width: 700
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1450,7 +1450,7 @@ The operating principle is straightforward. When the switch is tilted at a speci
 ------------
 
 .. image:: _static/Component/28.74hc.png
-   :width: 100
+   :width: 200
    :align: center
 
 .. raw:: html
@@ -1493,7 +1493,7 @@ Pins of 74HC595 and their functions:
 ---------
 
 .. image:: _static/Component/30.L293D3.png
-   :width: 100
+   :width: 200
    :align: center
 
 .. raw:: html
@@ -1505,7 +1505,7 @@ The L293D is a dual H-bridge motor driver chip commonly used with platforms like
 It integrates two sets of H-bridge driver circuits, allowing it to independently drive two DC motors or one four-phase stepper motor. Featuring built-in flyback protection diodes, it eliminates the need for external protection diodes and offers ease of use, making it a widely adopted motor driver chip in electronics education and robotics projects.
 
 .. image:: _static/Component/30.L293D.png
-   :width: 400
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -1520,7 +1520,7 @@ The L293D has three important types of pins:
 When EN is HIGH: - If input A is HIGH → output Y is HIGH - If input A is LOW → output Y is LOW.
 
 .. image:: _static/Component/30.L293D2.png
-   :width: 400
+   :width: 600
    :align: center
 
 .. raw:: html
