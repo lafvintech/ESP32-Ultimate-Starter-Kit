@@ -961,7 +961,7 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 
 ----
 
-6. Passive Buzzer
+7. Passive Buzzer
 -----------------
 
 This experiment is an introductory project for audio frequency generation and music programming. It aims to learn how to use the tone() function of ESP32 to drive a passive buzzer to play a melody.
@@ -1110,7 +1110,7 @@ After burning the program, the passive buzzer will automatically play the classi
 ----
 
 
-7. Tilt Alarm
+8. Tilt Alarm
 --------------
 
 This experiment is a practical project applying embedded state machines. It aims to teach you how to detect device displacement using a tilt switch (ball switch) and build a complete security alarm system. You will master the following core skills:
@@ -1390,7 +1390,7 @@ This experiment is a practical project applying embedded state machines. It aims
 
 ----
 
-8. 0.96 Inch Display
+9. 0.96 Inch Display
 --------------------
 
 This experiment is an introductory project for OLED display and scrolling special effects. It aims to learn how to use ESP32 to drive the SSD1306 OLED screen and realize the horizontal scrolling animation effect of text. You will master the following core skills:
