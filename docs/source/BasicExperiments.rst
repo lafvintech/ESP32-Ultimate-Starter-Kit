@@ -400,7 +400,228 @@ This introductory chapter guides you through the process of building fun, intera
 
 ----
 
-4. TEMP And HUMI Detection
+4. Thermometer
+--------------
+
+This experiment is an advanced project on analog sensor signal acquisition and mathematical modeling. It aims to learn how to use the ESP32's ADC to read the resistance changes of the NTC thermistor and accurately calculate the ambient temperature through a simplified version of the Steinhart-Hart equation (B value formula). You will master the following core skills: 
+
+- Principle of NTC thermistor: Understand the characteristics of negative temperature coefficient resistance decreasing with increasing temperature, and master the application of B value formula 
+
+- ADC high-precision sampling: using 12-bit resolution (0~4095) and 11dB attenuation, read the voltage value of the voltage divider circuit 
+
+- Software filtering technology: Reduce noise interference and improve measurement stability through multiple sampling averages (20 times) 
+
+- Voltage dividing circuit calculation: According to the series voltage dividing principle, the NTC current resistance value is deduced from the ADC voltage value.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Thermistor
+ - Resistor (10K)
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/7.Thermometer.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - NTC Thermistor
+     - One pin
+     - GPIO 34 (ADC)
+   * - 1
+     - NTC Thermistor
+     - Other pin
+     - GND
+   * - 2
+     - 10kΩ Resistor
+     - One pin
+     - 3.3V
+   * - 2
+     - 10kΩ Resistor
+     - Other pin
+     - GPIO 34 (ADC)
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+   #include <Arduino.h>
+
+ // Pin definition
+ #define NTC_ADC_PIN    34
+
+ // NTC parameters
+ #define SERIES_RESISTOR 10000.0
+ #define NTC_B_VALUE     3435.0
+ #define NTC_T0          298.15
+ #define NTC_R0          10000.0
+
+ // ADC parameters
+ #define ADC_MAX         4095.0
+ #define ADC_REF_VOLTAGE 3.3
+
+ // Sampling parameters
+ #define SAMPLES         20
+ #define SAMPLE_DELAY    10
+
+ // Calibration offset 
+ #define TEMP_CALIBRATION -2.0
+
+ // Temperature unit: C, F, or K
+ #define TEMP_UNIT_C     0
+ #define TEMP_UNIT_F     1
+ #define TEMP_UNIT_K     2
+ #define TEMP_UNIT       TEMP_UNIT_C
+
+ // Function declarations
+ float readNTCResistance();
+ float calcTemperature(float resistance);
+
+ void setup() {
+     Serial.begin(115200);
+     delay(1000);
+     
+     analogReadResolution(12);
+     analogSetAttenuation(ADC_11db);
+     
+     Serial.println("\n==========================================");
+     Serial.println("   ESP32 NTC Thermistor Test Program");
+     Serial.println("==========================================");
+     Serial.print("  Series Resistor: "); Serial.print(SERIES_RESISTOR/1000); Serial.println(" kΩ");
+     Serial.print("  NTC B-Value: "); Serial.print(NTC_B_VALUE); Serial.println(" K");
+     Serial.print("  Calibration: "); Serial.print(TEMP_CALIBRATION); Serial.println(" °C");
+     Serial.print("  Samples: "); Serial.println(SAMPLES);
+     Serial.println("==========================================");
+     Serial.println("  Time(s)\tResistance(Ω)\tTemp(°C)");
+     Serial.println("------------------------------------------");
+ }
+
+ void loop() {
+     static unsigned long lastPrintTime = 0;
+     unsigned long currentTime = millis();
+     
+     if (currentTime - lastPrintTime >= 1000) {
+         float resistance = readNTCResistance();
+         float temperature = calcTemperature(resistance);
+         
+         Serial.print(currentTime / 1000);
+         Serial.print("\t\t");
+         Serial.print(resistance, 1);
+         Serial.print("\t\t");
+         
+         #if TEMP_UNIT == TEMP_UNIT_C
+             Serial.print(temperature, 1);
+             Serial.println(" °C");
+         #elif TEMP_UNIT == TEMP_UNIT_F
+             Serial.print(temperature * 1.8 + 32.0, 1);
+             Serial.println(" °F");
+         #elif TEMP_UNIT == TEMP_UNIT_K
+             Serial.print(temperature + 273.15, 2);
+             Serial.println(" K");
+         #endif
+         
+         lastPrintTime = currentTime;
+     }
+ }
+
+ float readNTCResistance() {
+     uint32_t adcSum = 0;
+     
+     for (int i = 0; i < SAMPLES; i++) {
+         adcSum += analogRead(NTC_ADC_PIN);
+         delay(SAMPLE_DELAY);
+     }
+     
+     float adcValue = (float)adcSum / SAMPLES;
+     
+     if (adcValue <= 0) adcValue = 1;
+     if (adcValue >= ADC_MAX) adcValue = ADC_MAX - 1;
+     
+     float vNtc = (adcValue / ADC_MAX) * ADC_REF_VOLTAGE;
+     float resistance = SERIES_RESISTOR * vNtc / (ADC_REF_VOLTAGE - vNtc);
+     
+     return resistance;
+ }
+
+ float calcTemperature(float resistance) {
+     if (resistance <= 0) return -273.15;
+     
+     float lnRatio = log(resistance / NTC_R0);
+     float invTemp = (1.0 / NTC_T0) + (1.0 / NTC_B_VALUE) * lnRatio;
+     float tempK = 1.0 / invTemp;
+     float tempC = tempK - 273.15 + TEMP_CALIBRATION;
+     
+     return tempC;
+ } 
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/7.Thermometer.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- After burning the program, open the serial monitor (baud rate 115200), the system will display the NTC parameter information and header, and then automatically print the current time (seconds), NTC real-time resistance value (Ω) and temperature value every 1 second. 
+
+- Pinch the NTC probe with your fingers or get close to the heat source, the resistance value will drop rapidly, the temperature value will rise simultaneously, and the response will be sensitive.
+
+----
+
+5. TEMP And HUMI Detection
 --------------------------
 
 This experiment is an introductory project on digital sensor driving and data acquisition, aiming to teach how to use ESP32 to read DHT11 temperature and humidity sensors and view environmental data in real time through a serial monitor.
@@ -537,7 +758,7 @@ This experiment is an introductory project on digital sensor driving and data ac
 
 ----
 
-5. Scan RFID
+6. Scan RFID
 -------------
 
 This experiment is an introductory project to RFID (Radio Frequency Identification) technology, aiming to teach you how to use the ESP32 and RC522 modules to read the unique identifier (UID) of RFID cards/tags. You will master the following core skills:
@@ -740,8 +961,156 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 
 ----
 
+6. Passive Buzzer
+-----------------
 
-6. Tilt Alarm
+This experiment is an introductory project for audio frequency generation and music programming. It aims to learn how to use the tone() function of ESP32 to drive a passive buzzer to play a melody.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Passive Buzzer
+ - PN2222 Transistor
+ - Resistor (1K)
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/8.Passive Buzzer.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - Passive Buzzer
+     - Positive (+)
+     - 3.3V
+   * - 1
+     - Passive Buzzer
+     - Negative (-)
+     - PN2222 Collector (C)
+   * - 2
+     - PN2222 Transistor
+     - Emitter (E)
+     - GND
+   * - 2
+     - PN2222 Transistor
+     - Base (B)
+     - 1kΩ Resistor
+   * - 3
+     - 1kΩ Resistor
+     - One pin
+     - PN2222 Base (B)
+   * - 3
+     - 1kΩ Resistor
+     - Other pin
+     - GPIO 15
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #define BUZZER_PIN 15
+ #define NOTE_C4 262
+ #define NOTE_D4 294
+ #define NOTE_E4 330
+ #define NOTE_F4 349
+ #define NOTE_G4 392
+ #define NOTE_A4 440
+
+ struct Note {
+   int freq;
+   int duration;
+ };
+
+ Note melody[] = {
+   {NOTE_C4, 400}, {NOTE_C4, 400}, {NOTE_G4, 400}, {NOTE_G4, 400},
+   {NOTE_A4, 400}, {NOTE_A4, 400}, {NOTE_G4, 800},
+   {NOTE_F4, 400}, {NOTE_F4, 400}, {NOTE_E4, 400}, {NOTE_E4, 400},
+   {NOTE_D4, 400}, {NOTE_D4, 400}, {NOTE_C4, 800},
+   {NOTE_G4, 400}, {NOTE_G4, 400}, {NOTE_F4, 400}, {NOTE_F4, 400},
+   {NOTE_E4, 400}, {NOTE_E4, 400}, {NOTE_D4, 800},
+   {NOTE_G4, 400}, {NOTE_G4, 400}, {NOTE_F4, 400}, {NOTE_F4, 400},
+   {NOTE_E4, 400}, {NOTE_E4, 400}, {NOTE_D4, 800},
+   {NOTE_C4, 400}, {NOTE_C4, 400}, {NOTE_G4, 400}, {NOTE_G4, 400},
+   {NOTE_A4, 400}, {NOTE_A4, 400}, {NOTE_G4, 800},
+   {NOTE_F4, 400}, {NOTE_F4, 400}, {NOTE_E4, 400}, {NOTE_E4, 400},
+   {NOTE_D4, 400}, {NOTE_D4, 400}, {NOTE_C4, 800},
+ };
+
+ int melodyLength = sizeof(melody) / sizeof(melody[0]);
+
+ void setup() {
+   pinMode(BUZZER_PIN, OUTPUT);
+ }
+
+ void loop() {
+   for (int i = 0; i < melodyLength; i++) {
+     tone(BUZZER_PIN, melody[i].freq, melody[i].duration);
+     delay(melody[i].duration + 10);  
+   }
+   delay(2000);  
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+After burning the program, the passive buzzer will automatically play the classic nursery rhyme melody **(Little Star)** in a loop. Each note lasts 400ms, and there is a 10ms interval between notes to prevent sound adhesion. After playing it completely, pause for 2 seconds and then repeat, forming a continuous music loop.
+
+----
+
+
+7. Tilt Alarm
 --------------
 
 This experiment is a practical project applying embedded state machines. It aims to teach you how to detect device displacement using a tilt switch (ball switch) and build a complete security alarm system. You will master the following core skills:
@@ -1020,3 +1389,4 @@ This experiment is a practical project applying embedded state machines. It aims
 - If the device tilts or moves, an alarm is immediately triggered. The LED flashes rapidly, the buzzer sounds continuously, and the alarm time is output via the serial port. Pressing the reset button clears the alarm, and the system re-enters the 5-second arming countdown.
 
 ----
+
