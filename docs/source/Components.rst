@@ -330,7 +330,7 @@ The HC-SR04 is an ultrasonic distance sensor commonly used to measure the distan
  - Avoid using the sensor outdoors in heavy wind, rain, or when surfaces are highly absorbent to ultrasound.
 
 
-8. IR Receiver Module and Remote Control
+8. IR Receiver Module And Remote Control
 ----------------------------------------
 
 .. image:: _static/Component/10.ir.png
@@ -892,7 +892,7 @@ The buzzer has two pins:
  - The shorter pin is negative (-) called the cathode.
 
 .. warning::
-   
+
    Make sure to connect the pins correctly! If you mix them up, the buzzer won't make any sound.
 
 ----
