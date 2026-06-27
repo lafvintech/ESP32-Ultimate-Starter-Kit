@@ -861,17 +861,19 @@ A buzzer is an electronic device that makes a beeping sound when electricity flo
 
 There are two main types of buzzers:
 
-1. **Active Buzzer** (We're using this one!)
-   - Has a built-in circuit that creates sound automatically
-   - Just needs simple on/off power to work
-   - Produces a single, fixed tone
-   - Easy to identify: Usually has black tape covering it
+1. **Active Buzzer** 
+
+   - Has a built-in circuit that creates sound automatically.
+   - Just needs simple on/off power to work.
+   - Produces a single, fixed tone.
+   - Easy to identify: Usually has black tape covering it.
 
 2. **Passive Buzzer**
-   - Has no built-in sound generator
-   - Requires changing signals (like music notes) to make different sounds
-   - Can produce different tones and simple melodies
-   - Easy to identify: Usually has a green circuit board visible
+
+   - Has no built-in sound generator.
+   - Requires changing signals (like music notes) to make different sounds.
+   - Can produce different tones and simple melodies.
+   - Easy to identify: Usually has a green circuit board visible.
 
 **Connecting the Buzzer**
 
@@ -884,10 +886,13 @@ There are two main types of buzzers:
    <div style="margin-top: 30px;"></div>
 
 The buzzer has two pins:
-- The longer pin is positive (+) called the anode
-- The shorter pin is negative (-) called the cathode
+
+ - The longer pin is positive (+) called the anode.
+
+ - The shorter pin is negative (-) called the cathode.
 
 .. warning::
+   
    Make sure to connect the pins correctly! If you mix them up, the buzzer won't make any sound.
 
 ----
