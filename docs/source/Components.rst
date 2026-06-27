@@ -1601,7 +1601,7 @@ The PN2222 is one of the most popular NPN transistors for embedded electronics. 
 ---------------
 
 .. image:: _static/Component/32.dio.png
-   :width: 200
+   :width: 400
    :align: center
 
 .. raw:: html
@@ -1623,7 +1623,7 @@ The **1N4007** is a general-purpose **silicon rectifier diode** widely used for 
 A diode allows current to flow in only one direction.
 
 .. image:: _static/Component/32.dio2.png
-   :width: 200
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1642,7 +1642,7 @@ The 1N4007 is a reliable and inexpensive rectifier diode widely used in electron
 -------------------
 
 .. image:: _static/Component/33.power.png
-   :width: 200
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1674,7 +1674,7 @@ This power supply module operates using a 9V battery and provides both 3.3V and 
 33. Battery clip And Battery Box
 --------------------------------
 
-.. image:: _static/Component/34.power.png
+.. image:: _static/Component/34.battery.png
    :width: 500
    :align: center
 
@@ -1682,7 +1682,7 @@ This power supply module operates using a 9V battery and provides both 3.3V and 
 
    <div style="margin-top: 30px;"></div>
 
-.. image:: _static/Component/34.power.png
+.. image:: _static/Component/34.battery2.png
    :width: 500
    :align: center
 
@@ -1733,7 +1733,7 @@ The picture shows the internal structure of a breadboard. Although these holes o
 ----------------
 
 .. image:: _static/Component/36.wiring.png
-   :width: 200
+   :width: 400
    :align: center
 
 .. raw:: html
@@ -1741,7 +1741,7 @@ The picture shows the internal structure of a breadboard. Although these holes o
    <div style="margin-top: 30px;"></div>
 
 .. image:: _static/Component/36.wiring2.png
-   :width: 200
+   :width: 400
    :align: center
 
 .. raw:: html
