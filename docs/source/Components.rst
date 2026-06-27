@@ -1533,7 +1533,7 @@ When EN is HIGH: - If input A is HIGH → output Y is HIGH - If input A is LOW �
 --------------
 
 .. image:: _static/Component/29.the.png
-   :width: 600
+   :width: 400
    :align: center
 
 .. raw:: html
@@ -1559,21 +1559,50 @@ Temperature ↑ → Resistance ↓
 Temperature ↓ → Resistance ↑
 ```
 
-
-**Typical ESP32 Connection**
-
-| Thermistor Lead | ESP32 Connection |
-|-----------------|------------------|
-| One Lead | 3.3V (through a resistor) |
-| Other Lead | ADC Pin (e.g., GPIO34) |
-| GND | Connected through the fixed resistor to form a voltage divider |
-
-
 The NTC thermistor is one of the most widely used temperature sensors in embedded electronics. It offers a simple, low-cost solution for temperature monitoring and is ideal for projects based on ESP32, Arduino, and other microcontroller platforms.
 
 ----
 
+PN2222 Transistor
+------------------
+
+.. image:: _static/Component/31.pn222.png
+   :width: 400
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The **PN2222** is a general-purpose **NPN bipolar junction transistor (BJT)** widely used for electronic switching and signal amplification. It can be controlled by a microcontroller such as an ESP32 or Arduino to drive devices that require more current, such as LEDs, relays, buzzers, and small DC motors.
+
+**Features**
+
+- NPN bipolar junction transistor
+- Fast switching speed
+- Low cost and widely available
+- Suitable for switching and amplification
+- Compatible with Arduino, ESP32, STM32, and other microcontrollers
+
+**Pin Configuration**
+
+Viewed from the flat side with the leads pointing downward:
+
+.. image:: _static/Component/31.pn2222.png
+   :width: 400
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
 
+**Working Principle**
+
+A small current applied to the **Base (B)** controls a much larger current flowing from the **Collector (C)** to the **Emitter (E)**, allowing the transistor to operate as an electronic switch or amplifier.
+
+The PN2222 is one of the most popular NPN transistors for embedded electronics. Its simple operation, reliable performance, and ability to control higher-current loads make it an excellent choice for ESP32, Arduino, and other microcontroller-based projects.
+
+----
 
 
