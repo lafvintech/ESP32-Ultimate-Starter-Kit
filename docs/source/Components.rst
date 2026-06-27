@@ -154,7 +154,7 @@ The DHT11 is a basic, low-cost digital temperature and humidity sensor. It uses 
 
 - **VCC:** Power supply (3.3V or 5V)
 - **GND:** Ground connection     
-- **DATA:** Digital output pin connected to ESP32 GPIO for reading temperature and humidity data
+- **S:** Digital output pin connected to ESP32 GPIO for reading temperature and humidity data
 
 .. note::
    - The DHT11 sensor is suitable for basic temperature and humidity measurements, but it has limited accuracy and a slow response time compared to more advanced sensors. For applications requiring higher precision or faster updates, consider using the DHT22 or other digital sensors.
@@ -246,7 +246,7 @@ The Light Sensor, often based on a photoresistor (LDR) or photodiode, is a devic
 
 - **VCC:** Power supply (3.3V or 5V DC)
 - **GND:** Ground connection
-- **AO:** Analog output pin connected to ESP32 ADC for reading light intensity levels
+- **DO:** Digital output pin connected to the ESP32 ADC, used to read the light intensity level.
 
 .. note::
 
@@ -284,7 +284,7 @@ The Water Level Sensor included in this kit is a simple resistive/analog probe-t
 
 - **VCC:** 3.3V (or 5V) power input — use 3.3V when reading AO with ESP32 ADC
 - **GND:** Ground
-- **AO:** Analog output — connect to an ESP32 ADC-capable pin (e.g., `GPIO34`, `GPIO35`, etc.)
+- **S:** Analog output — connect to an ESP32 ADC-capable pin (e.g., `GPIO34`, `GPIO35`, etc.)
 
 .. note::
 
@@ -386,7 +386,7 @@ A typical joystick module in the kit provides two potentiometers (X and Y axes) 
 
 **Core features:**
 
-- **Axes:** Two analog outputs (`VRx`, `VRy`) for X and Y
+- **Axes:** Two analog outputs (`VRX`, `VRY`) for X and Y
 - **Switch:** One digital output (`SW`) activated when the joystick is pressed
 - **Power:** 3.3V or 5V compatible 
 
@@ -402,13 +402,13 @@ A typical joystick module in the kit provides two potentiometers (X and Y axes) 
 
 - **VCC:** 3.3V
 - **GND:** Ground
-- **VRx:** Analog output for X-axis → ESP32 ADC pin (e.g., `GPIO32`)
-- **VRy:** Analog output for Y-axis → ESP32 ADC pin (e.g., `GPIO33`)
+- **VRX:** Analog output for X-axis → ESP32 ADC pin (e.g., `GPIO32`)
+- **VRY:** Analog output for Y-axis → ESP32 ADC pin (e.g., `GPIO33`)
 - **SW:** Digital switch output → any GPIO with pull-up (e.g., `GPIO14`)
 
 .. note::
 
- - Read `VRx` and `VRy` using ADC and map the values to a joystick range (e.g., 0..1023 or 0..4095). Center position often yields a mid-scale value; apply deadzone filtering to ignore small variations.
+ - Read `VRX` and `VRY` using ADC and map the values to a joystick range (e.g., 0..1023 or 0..4095). Center position often yields a mid-scale value; apply deadzone filtering to ignore small variations.
  - Configure the `SW` pin with an internal pull-up and detect LOW for pressed state.
  - For better stability, apply simple smoothing (moving average) to analog readings.
 
@@ -701,7 +701,7 @@ To help you get to know how 7-segment displays(Common Cathode) display Numbers, 
 
 4-Digit 7-segment display consists of four 7- segment displays working together.
 
-.. image:: _static/Component/17.DIGIT.png
+.. image:: _static/Component/16.1-DIGIT2.png
    :width: 500
    :align: center
 
@@ -845,7 +845,7 @@ above becoming more simple circuit, small volume, convenient installation.
 ------------------------
 
 .. image:: _static/Component/21.actbuzzer.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -876,7 +876,7 @@ There are two main types of buzzers:
 **Connecting the Buzzer**
 
 .. image:: _static/Component/21.actbuzzer2.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1137,7 +1137,7 @@ The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout
    * - 3 YEL (Yellow)
      - 
      - 
-     - 
+     - -
      - -
      - 
      - 
@@ -1283,7 +1283,7 @@ Their relationship can be shown as follows: 1 MΩ=1000 KΩ, 1 KΩ = 1000 Ω. Nor
 When using a resistor, we need to know its resistance first. Here are two methods: you can observe the bands on the resistor, or use a multimeter to measure the resistance. You are recommended to use the first method as it is more convenient and faster. 
 
 .. image:: _static/Component/25.res3.png
-   :width: 300
+   :width: 500
    :align: center
 
 .. raw:: html
