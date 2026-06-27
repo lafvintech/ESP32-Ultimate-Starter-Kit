@@ -13,7 +13,7 @@ While foundational experiments taught you the basics of hands-on hardware intera
 
 ----
 
-1. TEMP and HUMI Meter
+1. TEMP And HUMI Meter
 ----------------------
 
 This experiment is a core project in our introductory practical course on the Internet of Things (IoT). It aims to teach you how to set up an ESP32 as a Wi-Fi hotspot (AP mode) and build an embedded web server to display sensor data in real time on a webpage. You will master the following key skills:
