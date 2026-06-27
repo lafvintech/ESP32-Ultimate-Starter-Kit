@@ -1563,8 +1563,8 @@ The NTC thermistor is one of the most widely used temperature sensors in embedde
 
 ----
 
-PN2222 Transistor
-------------------
+30. PN2222 Transistor
+---------------------
 
 .. image:: _static/Component/31.pn222.png
    :width: 400
@@ -1605,4 +1605,162 @@ The PN2222 is one of the most popular NPN transistors for embedded electronics. 
 
 ----
 
+31. 1N4007 Diode
+---------------
+
+.. image:: _static/Component/32.dio.png
+   :width: 200
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The **1N4007** is a general-purpose **silicon rectifier diode** widely used for converting AC to DC and protecting electronic circuits from reverse voltage. It is one of the most commonly used diodes in power supply and embedded electronics projects.
+
+**Features**
+
+- General-purpose rectifier diode
+- Maximum repetitive reverse voltage: **1000 V**
+- Maximum average forward current: **1 A**
+- Low cost and highly reliable
+- Easy to use in power and protection circuits
+
+**Working Principle**
+
+A diode allows current to flow in only one direction.
+
+.. image:: _static/Component/32.dio2.png
+   :width: 200
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- **Forward Bias:** Conducts current with a forward voltage drop of approximately **0.7 V**.
+- **Reverse Bias:** Blocks current until the reverse voltage exceeds its rated limit.
+
+
+The 1N4007 is a reliable and inexpensive rectifier diode widely used in electronic circuits. Its high reverse voltage rating and simple operation make it an excellent choice for power supplies, circuit protection, and embedded system applications.
+
+----
+
+32. Power Supply Module
+-------------------
+
+.. image:: _static/Component/33.power.png
+   :width: 200
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+Power Supply Module
+
+Modules such as motors require additional power, especially during startup and shutdown. Using a dedicated power supply module can:
+
+- Protect the ESP32 from voltage spikes
+
+- Provide a stable 5V power supply for the motors
+
+- Enhance the safety and reliability of the project
+
+This power supply module operates using a 9V battery and provides both 3.3V and 5V outputs.
+
+.. image:: _static/Component/33.power.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+----
+
+33. Battery clip And Battery Box
+--------------------------------
+
+.. image:: _static/Component/34.power.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+.. image:: _static/Component/34.power.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+This kit includes **two battery power options** for use with the breadboard power supply module. You can choose the appropriate power source based on your project requirements.
+
+* **9V Battery Clip**: Designed for a standard **9V battery**.
+* **6×AA Battery Holder**: Designed for **six AA batteries**.
+
+> **Note:** Batteries are **not included** in this kit and must be purchased separately.
+
+----
+
+34. Breadboard
+--------------
+
+.. image:: _static/Component/35.BOARD.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+A breadboard is a construction base for prototyping of electronics. Originally the word referred to a literal bread board, a polished piece of wood used for slicing bread. In the 1970s the solderless breadboard (a.k.a. plugboard, a terminal array board) became available and nowadays the term “breadboard” is commonly used to refer to these.
+
+It is used to build and test circuits quickly before finishing any circuit design. And it has many holes into which components mentioned above can be inserted like ICs and resistors as well as jumper wires. The breadboard allows you to plug in and remove components easily.
+
+The picture shows the internal structure of a breadboard. Although these holes on the breadboard appear to be independent of each other, they are actually connected to each other through metal strips internally.
+
+- This kit comes with **two 400-point breadboards**. If a project requires more space for circuit assembly, simply connect the two breadboards together using the side interlocking tabs, as shown below, to create a larger prototyping area.
+
+.. image:: _static/Component/35.BOARD2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+----
+
+35. jumper Wires
+----------------
+
+.. image:: _static/Component/36.wiring.png
+   :width: 200
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+.. image:: _static/Component/36.wiring2.png
+   :width: 200
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+Wires that link two terminals are known as jumper wires. There are various types of jumper wires, but here we will focus on those commonly used with breadboards. They serve to transmit electrical signals from any point on the breadboard to the input/output pins of a microcontroller.
+
+Jumper wires are connected by inserting their “end connectors” into the slots of the breadboard. Underneath the breadboard’s surface, there are sets of parallel plates that connect these slots in groups of rows or columns, depending on the section of the board. The “end connectors” are placed into the desired slots on the breadboard without soldering, making connections as needed for the specific prototype.
+
+There are three main types of jumper wires: Female-to-Female, Male-to-Male, and Male-to-Female. The names describe the connectors on each end. Male-to-Female wires have a protruding pin on one end and a recessed female connector on the other. Male-to-Male wires have pins on both ends, while Female-to-Female wires have sockets on both ends.
+
+----
 
