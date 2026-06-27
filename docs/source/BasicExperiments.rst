@@ -1558,7 +1558,7 @@ This experiment is a comprehensive project of human-computer interaction and mul
 
 **Wiring Diagram:**
 
-.. image:: _static/project/BASIC/9.Keyboard.png
+.. image:: _static/project/BASIC/9.keyboard.png
    :width: 700
    :align: center
 
@@ -1769,7 +1769,7 @@ This experiment is a comprehensive project of human-computer interaction and mul
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/9.Keyboard.png
+.. image:: _static/project/BASIC/9.keyboard.png
    :width: 700
    :align: center
 
