@@ -1729,7 +1729,7 @@ The picture shows the internal structure of a breadboard. Although these holes o
 
 ----
 
-35. jumper Wires
+35. Jumper Wires
 ----------------
 
 .. image:: _static/Component/36.wiring.png
