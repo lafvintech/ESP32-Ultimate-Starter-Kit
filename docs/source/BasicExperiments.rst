@@ -1537,3 +1537,248 @@ This experiment is an introductory project for OLED display and scrolling specia
 After the program is burned, the text **LAFVIN** is displayed in the center of the OLED screen (font size 2, approximately in the middle of the screen). After waiting for 2 seconds, the text starts to scroll to the right for 7 seconds, pauses for 1 second, then scrolls to the left for 7 seconds, pauses for 1 second, and so on, forming a dynamic display effect.
 
 ----
+
+10. Keyboard Display
+--------------------
+
+This experiment is a comprehensive project of human-computer interaction and multi-peripheral collaboration. It aims to learn how to combine a 4x4 matrix keyboard with an OLED display to build a real-time key display system. You will master the following core skills: 
+
+ - Matrix keyboard scanning principle: Understand the row and row scanning mechanism, detect key presses through row and row intersections, and save GPIO pin resources (4+4=8 pins control 16 keys) 
+
+ - Use of Keypad library: Master the configuration and calling of Keypad.h library, including key mapping, row and column pin definition, key detection and anti-shake processing 
+
+ - OLED display driver: Use the Adafruit_SSD1306 library to drive the OLED screen of the I2C interface, and learn operations such as display initialization, screen clearing, and text rendering.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 4X4 Keyboard
+ - 0.96 Inch Display
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/9.Keyboard.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - SSD1306 OLED
+     - VCC
+     - 3.3V
+   * - 1
+     - SSD1306 OLED
+     - GND
+     - GND
+   * - 1
+     - SSD1306 OLED
+     - SCL
+     - GPIO 22
+   * - 1
+     - SSD1306 OLED
+     - SDA
+     - GPIO 21
+   * - 2
+     - Keypad Row 1
+     - R1
+     - GPIO 18
+   * - 2
+     - Keypad Row 2
+     - R2
+     - GPIO 19
+   * - 2
+     - Keypad Row 3
+     - R3
+     - GPIO 23
+   * - 2
+     - Keypad Row 4
+     - R4
+     - GPIO 32
+   * - 3
+     - Keypad Column 1
+     - C1
+     - GPIO 27
+   * - 3
+     - Keypad Column 2
+     - C2
+     - GPIO 26
+   * - 3
+     - Keypad Column 3
+     - C3
+     - GPIO 25
+   * - 3
+     - Keypad Column 4
+     - C4
+     - GPIO 33
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <Keypad.h>
+ #include <Wire.h>
+ #include <Adafruit_GFX.h>
+ #include <Adafruit_SSD1306.h>
+
+ // ==================== OLED Configuration ====================
+ #define SCREEN_WIDTH 128
+ #define SCREEN_HEIGHT 64
+ #define OLED_RESET    -1  // Not used for I2C
+ #define I2C_ADDRESS   0x3C  // Common I2C address for OLED
+
+ // Create OLED display object
+ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+ // ==================== Keypad Configuration ====================
+ const byte ROWS = 4;  // 4 rows
+ const byte COLS = 4;  // 4 columns
+
+ // Key mapping
+ char keys[ROWS][COLS] = {
+   {'1', '2', '3', 'A'},
+   {'4', '5', '6', 'B'},
+   {'7', '8', '9', 'C'},
+   {'*', '0', '#', 'D'}
+ };
+
+ // Pin connections (avoid GPIO 21,22 for keypad to prevent conflict with OLED)
+ byte rowPins[ROWS] = {18, 19, 23, 32};  // R1, R2, R3, R4
+ byte colPins[COLS] = {27, 26, 25, 33};  // C1, C2, C3, C4
+
+ // Create Keypad object
+ Keypad customKeypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+ // ==================== Variables ====================
+ char lastKey = '\0';  // Last pressed key
+
+ // ==================== Setup Function ====================
+ void setup() {
+   // Initialize I2C for OLED (SDA=GPIO21, SCL=GPIO22)
+   Wire.begin(21, 22);
+   
+   // Initialize OLED display
+   if (!display.begin(SSD1306_SWITCHCAPVCC, I2C_ADDRESS)) {
+     // If display initialization fails, loop forever
+     while (true);
+   }
+   
+   // Clear screen
+   display.clearDisplay();
+   
+   // Set text color (white on black background)
+   display.setTextColor(SSD1306_WHITE);
+   
+   // Display startup message
+   display.setTextSize(1);
+   display.setCursor(0, 0);
+   display.println("Keypad Ready");
+   display.println("Press any key");
+   display.display();
+   
+   // Wait 2 seconds then clear
+   delay(2000);
+   display.clearDisplay();
+   display.display();
+ }
+
+ // ==================== Main Loop ====================
+ void loop() {
+   char customKey = customKeypad.getKey();
+   
+   if (customKey && customKey != lastKey) {
+     // Clear screen before displaying new key
+     display.clearDisplay();
+     
+     // Use large font for the key
+     display.setTextSize(4);  // Extra large text
+     
+     // Calculate position to center the key
+     String keyStr = String(customKey);
+     int16_t x1, y1;
+     uint16_t w, h;
+     display.getTextBounds(keyStr, 0, 0, &x1, &y1, &w, &h);
+     
+     // Center the text
+     int x = (SCREEN_WIDTH - w) / 2;
+     int y = (SCREEN_HEIGHT - h) / 2;
+     
+     display.setCursor(x, y);
+     display.print(customKey);
+     display.display();
+     
+     // Record last key
+     lastKey = customKey;
+   } else if (!customKey) {
+     // Reset last key when no key is pressed
+     lastKey = '\0';
+   }
+   
+   // Small delay to debounce
+   delay(50);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/9.Keyboard.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- The OLED screen first displays the startup prompt "Keypad Ready / Press any key". The screen clears after 2 seconds and enters standby mode.
+
+- When any key of the matrix keyboard is pressed, the character of the key (0-9, A-D, *, #) will be displayed in real time in the center of the OLED screen in a large font (font size 4). The screen will remain unchanged after the key is released, and will be updated to the new character the next time a new key is pressed, achieving clear key visual feedback.
+
+----
