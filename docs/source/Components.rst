@@ -845,7 +845,7 @@ above becoming more simple circuit, small volume, convenient installation.
 ------------------------
 
 .. image:: _static/Component/21.actbuzzer.png
-   :width: 500
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -876,7 +876,7 @@ There are two main types of buzzers:
 **Connecting the Buzzer**
 
 .. image:: _static/Component/21.actbuzzer2.png
-   :width: 500
+   :width: 300
    :align: center
 
 .. raw:: html
