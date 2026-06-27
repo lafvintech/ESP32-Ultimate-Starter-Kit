@@ -334,7 +334,7 @@ The HC-SR04 is an ultrasonic distance sensor commonly used to measure the distan
 ----------------------------------------
 
 .. image:: _static/Component/10.ir.png
-   :width: 800
+   :width: 500
    :align: center
 
 .. raw:: html
@@ -1445,3 +1445,91 @@ The operating principle is straightforward. When the switch is tilted at a speci
    <div style="margin-top: 30px;"></div>
 
 ----
+
+28. 74HC595
+------------
+
+.. image:: _static/Component/28.74hc.png
+   :width: 100
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The 74HC595 consists of an 8−bit shift register and a storage register with three−state parallel outputs. It converts serial input into parallel output so you can save IO ports of an MCU.
+
+* When MR (pin10) is high level and OE (pin13) is low level, data is input in the rising edge of SHcp and goes to the memory register through the rising edge of SHcp. 
+* If the two clocks are connected together, the shift register is always one pulse earlier than the memory register. 
+* There is a serial shift input pin (Ds), a serial output pin (Q) and an asynchronous reset button (low level) in the memory register. 
+* The memory register outputs a Bus with a parallel 8-bit and in three states. 
+* When OE is enabled (low level), the data in memory register is output to the bus(Q0 ~ Q7).
+
+* `74HC595 Datasheet <https://www.ti.com/lit/ds/symlink/cd74hc595.pdf?ts=1617341564801>`_
+
+.. image:: _static/Component/28.74hc2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+Pins of 74HC595 and their functions:
+
+* **Q0-Q7**: 8-bit parallel data output pins, able to control 8 LEDs or 8 pins of 7-segment display directly.
+* **Q7'**: Series output pin, connected to DS of another 74HC595 to connect multiple 74HC595s in series
+* **MR**: Reset pin, active at low level; 
+* **SHcp**: Time sequence input of shift register. On the rising edge, the data in shift register moves successively one bit, i.e. data in Q1 moves to Q2, and so forth. While on the falling edge, the data in shift register remain unchanged.
+* **STcp**: Time sequence input of storage register. On the rising edge, data in the shift register moves into memory register.
+* **CE**: Output enable pin, active at low level. 
+* **DS**: Serial data input pin
+* **VCC**: Positive supply voltage.
+* **GND**: Ground.
+
+----
+
+28. L293D
+---------
+
+.. image:: _static/Component/30.L293D3.png
+   :width: 100
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The L293D is a dual H-bridge motor driver chip commonly used with platforms like Arduino and ESP32 to control DC motors and stepper motors.
+
+It integrates two sets of H-bridge driver circuits, allowing it to independently drive two DC motors or one four-phase stepper motor. Featuring built-in flyback protection diodes, it eliminates the need for external protection diodes and offers ease of use, making it a widely adopted motor driver chip in electronics education and robotics projects.
+
+.. image:: _static/Component/30.L293D.png
+   :width: 400
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The L293D has three important types of pins: 
+- Enable pins (EN): Turn the motor control on/off 
+- Input pins (A): Control the direction (forward/reverse) 
+- Output pins (Y): Connect to the motor
+
+When EN is HIGH: - If input A is HIGH → output Y is HIGH - If input A is LOW → output Y is LOW.
+
+.. image:: _static/Component/30.L293D2.png
+   :width: 400
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+----
+
+
+
+
+
