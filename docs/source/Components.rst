@@ -9,6 +9,12 @@ Components Introduction
 
    <div style="margin-top: 30px;"></div>
 
+Extensive Components and Smart Modules: The kit includes a variety of popular modules.
+
+such as ultrasonic sensors, RFID modules, servo motors, MPU6050 angle sensors, OLED displays, temperature and humidity sensors, and PIR motion sensors—enabling users to build dozens of creative DIY projects right out of the box.
+
+Below is the introduction to each component, which contains the operating principle of the component.
+
 ----
 
 
