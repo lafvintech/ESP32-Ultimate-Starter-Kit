@@ -1963,7 +1963,7 @@ After the program is uploaded, the system enters monitoring mode.
 
  - The buzzer continues to sound as long as the motion persists, while the timer is continuously reset. 
  
-  - Once the motion stops, the buzzer remains active for another 3 seconds (to prevent frequent start-stop cycles caused by brief pauses) before automatically turning off; the serial port then outputs the message "✅ Motion stopped, buzzer off," and the system returns to standby mode, awaiting the next trigger.
+ - Once the motion stops, the buzzer remains active for another 3 seconds (to prevent frequent start-stop cycles caused by brief pauses) before automatically turning off; the serial port then outputs the message "✅ Motion stopped, buzzer off," and the system returns to standby mode, awaiting the next trigger.
 
 ----
 
