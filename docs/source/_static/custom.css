@@ -88,3 +88,73 @@ table.docutils {
     margin-left: auto;
     margin-right: auto;
 }
+
+/*==============================
+  H2 Title
+==============================*/
+
+h2{
+
+    background:#2980B9;
+
+    color:#fff !important;
+
+    padding:14px 22px;
+
+    margin-top:45px;
+
+    margin-bottom:22px;
+
+    border:none !important;
+
+    border-radius:10px;
+
+    box-shadow:
+
+        0 4px 10px rgba(0,0,0,.12);
+
+    font-size:28px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+h2:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+        0 8px 20px rgba(0,0,0,.18);
+
+}
+
+h2 .headerlink{
+
+    color:white !important;
+
+    opacity:0;
+
+    transition:.2s;
+
+}
+
+h2:hover .headerlink{
+
+    opacity:1;
+
+}
+
+@media (max-width:768px){
+
+    h2{
+
+        font-size:22px;
+
+        padding:12px 18px;
+
+    }
+
+}
