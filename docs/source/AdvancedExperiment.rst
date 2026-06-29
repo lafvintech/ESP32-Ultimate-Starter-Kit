@@ -1602,9 +1602,9 @@ This experiment is a comprehensive project integrating IoT remote control and se
 
    <div style="margin-top: 30px;"></div>
 
-The ESP32 creates a Wi-Fi hotspot named "ESP32_Servo_Control.
+The ESP32 creates a Wi-Fi hotspot named **ESP32_Servo_Control**.
 
-- After connecting to this Wi-Fi network via a smartphone or computer, accessing the address 192.168.4.1 opens a control page. This page features a 3D visualization of the servo, an angle display, a slider, and quick-action buttons (0°, 90°, and 180°).
+- After connecting to this Wi-Fi network via a smartphone or computer, accessing the address **192.168.4.1** opens a control page. This page features a 3D visualization of the servo, an angle display, a slider, and quick-action buttons (0°, 90°, and 180°).
 
 - Dragging the slider or clicking the quick-action buttons causes the servo to immediately rotate to the specified angle; simultaneously, the 3D visualization rotates in sync and the angle value updates in real-time, delivering a "what-you-see-is-what-you-get" remote control experience.
 
@@ -1613,20 +1613,21 @@ The ESP32 creates a Wi-Fi hotspot named "ESP32_Servo_Control.
 4. Colorful RGB
 ---------------
 
-This experiment is an advanced project on analog sensor signal acquisition and mathematical modeling. It aims to learn how to use the ESP32's ADC to read the resistance changes of the NTC thermistor and accurately calculate the ambient temperature through a simplified version of the Steinhart-Hart equation (B value formula). You will master the following core skills: 
+This experiment is a comprehensive project on IoT-based smart lighting control. It aims to teach you how to drive WS2812B full-color RGB LED strips using an ESP32 and remotely control various dynamic lighting effects via a Wi-Fi-hosted web interface. You will master the following core skills:
 
-- Principle of NTC thermistor: Understand the characteristics of negative temperature coefficient resistance decreasing with increasing temperature, and master the application of B value formula 
+- **FastLED Library Usage:** Learn the driving principles of WS2812B programmable LEDs and master key functions such as `addLeds()`, `show()`, `fadeToBlackBy()`, and `nscale8_video()`.
 
-- ADC high-precision sampling: using 12-bit resolution (0~4095) and 11dB attenuation, read the voltage value of the voltage divider circuit 
+- **Multi-mode Lighting Algorithms:** Implement three dynamic effects—Chase, Gradient, and Flow—while gaining an understanding of the HSV color model and brightness control.
 
-- Software filtering technology: Reduce noise interference and improve measurement stability through multiple sampling averages (20 times) 
+- **Custom RGB Color Mixing:** Independently adjust red, green, and blue channels via sliders to create any desired color, with support for real-time preview.
 
-- Voltage dividing circuit calculation: According to the series voltage dividing principle, the NTC current resistance value is deduced from the ADC voltage value.
+- **Hardware Button Integration:** Use GPIO buttons for physical mode switching (short-press to cycle through modes), enabling operation without a network connection.
 
 **Materials Needed:**
 
  - ESP32 Development Board
- - Thermistor
+ - RGB LED strip
+ - Button
  - Resistor (10K)
  - Breadboard and Jumper Wires
 
@@ -1651,36 +1652,284 @@ This experiment is an advanced project on analog sensor signal acquisition and m
      - Pin
      - Connect to
    * - 1
-     - NTC Thermistor
-     - One pin
-     - GPIO 34 (ADC)
+     - WS2812B LED Strip
+     - VCC
+     - 5V
    * - 1
-     - NTC Thermistor
-     - Other pin
+     - WS2812B LED Strip
      - GND
+     - GND
+   * - 1
+     - WS2812B LED Strip
+     - DATA
+     - GPIO 5
    * - 2
-     - 10kΩ Resistor
+     - Button
      - One pin
      - 3.3V
    * - 2
+     - Button
+     - Other pin
+     - GPIO 4
+   * - 3
+     - 10kΩ Resistor
+     - One pin
+     - GPIO 4
+   * - 3
      - 10kΩ Resistor
      - Other pin
-     - GPIO 34 (ADC)
+     - GND
 
 **Example code:**
 
+.. raw:: html
 
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-rgb" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+ #include <FastLED.h>
+
+ #define LED_PIN 5
+ #define NUM_LEDS 8
+ #define BUTTON_PIN 4
+
+ CRGB leds[NUM_LEDS];
+ WebServer server(80);
+
+ bool power = false;
+ int mode = 0;
+ bool customMode = false;
+ int r = 255, g = 100, b = 150;
+
+ int hueOffset = 0;
+ int chasePos = 0;
+
+ const char* html = R"(
+ <!DOCTYPE html>
+ <html>
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>RGB Light</title>
+ <style>
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{background:#f5f5f5;font-family:-apple-system,Helvetica Neue,Segoe UI,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+ .container{background:#fff;border-radius:24px;padding:40px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.06);border:1px solid #f0f0f0}
+ h1{font-size:24px;font-weight:300;letter-spacing:3px;text-align:center;margin-bottom:8px;color:#1a1a1a}
+ .sub{text-align:center;font-size:13px;color:#999;letter-spacing:2px;margin-bottom:28px}
+ .status{display:flex;justify-content:space-between;padding:12px 16px;background:#f8f8f8;border-radius:12px;margin-bottom:24px;font-size:13px;color:#666}
+ .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+ .dot.on{background:#2ecc71}
+ .dot.off{background:#e74c3c}
+ .btn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+ .btn{background:#f8f8f8;border:2px solid transparent;padding:14px 8px;border-radius:12px;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;font-family:inherit;color:#333}
+ .btn:hover{background:#f0f0f0}
+ .btn.active{background:#1a1a1a;color:#fff}
+ .btn-power{grid-column:span 3;padding:16px}
+ .btn-power.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+ .sec{margin-bottom:20px}
+ .sec-title{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#999;margin-bottom:10px;font-weight:500}
+ .row{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+ .row .lbl{font-size:13px;color:#555;min-width:20px}
+ .row .val{font-size:12px;color:#888;min-width:32px;text-align:right}
+ input[type=range]{-webkit-appearance:none;flex:1;height:3px;border-radius:2px;background:#e0e0e0;outline:none}
+ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#1a1a1a;cursor:pointer}
+ .toggle{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f8f8f8;border-radius:12px;margin-bottom:14px;cursor:pointer}
+ .toggle-track{width:44px;height:24px;background:#ddd;border-radius:12px;position:relative;transition:.3s;flex-shrink:0}
+ .toggle-track.on{background:#1a1a1a}
+ .toggle-thumb{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:.3s}
+ .toggle-track.on .toggle-thumb{left:22px}
+ .toggle-label{font-size:13px;color:#555}
+ .rgb-ctrl{opacity:0.4;pointer-events:none;transition:.3s}
+ .rgb-ctrl.active{opacity:1;pointer-events:auto}
+ .rgb-ctrl .row .lbl{font-weight:500;font-size:12px}
+ .rgb-ctrl .row .lbl.r{color:#e74c3c}
+ .rgb-ctrl .row .lbl.g{color:#2ecc71}
+ .rgb-ctrl .row .lbl.b{color:#3498db}
+ .preview{display:flex;align-items:center;gap:16px;padding:12px 16px;background:#f8f8f8;border-radius:12px;margin-top:8px}
+ .color-box{width:48px;height:48px;border-radius:12px;flex-shrink:0;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+ .color-info{font-size:12px;color:#888}
+ .color-info strong{color:#1a1a1a;font-weight:500}
+ .footer{text-align:center;font-size:11px;color:#ccc;margin-top:24px;padding-top:20px;border-top:1px solid #f0f0f0}
+ </style>
+ </head>
+ <body>
+ <div class=container>
+ <h1>✦ ESP32-RGB</h1>
+ <div class=status><div><span class=dot id=dot></span><span id=status>Off</span></div><div>Mode: <span id=modeText>—</span></div></div>
+ <div class=btn-grid>
+ <button class=btn onclick=setMode(1)>▶ Chase</button>
+ <button class=btn onclick=setMode(2)>◈ Gradient</button>
+ <button class=btn onclick=setMode(3)>〰 Flow</button>
+ <button class="btn btn-power" id=pwr onclick=togglePower()>⏻ Power</button>
+ </div>
+ <div class=sec>
+ <div class=sec-title>Color</div>
+ <div class=toggle onclick=toggleCustom()><div class=toggle-track id=tt><div class=toggle-thumb></div></div><div class=toggle-label>Custom RGB <span id=togStatus>Off</span></div></div>
+ <div class=rgb-ctrl id=rgbCtrl>
+ <div class=row><span class=lbl r>R</span><input type=range id=red min=0 max=255 value=255 oninput=updateRGB()><span class=val id=redVal>255</span></div>
+ <div class=row><span class=lbl g>G</span><input type=range id=green min=0 max=255 value=100 oninput=updateRGB()><span class=val id=greenVal>100</span></div>
+ <div class=row><span class=lbl b>B</span><input type=range id=blue min=0 max=255 value=150 oninput=updateRGB()><span class=val id=blueVal>150</span></div>
+ </div>
+ <div class=preview><div class=color-box id=colorBox></div><div class=color-info><strong id=hex>#FF6496</strong><br><span id=rgbText>RGB(255,100,150)</span></div></div>
+ </div>
+ <div class=footer></div>
+ </div>
+ <script>
+ let custom=false;
+ function upd(){
+ fetch('/status').then(r=>r.json()).then(d=>{
+ document.getElementById('dot').className='dot '+(d.power?'on':'off');
+ document.getElementById('status').textContent=d.power?'On':'Off';
+ document.getElementById('modeText').textContent=['—','Chase','Gradient','Flow'][d.mode]||'—';
+ document.getElementById('pwr').className='btn btn-power'+(d.power?' on':'');
+ document.querySelectorAll('.btn-grid .btn:not(.btn-power)').forEach((b,i)=>{b.className='btn'+(i+1==d.mode?' active':'')});
+ if(d.custom){
+ document.getElementById('red').value=d.r;document.getElementById('green').value=d.g;document.getElementById('blue').value=d.b;
+ document.getElementById('redVal').textContent=d.r;document.getElementById('greenVal').textContent=d.g;document.getElementById('blueVal').textContent=d.b;
+ custom=d.custom;updToggle();updColor(d.r,d.g,d.b);
+ }
+})}
+ function togglePower(){fetch('/power',{method:'POST'}).then(()=>upd())}
+ function setMode(m){fetch('/mode?mode='+m,{method:'POST'}).then(()=>upd())}
+ function toggleCustom(){custom=!custom;fetch('/custom?state='+(custom?1:0),{method:'POST'}).then(()=>{updToggle();document.getElementById('rgbCtrl').className='rgb-ctrl'+(custom?' active':'');if(custom)updateRGB();upd()})}
+ function updToggle(){document.getElementById('tt').className='toggle-track'+(custom?' on':'');document.getElementById('togStatus').textContent=custom?'On':'Off'}
+ function updateRGB(){const r=parseInt(document.getElementById('red').value),g=parseInt(document.getElementById('green').value),b=parseInt(document.getElementById('blue').value);document.getElementById('redVal').textContent=r;document.getElementById('greenVal').textContent=g;document.getElementById('blueVal').textContent=b;updColor(r,g,b);fetch('/rgb?r='+r+'&g='+g+'&b='+b,{method:'POST'})}
+ function updColor(r,g,b){const h='#'+[r,g,b].map(c=>c.toString(16).padStart(2,'0')).join('');document.getElementById('colorBox').style.background=h;document.getElementById('hex').textContent=h.toUpperCase();document.getElementById('rgbText').textContent='RGB('+r+','+g+','+b+')'}
+ upd();setInterval(upd,800);
+ </script>
+ </body>
+ </html>
+ )";
+
+ void chase() {
+     if (!power) return;
+     for (int i = 0; i < NUM_LEDS; i++) leds[i].fadeToBlackBy(20);
+     CRGB color = customMode ? CRGB(r, g, b) : CHSV(hueOffset++, 200, 128);
+     leds[chasePos] = color;
+     chasePos = (chasePos + 1) % NUM_LEDS;
+     FastLED.show();
+     delay(150);
+ }
+
+ void gradient() {
+     if (!power) return;
+     if (customMode) {
+         for (int i = 0; i < NUM_LEDS; i++) {
+             float f = (float)i / NUM_LEDS;
+             leds[i] = CRGB(r * (0.3 + 0.7 * (1 - f)), g * (0.3 + 0.7 * f), b * (0.3 + 0.7 * (1 - sin(f * 3.14))));
+         }
+     } else {
+         hueOffset++;
+         for (int i = 0; i < NUM_LEDS; i++) leds[i] = CHSV(hueOffset + i * 2, 200, 128);
+     }
+     FastLED.show();
+     delay(20);
+ }
+
+ void flow() {
+     if (!power) return;
+     if (customMode) {
+         int waveOffset = (millis() / 30) % 256;
+         for (int i = 0; i < NUM_LEDS; i++) {
+             leds[i] = CRGB(r, g, b);
+             leds[i].nscale8_video((sin8(i * 16 + waveOffset * 2) * 128) / 255);
+         }
+     } else {
+         hueOffset += 2;
+         for (int i = 0; i < NUM_LEDS; i++) {
+             leds[i] = CHSV(hueOffset + i * 4, 220, (sin8(i * 12 + hueOffset * 2) * 128) / 255);
+         }
+     }
+     FastLED.show();
+     delay(25);
+ }
+
+ void handleRoot() { server.send(200, "text/html", html); }
+
+ void handleStatus() {
+     String j = "{\"power\":" + String(power ? "true" : "false") + ",\"mode\":" + String(mode) + ",\"custom\":" + String(customMode ? "true" : "false") + ",\"r\":" + String(r) + ",\"g\":" + String(g) + ",\"b\":" + String(b) + "}";
+     server.send(200, "application/json", j);
+ }
+
+ void handlePower() {
+     power = !power;
+     if (!power) { FastLED.clear(); FastLED.show(); mode = 0; }
+     server.send(200, "text/plain", "OK");
+ }
+
+ void handleMode() {
+     if (server.hasArg("mode")) { mode = server.arg("mode").toInt(); if (mode > 3) mode = 0; if (mode > 0) power = true; }
+     server.send(200, "text/plain", "OK");
+ }
+
+ void handleCustom() {
+     if (server.hasArg("state")) customMode = server.arg("state").toInt() == 1;
+     server.send(200, "text/plain", "OK");
+ }
+
+ void handleRGB() {
+     if (server.hasArg("r") && server.hasArg("g") && server.hasArg("b")) {
+         r = constrain(server.arg("r").toInt(), 0, 255);
+         g = constrain(server.arg("g").toInt(), 0, 255);
+         b = constrain(server.arg("b").toInt(), 0, 255);
+     }
+     server.send(200, "text/plain", "OK");
+ }
+
+ void button() {
+     static unsigned long last = 0;
+     if (millis() - last < 300) return;
+     last = millis();
+     if (digitalRead(BUTTON_PIN) == HIGH) {
+         mode = (mode + 1) % 4;
+         if (mode == 0) { power = false; FastLED.clear(); FastLED.show(); } else power = true;
+     }
+ }
+
+ void setup() {
+     FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);
+     FastLED.clear();
+     FastLED.show();
+     pinMode(BUTTON_PIN, INPUT);
+     WiFi.softAP("ESP32-RGB", NULL);
+     server.on("/", handleRoot);
+     server.on("/status", handleStatus);
+     server.on("/power", HTTP_POST, handlePower);
+     server.on("/mode", HTTP_POST, handleMode);
+     server.on("/custom", HTTP_POST, handleCustom);
+     server.on("/rgb", HTTP_POST, handleRGB);
+     server.begin();
+ }
+
+ void loop() {
+     server.handleClient();
+     button();
+     static unsigned long lastEffect = 0;
+     if (millis() - lastEffect > 15) {
+         lastEffect = millis();
+         switch (mode) {
+             case 1: chase(); break;
+             case 2: gradient(); break;
+             case 3: flow(); break;
+         }
+     }
+     delay(1);
+ }
 .. raw:: html
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-SG90" onclick="toggleCode('code-container-SG90', 'expand-btn-SG90')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-rgb" onclick="toggleCode('code-container-rgb', 'expand-btn-rgb')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-SG90 { transition: max-height 0.4s ease-in-out; }
+   #code-container-rgb { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -1712,11 +1961,15 @@ This experiment is an advanced project on analog sensor signal acquisition and m
 
    <div style="margin-top: 30px;"></div>
 
-The ESP32 creates a Wi-Fi hotspot named "ESP32_Servo_Control.
+After flashing the firmware, the ESP32 creates a Wi-Fi hotspot named **ESP32-RGB** . Once a smartphone or computer connects to this network, accessing **192.168.4.1** opens the control page, which offers comprehensive lighting controls:
 
-- After connecting to this Wi-Fi network via a smartphone or computer, accessing the address 192.168.4.1 opens a control page. This page features a 3D visualization of the servo, an angle display, a slider, and quick-action buttons (0°, 90°, and 180°).
+Power Control: Toggle the LED strip on or off; turning it off clears all LEDs and resets the mode.
 
-- Dragging the slider or clicking the quick-action buttons causes the servo to immediately rotate to the specified angle; simultaneously, the 3D visualization rotates in sync and the angle value updates in real-time, delivering a "what-you-see-is-what-you-get" remote control experience.
+Three Dynamic Modes: Chase, Gradient (rainbow fade), and Flow (flowing halo); switching modes takes effect immediately.
+
+Custom RGB Color Mixing: Enable custom mode via the toggle switch to independently adjust the Red, Green, and Blue channels with real-time color preview.
+
+Physical Button: A short press of the button connected to GPIO4 cycles through the modes (Chase → Gradient → Flow → Off → Cycle).
 
 ----
 
