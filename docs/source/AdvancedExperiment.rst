@@ -1973,3 +1973,348 @@ After flashing the firmware, the ESP32 creates a Wi-Fi hotspot named **ESP32-RGB
 
 ----
 
+5. IR Display
+-------------
+
+This experiment is an integrated project combining infrared (IR) remote control decoding with IoT-based display. It aims to teach you how to use an ESP32 to read signals from an IR remote and display the corresponding button information in real-time via a Wi-Fi web page. You will master the following core skills:
+
+- Use of the IRremote library: Learn the principles of signal decoding for IR receivers and master key functions such as **`IrReceiver.begin()`, `decode()`, and `resume()`** . 
+
+- IR protocols and key mapping: Understand the data structure of the NEC IR protocol, extract button command codes using **`decodedIRData.command`** , and map them to human-readable characters. 
+
+- Wi-Fi AP mode application: Configure the ESP32 as a wireless access point (AP), allowing a smartphone to connect directly without a router. 
+
+- Web Server and AJAX polling: Return the latest button press via the `/key` endpoint, with the front-end polling for updates every 150ms to achieve near real-time display.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Infrared Receiver Module
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/5.ir.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - IR Receiver 
+     - VCC
+     - 3.3V
+   * - 1
+     - IR Receiver
+     - GND
+     - GND
+   * - 1
+     - IR Receiver
+     - S (OUT)
+     - GPIO 15
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-ir" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+ #include <IRremote.h>
+ #include <Preferences.h>
+
+ // ===== Hardware Definitions =====
+ #define IR_RECEIVE_PIN 15
+ String lastKey = "";      // Save last key press
+ String currentKey = "";
+
+ // ===== WiFi Configuration =====
+ const char* apSSID = "IR_Display";  // Access Point SSID 
+ const char* apPassword = NULL;     
+
+ // ===== Web Server =====
+ WebServer server(80);
+
+ // ===== Key Mapping =====
+ String keyMap(uint32_t code) {
+   switch(code) {
+     case 0x16: return "1";
+     case 0x19: return "2";
+     case 0x0d: return "3";
+     case 0x0c: return "4";
+     case 0x18: return "5";
+     case 0x5e: return "6";
+     case 0x08: return "7";
+     case 0x1c: return "8";
+     case 0x5A: return "9";
+     case 0x52: return "0";
+     case 0x42: return "*";
+     case 0x4A: return "#";
+     case 0x46: return "UP";
+     case 0x15: return "DOWN";
+     case 0x40: return "OK";
+     case 0x44: return "LEFT";
+     case 0x43: return "RIGHT";
+     default: return "";
+   }
+ }
+
+ //HTML Control Page 
+ String controlHTMLPage() {
+   String page = R"rawliteral(
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>IR Remote Display</title>
+ <style>
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+   
+   body {
+     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+                  'Helvetica Neue', Arial, sans-serif;
+     background: #ffffff;
+     color: #000000;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     margin: 0;
+     padding: 20px;
+   }
+   
+   .container {
+     text-align: center;
+     max-width: 600px;
+     width: 100%;
+   }
+   
+   h1 {
+     font-size: 24px;
+     font-weight: 300;
+     letter-spacing: 2px;
+     margin-bottom: 40px;
+     color: #000000;
+     border-bottom: 1px solid #e0e0e0;
+     padding-bottom: 20px;
+   }
+   
+   .key-display {
+     font-size: 120px;
+     font-weight: 100;
+     color: #000000;
+     margin: 40px 0;
+     min-height: 150px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     letter-spacing: 4px;
+   }
+   
+   .key-display .placeholder {
+     font-size: 40px;
+     font-weight: 100;
+     color: #cccccc;
+   }
+   
+   .status {
+     font-size: 14px;
+     font-weight: 300;
+     color: #888888;
+     margin-top: 30px;
+     letter-spacing: 1px;
+     border-top: 1px solid #f0f0f0;
+     padding-top: 20px;
+   }
+   
+   .status span {
+     display: inline-block;
+     width: 6px;
+     height: 6px;
+     background: #4CAF50;
+     border-radius: 50%;
+     margin-right: 8px;
+     animation: pulse 2s infinite;
+   }
+   
+   @keyframes pulse {
+     0% { opacity: 1; }
+     50% { opacity: 0.3; }
+     100% { opacity: 1; }
+   }
+   
+   @media (max-width: 480px) {
+     h1 {
+       font-size: 20px;
+     }
+     .key-display {
+       font-size: 80px;
+       min-height: 100px;
+     }
+   }
+ </style>
+ </head>
+ <body>
+   <div class="container">
+     <h1>IR REMOTE DISPLAY</h1>
+     <div class="key-display" id="keyValue">
+       <span class="placeholder">—</span>
+     </div>
+     <div class="status">
+       <span></span> Ready
+     </div>
+   </div>
+
+ <script>
+ function fetchKey() {
+   fetch('/key')
+     .then(response => response.text())
+     .then(data => {
+       const display = document.getElementById('keyValue');
+       if (data && data.trim() !== '') {
+         display.innerHTML = data.trim();
+       } else {
+         display.innerHTML = '<span class="placeholder">—</span>';
+       }
+     })
+     .catch(err => {
+       console.error('Fetch error:', err);
+     });
+ }
+
+ // Fetch key every 150ms for responsive feel
+ setInterval(fetchKey, 150);
+ </script>
+ </body>
+ </html>
+ )rawliteral";
+   return page;
+ }
+
+ // ===== Route Handlers =====
+ void handleRoot() {
+   server.send(200, "text/html", controlHTMLPage());
+ }
+
+ void handleKey() {
+   server.send(200, "text/plain", currentKey);
+ }
+
+ // ===== Setup Access Point =====
+ void setupAccessPoint() {
+   Serial.println("Setting up Access Point...");
+   WiFi.softAP(apSSID, apPassword);
+   Serial.println("Access Point started");
+   Serial.println("SSID: " + String(apSSID));
+   Serial.println("Password: None (Open Network)");
+   Serial.println("IP address: " + WiFi.softAPIP().toString());
+   Serial.println("Connect to this AP and open http://" + WiFi.softAPIP().toString());
+ }
+
+ // ===== Setup =====
+ void setup() {
+   Serial.begin(115200);
+   Serial.println("ESP32 IR Remote Web Display");
+   
+   // Setup Access Point (AP Mode)
+   setupAccessPoint();
+
+   // IR Receiver initialization
+   IrReceiver.begin(IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK);
+   Serial.println("IR Receiver initialized");
+
+   // Web server routes
+   server.on("/", handleRoot);
+   server.on("/key", handleKey);
+   
+   server.begin();
+   Serial.println("Web server started.");
+ }
+
+ // ===== Main Loop =====
+ void loop() {
+   server.handleClient();
+
+   // Detect IR signals
+   if (IrReceiver.decode()) {
+     uint32_t code = IrReceiver.decodedIRData.command; // Get command code
+     String key = keyMap(code);
+
+     if (key != "" && key != lastKey) {  // Only update for new keys
+       currentKey = key;
+       lastKey = key;
+       Serial.print("Key pressed: ");
+       Serial.println(currentKey);
+     }
+
+     IrReceiver.resume();  // Prepare for next reception
+   }
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-ir" onclick="toggleCode('code-container-ir', 'expand-btn-ir')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-ir { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/5.IR2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- After flashing the program, the ESP32 creates a Wi-Fi hotspot named **IR_Display**. Connect your smartphone or computer to this Wi-Fi network and visit **192.168.4.1** to open the display page.
+
+- When you point an IR remote control at the receiver and press any button, the name of the corresponding button appears in large text in the center of the page; when no button is pressed, a "—" placeholder is displayed.
+
+----
