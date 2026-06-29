@@ -979,3 +979,795 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 
 ----
 
+3. Web-Control Servo
+---------------------
+
+This experiment is a comprehensive project integrating IoT remote control and servo driving, designed to teach you how to remotely control the rotation of an SG90 servo motor via an ESP32 using a web interface. You will master the following core skills:
+
+- ESP32Servo Library Usage: Learn the principles of driving servos via PWM signals and master key functions such as `attach()` and `write()`. 
+
+- RESTful API Design: Implement state setting and querying through endpoints like `/set?angle=xx` and `/status`, while understanding the communication architecture of frontend-backend separation. 
+
+- Frontend Development (HTML/CSS/JavaScript): Design a responsive interactive interface featuring a slider, angle display, synchronized 3D servo visualization, and input debouncing. 
+
+- Real-time Visual Feedback: Synchronize the rotation of the frontend servo visualization with the actual angle and implement two-way binding between the slider and the numerical display to enhance the user experience. 
+
+- JSON Data Interaction: Use the `fetch()` API for asynchronous requests to retrieve the current angle status, ensuring synchronization during page initialization.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - SG90 Servo
+ - Power Supply 
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/2.hcsr04.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - SG90 Servo
+     - Red (VCC)
+     - 5V
+   * - 1
+     - SG90 Servo
+     - Brown (GND)
+     - GND
+   * - 1
+     - SG90 Servo
+     - Orange (Signal)
+     - GPIO 13
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ // LED pins
+ #define RED_LED     13
+ #define YELLOW_LED  12
+
+ // Button pins
+ #define BUTTON1     18
+ #define BUTTON2     19
+
+ // LED state variables
+ bool redState = false;
+ bool yellowState = false;
+
+ // Save previous button states
+ bool lastButton1 = LOW;
+ bool lastButton2 = LOW;
+
+ void setup()
+ {
+    pinMode(RED_LED, OUTPUT);
+    pinMode(YELLOW_LED, OUTPUT);
+    pinMode(BUTTON1, INPUT);
+    pinMode(BUTTON2, INPUT);
+ }
+
+ void loop()
+ {
+    // Read current button states
+    bool currentButton1 = digitalRead(BUTTON1);
+    bool currentButton2 = digitalRead(BUTTON2);
+
+    // ===== Button 1: Control red LED =====
+    // Detect rising edge (LOW to HIGH: button pressed)
+    if (lastButton1 == LOW && currentButton1 == HIGH)
+    {
+        redState = !redState;
+        digitalWrite(RED_LED, redState);
+        delay(200);  // Simple debounce
+    }
+
+    // ===== Button 2: Control yellow LED =====
+    if (lastButton2 == LOW && currentButton2 == HIGH)
+    {
+        yellowState = !yellowState;
+        digitalWrite(YELLOW_LED, yellowState);
+        delay(200);  // Simple debounce
+    }
+
+    // Save current states
+    lastButton1 = currentButton1;
+    lastButton2 = currentButton2;
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/2.buttonled2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- Pressing button 1 (GPIO18): The red LED's state toggles—it turns on if currently off, and off if currently on, toggling each time it's pressed.
+
+- Pressing button 2 (GPIO19): The yellow LED follows the same toggling logic, without interfering with each other.
+
+----
+
+4. Thermometer
+--------------
+
+This experiment is an advanced project on analog sensor signal acquisition and mathematical modeling. It aims to learn how to use the ESP32's ADC to read the resistance changes of the NTC thermistor and accurately calculate the ambient temperature through a simplified version of the Steinhart-Hart equation (B value formula). You will master the following core skills: 
+
+- Principle of NTC thermistor: Understand the characteristics of negative temperature coefficient resistance decreasing with increasing temperature, and master the application of B value formula 
+
+- ADC high-precision sampling: using 12-bit resolution (0~4095) and 11dB attenuation, read the voltage value of the voltage divider circuit 
+
+- Software filtering technology: Reduce noise interference and improve measurement stability through multiple sampling averages (20 times) 
+
+- Voltage dividing circuit calculation: According to the series voltage dividing principle, the NTC current resistance value is deduced from the ADC voltage value.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Thermistor
+ - Resistor (10K)
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/7.Thermometer.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - NTC Thermistor
+     - One pin
+     - GPIO 34 (ADC)
+   * - 1
+     - NTC Thermistor
+     - Other pin
+     - GND
+   * - 2
+     - 10kΩ Resistor
+     - One pin
+     - 3.3V
+   * - 2
+     - 10kΩ Resistor
+     - Other pin
+     - GPIO 34 (ADC)
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-SG90" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+ #include <ESP32Servo.h>
+
+ // ========== WiFi AP Configuration ==========
+ const char* ap_ssid = "ESP32_Servo_Control";
+ const char* ap_password = NULL;               
+
+ // ========== Pin Definition ==========
+ const int servoPin = 13;    // Servo signal pin (GPIO13)
+
+ // ========== Web Server ==========
+ WebServer server(80);
+
+ // ========== Servo Object ==========
+ Servo myServo;
+
+ // ========== Current State ==========
+ int currentAngle = 90;      // Starting at 90 degrees (center)
+
+ // ========== HTML Page - Minimalist White Style ==========
+ const char index_html[] PROGMEM = R"rawliteral(
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+     <title>Servo Control</title>
+     <style>
+         * {
+             margin: 0;
+             padding: 0;
+             box-sizing: border-box;
+         }
+         
+         body {
+             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+             background: #ffffff;
+             min-height: 100vh;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             padding: 20px;
+         }
+         
+         .container {
+             background: #ffffff;
+             text-align: center;
+             max-width: 420px;
+             width: 100%;
+         }
+         
+         h1 {
+             font-size: 28px;
+             font-weight: 600;
+             color: #000000;
+             letter-spacing: -0.5px;
+             margin-bottom: 8px;
+         }
+         
+         .subtitle {
+             color: #666666;
+             font-size: 14px;
+             font-weight: 400;
+             margin-bottom: 40px;
+         }
+         
+         /* Servo Model Container */
+         .servo-model {
+             background: #f5f5f5;
+             border-radius: 24px;
+             padding: 30px 20px;
+             margin-bottom: 32px;
+         }
+         
+         /* Servo Body */
+         .servo-body {
+             width: 200px;
+             height: 140px;
+             background: #e0e0e0;
+             border-radius: 20px;
+             margin: 0 auto;
+             position: relative;
+             box-shadow: none;
+             border: 1px solid #cccccc;
+         }
+         
+         /* Servo Top Cap */
+         .servo-top {
+             width: 160px;
+             height: 30px;
+             background: #d0d0d0;
+             border-radius: 12px;
+             position: absolute;
+             top: -15px;
+             left: 50%;
+             transform: translateX(-50%);
+             border: 1px solid #bbbbbb;
+         }
+         
+         /* Servo Horn (Rotating Part) */
+         .servo-horn {
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             width: 60px;
+             height: 60px;
+             transform: translate(-50%, -50%) rotate(0deg);
+             transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+         }
+         
+         .horn-center {
+             width: 16px;
+             height: 16px;
+             background: #333333;
+             border-radius: 50%;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             z-index: 3;
+         }
+         
+         .horn-arm {
+             position: absolute;
+             top: 0;
+             left: 50%;
+             width: 6px;
+             height: 35px;
+             background: #555555;
+             transform: translateX(-50%);
+             border-radius: 3px;
+         }
+         
+         .horn-arm::before {
+             content: '';
+             position: absolute;
+             top: -6px;
+             left: -5px;
+             width: 16px;
+             height: 8px;
+             background: #666666;
+             border-radius: 3px;
+         }
+         
+         .horn-arm::after {
+             content: '';
+             position: absolute;
+             bottom: -6px;
+             left: -5px;
+             width: 16px;
+             height: 8px;
+             background: #666666;
+             border-radius: 3px;
+         }
+         
+         /* Screws */
+         .screw {
+             position: absolute;
+             width: 8px;
+             height: 8px;
+             background: #999999;
+             border-radius: 50%;
+         }
+         
+         .screw-1 { top: 15px; left: 15px; }
+         .screw-2 { top: 15px; right: 15px; }
+         .screw-3 { bottom: 15px; left: 15px; }
+         .screw-4 { bottom: 15px; right: 15px; }
+         
+         /* Label */
+         .servo-label {
+             position: absolute;
+             bottom: 12px;
+             left: 50%;
+             transform: translateX(-50%);
+             font-size: 10px;
+             font-weight: 600;
+             color: #555555;
+             background: #e0e0e0;
+             padding: 2px 8px;
+             border-radius: 20px;
+             font-family: monospace;
+         }
+         
+         /* Angle Arc */
+         .angle-arc {
+             margin-top: 24px;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 0 10px;
+         }
+         
+         .arc-label {
+             font-size: 12px;
+             color: #888888;
+         }
+         
+         .arc-line {
+             flex: 1;
+             height: 3px;
+             background: #e0e0e0;
+             border-radius: 2px;
+             margin: 0 12px;
+             position: relative;
+         }
+         
+         .arc-fill {
+             position: absolute;
+             height: 3px;
+             background: #000000;
+             border-radius: 2px;
+             width: 50%;
+             transition: width 0.15s ease;
+         }
+         
+         /* Angle Display */
+         .angle-display {
+             margin-bottom: 28px;
+         }
+         
+         .angle-value {
+             font-size: 48px;
+             font-weight: 600;
+             color: #000000;
+             font-family: monospace;
+         }
+         
+         .angle-unit {
+             font-size: 16px;
+             color: #888888;
+             margin-left: 4px;
+         }
+         
+         /* Slider */
+         .slider-container {
+             margin-bottom: 28px;
+         }
+         
+         input[type="range"] {
+             width: 100%;
+             height: 4px;
+             -webkit-appearance: none;
+             background: #e0e0e0;
+             border-radius: 2px;
+             outline: none;
+         }
+         
+         input[type="range"]::-webkit-slider-thumb {
+             -webkit-appearance: none;
+             width: 20px;
+             height: 20px;
+             background: #000000;
+             border-radius: 50%;
+             cursor: pointer;
+             border: none;
+         }
+         
+         input[type="range"]::-webkit-slider-thumb:hover {
+             transform: scale(1.1);
+         }
+         
+         /* Button Group */
+         .button-group {
+             display: flex;
+             gap: 12px;
+             justify-content: center;
+         }
+         
+         .btn {
+             padding: 12px 24px;
+             font-size: 15px;
+             font-weight: 500;
+             border: 1px solid #cccccc;
+             background: #ffffff;
+             color: #333333;
+             border-radius: 30px;
+             cursor: pointer;
+             transition: all 0.2s ease;
+         }
+         
+         .btn:hover {
+             background: #f0f0f0;
+             border-color: #999999;
+         }
+         
+         .btn:active {
+             transform: scale(0.96);
+         }
+         
+         /* Divider */
+         .divider {
+             height: 1px;
+             background: #eeeeee;
+             margin: 32px 0 20px 0;
+         }
+         
+         .info-text {
+             font-size: 11px;
+             color: #aaaaaa;
+             margin-top: 20px;
+         }
+         
+         @media (max-width: 480px) {
+             .container { padding: 0; }
+             h1 { font-size: 24px; }
+             .servo-body { width: 180px; height: 125px; }
+             .servo-top { width: 145px; }
+             .angle-value { font-size: 40px; }
+             .btn { padding: 10px 20px; font-size: 14px; }
+         }
+     </style>
+     <script>
+         let currentAngle = 90;
+         let isUpdating = false;
+         
+         function setAngle(angle) {
+             if (isUpdating) return;
+             isUpdating = true;
+             
+             angle = Math.min(180, Math.max(0, angle));
+             currentAngle = angle;
+             
+             updateUI();
+             
+             fetch('/set?angle=' + angle)
+                 .catch(error => console.error('Error:', error))
+                 .finally(() => {
+                     setTimeout(() => { isUpdating = false; }, 100);
+                 });
+         }
+         
+         function updateUI() {
+             const slider = document.getElementById('angleSlider');
+             if (slider) slider.value = currentAngle;
+             
+             const angleSpan = document.getElementById('angleValue');
+             if (angleSpan) angleSpan.textContent = currentAngle;
+             
+             const horn = document.getElementById('servoHorn');
+             if (horn) {
+                 const rotation = currentAngle - 90;
+                 horn.style.transform = 'translate(-50%, -50%) rotate(' + rotation + 'deg)';
+             }
+             
+             const arcFill = document.getElementById('arcFill');
+             if (arcFill) {
+                 const percent = (currentAngle / 180) * 100;
+                 arcFill.style.width = percent + '%';
+             }
+         }
+         
+         function resetAngle() {
+             setAngle(90);
+         }
+         
+         function setMinAngle() {
+             setAngle(0);
+         }
+         
+         function setMaxAngle() {
+             setAngle(180);
+         }
+         
+         document.addEventListener('DOMContentLoaded', () => {
+             const slider = document.getElementById('angleSlider');
+             if (slider) {
+                 slider.addEventListener('input', (e) => {
+                     setAngle(parseInt(e.target.value));
+                 });
+             }
+             
+             fetch('/status')
+                 .then(response => response.json())
+                 .then(data => {
+                     if (data.angle !== undefined) {
+                         currentAngle = data.angle;
+                         updateUI();
+                     }
+                 })
+                 .catch(error => console.error('Status error:', error));
+         });
+     </script>
+ </head>
+ <body>
+     <div class="container">
+         <h1>Servo Control</h1>
+         <div class="subtitle">SG90 Servo Motor</div>
+         
+         <!-- Servo Model -->
+         <div class="servo-model">
+             <div class="servo-body">
+                 <div class="servo-top"></div>
+                 <div class="servo-horn" id="servoHorn">
+                     <div class="horn-arm"></div>
+                     <div class="horn-center"></div>
+                 </div>
+                 <div class="screw screw-1"></div>
+                 <div class="screw screw-2"></div>
+                 <div class="screw screw-3"></div>
+                 <div class="screw screw-4"></div>
+                 <div class="servo-label">SG90</div>
+             </div>
+             
+             <div class="angle-arc">
+                 <span class="arc-label">0°</span>
+                 <div class="arc-line">
+                     <div class="arc-fill" id="arcFill"></div>
+                 </div>
+                 <span class="arc-label">180°</span>
+             </div>
+         </div>
+         
+         <!-- Angle Display -->
+         <div class="angle-display">
+             <span class="angle-value" id="angleValue">90</span>
+             <span class="angle-unit">degrees</span>
+         </div>
+         
+         <!-- Slider -->
+         <div class="slider-container">
+             <input type="range" id="angleSlider" min="0" max="180" value="90">
+         </div>
+         
+         <!-- Buttons -->
+         <div class="button-group">
+             <button class="btn" onclick="setMinAngle()">0°</button>
+             <button class="btn" onclick="resetAngle()">90°</button>
+             <button class="btn" onclick="setMaxAngle()">180°</button>
+         </div>
+         
+         <div class="divider"></div>
+         <div class="info-text">ESP32 · SG90 Servo Controller</div>
+     </div>
+ </body>
+ </html>
+ )rawliteral";
+
+ // ========== Servo Control Functions ==========
+ void setServoAngle(int angle) {
+     angle = constrain(angle, 0, 180);
+     currentAngle = angle;
+     myServo.write(currentAngle);
+     Serial.print("Servo angle: ");
+     Serial.print(currentAngle);
+     Serial.println("°");
+ }
+
+ // ========== Web Request Handlers ==========
+ void handleRoot() {
+     server.send(200, "text/html", index_html);
+ }
+
+ void handleSet() {
+     if (server.hasArg("angle")) {
+         int newAngle = server.arg("angle").toInt();
+         setServoAngle(newAngle);
+         server.send(200, "text/plain", "OK");
+     } else {
+         server.send(400, "text/plain", "Bad Request");
+     }
+ }
+
+ void handleStatus() {
+     String json = "{\"angle\":" + String(currentAngle) + "}";
+     server.send(200, "application/json", json);
+ }
+
+ void handleNotFound() {
+     server.send(404, "text/plain", "404: Not Found");
+ }
+
+ // ========== Setup ==========
+ void setup() {
+     Serial.begin(115200);
+     delay(100);
+     
+     myServo.attach(servoPin);
+     myServo.write(currentAngle);
+     
+     Serial.println();
+     Serial.println("=== ESP32 SG90 Servo Controller ===");
+     Serial.print("Initial angle: ");
+     Serial.print(currentAngle);
+     Serial.println("°");
+     
+     Serial.print("Starting AP: ");
+     Serial.println(ap_ssid);
+     
+     WiFi.softAP(ap_ssid, ap_password);
+     
+     IPAddress apIP = WiFi.softAPIP();
+     Serial.print("AP IP: ");
+     Serial.println(apIP);
+     
+     server.on("/", handleRoot);
+     server.on("/set", handleSet);
+     server.on("/status", handleStatus);
+     server.onNotFound(handleNotFound);
+     
+     server.begin();
+     Serial.println("Server started");
+     Serial.print("Connect to: ");
+     Serial.println(ap_ssid);
+     Serial.print("Then visit: http://");
+     Serial.println(apIP);
+     Serial.println("====================================");
+ }
+
+ void loop() {
+     server.handleClient();
+     delay(10);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-SG90" onclick="toggleCode('code-container-SG90', 'expand-btn-SG90')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-SG90 { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/7.Thermometer.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The ESP32 creates a Wi-Fi hotspot named "ESP32_Servo_Control.
+
+- After connecting to this Wi-Fi network via a smartphone or computer, accessing the address 192.168.4.1 opens a control page. This page features a 3D visualization of the servo, an angle display, a slider, and quick-action buttons (0°, 90°, and 180°).
+
+- Dragging the slider or clicking the quick-action buttons causes the servo to immediately rotate to the specified angle; simultaneously, the 3D visualization rotates in sync and the angle value updates in real-time, delivering a "what-you-see-is-what-you-get" remote control experience.
+
+----
+
