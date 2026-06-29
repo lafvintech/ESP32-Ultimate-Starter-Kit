@@ -1782,3 +1782,188 @@ This experiment is a comprehensive project of human-computer interaction and mul
 
 ----
 
+11. Human Body Detection
+--------------------------
+
+This experiment serves as an introductory project linking motion detection with an audio-visual alarm system. It aims to teach you how to use an ESP32 to read signals from a Passive Infrared (PIR) motion sensor and drive an active buzzer to trigger an alarm. You will master the following core skills:
+
+ - PIR Motion Sensor Interfacing: Learn to read digital signals and understand the sensor's output characteristics—specifically, high-level output (motion detected) versus low-level output (stationary).
+
+ - Active Buzzer Control: Drive the buzzer directly via a digital output pin and understand the distinction between active buzzers (which have a built-in oscillator) and passive buzzers.
+
+ - Non-blocking Timer Design: Use `millis()` for timing control to ensure the buzzer continues sounding for 3 seconds after motion ceases before turning off, thereby preventing false triggers and rapid on/off cycling.
+
+ - State Machine Programming: Manage the buzzer's state using an `isBuzzerActive` flag to implement the complete logic flow: "Trigger → Hold → Delayed Turn-off."
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - PIR Motion Sensor
+ - Active Buzzer
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/11.pir.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - PIR Motion Sensor
+     - VCC
+     - 5V
+   * - 1
+     - PIR Motion Sensor
+     - GND
+     - GND
+   * - 1
+     - PIR Motion Sensor
+     - OUT (Signal)
+     - GPIO 27
+   * - 2
+     - Active Buzzer
+     - Positive (+)
+     - GPIO 26
+   * - 2
+     - Active Buzzer
+     - Negative (-)
+     - GND
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-pir" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ // ==================== ESP32 Pin Definitions ====================
+ const int buzzerPin = 26;      // Active buzzer positive pin
+ const int motionSensor = 27;   // Motion sensor signal pin
+
+ // ==================== Timing Variables ====================
+ unsigned long previousMillis = 0;   // Last trigger time
+ unsigned long currentMillis;        // Current time
+ const long interval = 3000;         // Buzzer duration after motion stops (milliseconds)
+
+ // ==================== State Variables ====================
+ bool isBuzzerActive = false;        // Buzzer status flag
+
+ // ==================== Setup ====================
+ void setup() {
+   // Initialize serial communication
+   Serial.begin(115200);
+   Serial.println("=================================");
+   Serial.println("ESP32 Motion Sensor Alarm System");
+   Serial.println("Active Buzzer Version");
+   Serial.println("=================================");
+   Serial.println("System ready, monitoring...");
+   Serial.println("Buzzer will sound when motion is detected");
+   Serial.println("=================================");
+   
+   // Set pin modes
+   pinMode(buzzerPin, OUTPUT);
+   pinMode(motionSensor, INPUT);
+   
+   // Ensure buzzer is off initially
+   digitalWrite(buzzerPin, LOW);
+ }
+
+ // ==================== Main Loop ====================
+ void loop() {
+   // Read current motion detection state
+   int reading = digitalRead(motionSensor);
+   currentMillis = millis();
+   
+   // Motion detected (HIGH level)
+   if (reading == HIGH) {
+     // If buzzer is not active, turn it on
+     if (!isBuzzerActive) {
+       digitalWrite(buzzerPin, HIGH);
+       isBuzzerActive = true;
+       Serial.println("⚠️ Motion detected! Buzzer alarm!");
+     }
+     // Reset timer every time motion is detected
+     previousMillis = currentMillis;
+   } 
+   else {
+     // No motion detected, check if buzzer needs to be turned off
+     if (isBuzzerActive) {
+       // Check if duration has been exceeded
+       if (currentMillis - previousMillis >= interval) {
+         digitalWrite(buzzerPin, LOW);
+         isBuzzerActive = false;
+         Serial.println("✅ Motion stopped, buzzer off");
+       }
+     }
+   }
+   
+   delay(50);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-pir" onclick="toggleCode('code-container-pir', 'expand-btn-pir')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-pir { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/11.pir2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is uploaded, the system enters monitoring mode. 
+
+ - When the PIR sensor detects human motion, the buzzer sounds immediately, and the serial port outputs the warning message "⚠️ Motion detected! Buzzer alarm!". 
+
+ - The buzzer continues to sound as long as the motion persists, while the timer is continuously reset. 
+ 
+  - Once the motion stops, the buzzer remains active for another 3 seconds (to prevent frequent start-stop cycles caused by brief pauses) before automatically turning off; the serial port then outputs the message "✅ Motion stopped, buzzer off," and the system returns to standby mode, awaiting the next trigger.
+
+----
+

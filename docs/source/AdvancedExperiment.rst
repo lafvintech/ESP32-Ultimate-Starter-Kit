@@ -2535,7 +2535,7 @@ This experiment is a comprehensive project integrating web interaction with OLED
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/3.SG902.png
+.. image:: _static/project/IOT/6.ir.png
    :width: 600
    :align: center
 
@@ -2550,3 +2550,4 @@ After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_WEB_
  - When a user modifies the text in any field and clicks the "UPDATE DISPLAY" button, the OLED screen immediately updates to show the new content; simultaneously, the page automatically refreshes to the home screen, with the input fields reflecting the latest content.
 
 ----
+
