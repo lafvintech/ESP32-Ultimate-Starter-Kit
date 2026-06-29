@@ -2383,7 +2383,7 @@ This experiment is a comprehensive project integrating web interaction with OLED
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-servo" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-oled" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
