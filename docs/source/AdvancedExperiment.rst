@@ -2362,19 +2362,19 @@ This experiment is a comprehensive project integrating web interaction with OLED
      - Pin
      - Connect to
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - VCC
      - 3.3V
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - GND
      - GND
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - SCL
      - GPIO 22
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - SDA
      - GPIO 21
 
