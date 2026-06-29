@@ -579,7 +579,7 @@ This experiment is an advanced project on analog sensor signal acquisition and m
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-the', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-the" onclick="toggleCode('code-container-the', 'expand-btn-the')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
@@ -672,7 +672,7 @@ This experiment is an introductory project on digital sensor driving and data ac
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-temp" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -717,12 +717,12 @@ This experiment is an introductory project on digital sensor driving and data ac
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-temp" onclick="toggleCode('code-container-temp', 'expand-btn-temp')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-temp { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -831,7 +831,7 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-rfid" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -919,12 +919,12 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-rfid" onclick="toggleCode('code-container-rfid', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-rfid { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
