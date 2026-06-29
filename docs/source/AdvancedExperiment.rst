@@ -1693,9 +1693,9 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
  #include <WebServer.h>
  #include <FastLED.h>
 
- #define LED_PIN 5
+ #define LED_PIN 4
  #define NUM_LEDS 8
- #define BUTTON_PIN 4
+ #define BUTTON_PIN 5
 
  CRGB leds[NUM_LEDS];
  WebServer server(80);
