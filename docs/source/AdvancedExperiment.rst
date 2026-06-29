@@ -1003,7 +1003,7 @@ This experiment is a comprehensive project integrating IoT remote control and se
 
 **Wiring Diagram:**
 
-.. image:: _static/project/IOT/2.hcsr04.png
+.. image:: _static/project/IOT/3.SG90.png
    :width: 600
    :align: center
 
@@ -1034,176 +1034,16 @@ This experiment is a comprehensive project integrating IoT remote control and se
      - Orange (Signal)
      - GPIO 13
 
-**Example code:**
+.. note::
 
-.. raw:: html
-
-   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
-
-.. code-block:: cpp
-
- // LED pins
- #define RED_LED     13
- #define YELLOW_LED  12
-
- // Button pins
- #define BUTTON1     18
- #define BUTTON2     19
-
- // LED state variables
- bool redState = false;
- bool yellowState = false;
-
- // Save previous button states
- bool lastButton1 = LOW;
- bool lastButton2 = LOW;
-
- void setup()
- {
-    pinMode(RED_LED, OUTPUT);
-    pinMode(YELLOW_LED, OUTPUT);
-    pinMode(BUTTON1, INPUT);
-    pinMode(BUTTON2, INPUT);
- }
-
- void loop()
- {
-    // Read current button states
-    bool currentButton1 = digitalRead(BUTTON1);
-    bool currentButton2 = digitalRead(BUTTON2);
-
-    // ===== Button 1: Control red LED =====
-    // Detect rising edge (LOW to HIGH: button pressed)
-    if (lastButton1 == LOW && currentButton1 == HIGH)
-    {
-        redState = !redState;
-        digitalWrite(RED_LED, redState);
-        delay(200);  // Simple debounce
-    }
-
-    // ===== Button 2: Control yellow LED =====
-    if (lastButton2 == LOW && currentButton2 == HIGH)
-    {
-        yellowState = !yellowState;
-        digitalWrite(YELLOW_LED, yellowState);
-        delay(200);  // Simple debounce
-    }
-
-    // Save current states
-    lastButton1 = currentButton1;
-    lastButton2 = currentButton2;
- }
-
-.. raw:: html
-
-   </div>
-   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
-   </div>
-   </div>
-
-   <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
-   </style>
-
-   <script>
-   function toggleCode(containerId, buttonId) {
-     const container = document.getElementById(containerId);
-     const btn = document.getElementById(buttonId);
-     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
-       container.style.maxHeight = 'none';
-       btn.textContent = '✕ Collapse Code';
-     } else {
-       container.style.maxHeight = '420px';
-       btn.textContent = '▼ Expand All Code';
-     }
-   }
-   </script>
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-**Display Effect:**
-
-.. image:: _static/project/BASIC/2.buttonled2.png
-   :width: 500
-   :align: center
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-- Pressing button 1 (GPIO18): The red LED's state toggles—it turns on if currently off, and off if currently on, toggling each time it's pressed.
-
-- Pressing button 2 (GPIO19): The yellow LED follows the same toggling logic, without interfering with each other.
-
-----
-
-4. Thermometer
---------------
-
-This experiment is an advanced project on analog sensor signal acquisition and mathematical modeling. It aims to learn how to use the ESP32's ADC to read the resistance changes of the NTC thermistor and accurately calculate the ambient temperature through a simplified version of the Steinhart-Hart equation (B value formula). You will master the following core skills: 
-
-- Principle of NTC thermistor: Understand the characteristics of negative temperature coefficient resistance decreasing with increasing temperature, and master the application of B value formula 
-
-- ADC high-precision sampling: using 12-bit resolution (0~4095) and 11dB attenuation, read the voltage value of the voltage divider circuit 
-
-- Software filtering technology: Reduce noise interference and improve measurement stability through multiple sampling averages (20 times) 
-
-- Voltage dividing circuit calculation: According to the series voltage dividing principle, the NTC current resistance value is deduced from the ADC voltage value.
-
-**Materials Needed:**
-
- - ESP32 Development Board
- - Thermistor
- - Resistor (10K)
- - Breadboard and Jumper Wires
-
-**Wiring Diagram:**
-
-.. image:: _static/project/BASIC/7.Thermometer.png
-   :width: 700
-   :align: center
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
-**Wiring Table**
-
-.. list-table:: 
-   :header-rows: 1
-   :widths: 10 20 20 25
-
-   * - No.
-     - Component
-     - Pin
-     - Connect to
-   * - 1
-     - NTC Thermistor
-     - One pin
-     - GPIO 34 (ADC)
-   * - 1
-     - NTC Thermistor
-     - Other pin
-     - GND
-   * - 2
-     - 10kΩ Resistor
-     - One pin
-     - 3.3V
-   * - 2
-     - 10kΩ Resistor
-     - Other pin
-     - GPIO 34 (ADC)
+    The servo requires a 5V power supply for stable operation; therefore, a breadboard power supply module used in conjunction with a battery is needed to provide a stable 5V supply.
 
 **Example code:**
 
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-SG90" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-servo" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -1721,6 +1561,115 @@ This experiment is an advanced project on analog sensor signal acquisition and m
      server.handleClient();
      delay(10);
  }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-servo" onclick="toggleCode('code-container-servo', 'expand-btn-SG90')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-servo { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/3.SG902.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+The ESP32 creates a Wi-Fi hotspot named "ESP32_Servo_Control.
+
+- After connecting to this Wi-Fi network via a smartphone or computer, accessing the address 192.168.4.1 opens a control page. This page features a 3D visualization of the servo, an angle display, a slider, and quick-action buttons (0°, 90°, and 180°).
+
+- Dragging the slider or clicking the quick-action buttons causes the servo to immediately rotate to the specified angle; simultaneously, the 3D visualization rotates in sync and the angle value updates in real-time, delivering a "what-you-see-is-what-you-get" remote control experience.
+
+----
+
+4. Colorful RGB
+---------------
+
+This experiment is an advanced project on analog sensor signal acquisition and mathematical modeling. It aims to learn how to use the ESP32's ADC to read the resistance changes of the NTC thermistor and accurately calculate the ambient temperature through a simplified version of the Steinhart-Hart equation (B value formula). You will master the following core skills: 
+
+- Principle of NTC thermistor: Understand the characteristics of negative temperature coefficient resistance decreasing with increasing temperature, and master the application of B value formula 
+
+- ADC high-precision sampling: using 12-bit resolution (0~4095) and 11dB attenuation, read the voltage value of the voltage divider circuit 
+
+- Software filtering technology: Reduce noise interference and improve measurement stability through multiple sampling averages (20 times) 
+
+- Voltage dividing circuit calculation: According to the series voltage dividing principle, the NTC current resistance value is deduced from the ADC voltage value.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Thermistor
+ - Resistor (10K)
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/7.Thermometer.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - NTC Thermistor
+     - One pin
+     - GPIO 34 (ADC)
+   * - 1
+     - NTC Thermistor
+     - Other pin
+     - GND
+   * - 2
+     - 10kΩ Resistor
+     - One pin
+     - 3.3V
+   * - 2
+     - 10kΩ Resistor
+     - Other pin
+     - GPIO 34 (ADC)
+
+**Example code:**
+
+
 
 .. raw:: html
 
