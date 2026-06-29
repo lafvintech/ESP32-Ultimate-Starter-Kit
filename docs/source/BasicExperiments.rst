@@ -1028,7 +1028,7 @@ This experiment is an introductory project for audio frequency generation and mu
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-pbu" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -1078,12 +1078,12 @@ This experiment is an introductory project for audio frequency generation and mu
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-pbu" onclick="toggleCode('code-container-pbu', 'expand-btn-pbu')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-pbu { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -1184,7 +1184,7 @@ This experiment is a practical project applying embedded state machines. It aims
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-tilt" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -1349,12 +1349,12 @@ This experiment is a practical project applying embedded state machines. It aims
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-tilt" onclick="toggleCode('code-container-tilt', 'expand-btn-tilt')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-tilt { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -1455,7 +1455,7 @@ This experiment is an introductory project for OLED display and scrolling specia
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-oled" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -1499,12 +1499,12 @@ This experiment is an introductory project for OLED display and scrolling specia
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-oled" onclick="toggleCode('code-container-oled', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-oled { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -1632,7 +1632,7 @@ This experiment is a comprehensive project of human-computer interaction and mul
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-key" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -1742,12 +1742,12 @@ This experiment is a comprehensive project of human-computer interaction and mul
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-key" onclick="toggleCode('code-container-key', 'expand-btn-key')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-key { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
