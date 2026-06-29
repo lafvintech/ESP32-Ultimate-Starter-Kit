@@ -1633,7 +1633,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 
 **Wiring Diagram:**
 
-.. image:: _static/project/BASIC/4.rgb.png
+.. image:: _static/project/IOT/4.rgb.png
    :width: 700
    :align: center
 
@@ -1953,7 +1953,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/4.rgb2.png
+.. image:: _static/project/IOT/4.rgb2.png
    :width: 700
    :align: center
 
