@@ -1633,7 +1633,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 
 **Wiring Diagram:**
 
-.. image:: _static/project/BASIC/7.Thermometer.png
+.. image:: _static/project/BASIC/4.rgb.png
    :width: 700
    :align: center
 
@@ -1662,7 +1662,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
    * - 1
      - WS2812B LED Strip
      - DATA
-     - GPIO 5
+     - GPIO 4
    * - 2
      - Button
      - One pin
@@ -1670,11 +1670,11 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
    * - 2
      - Button
      - Other pin
-     - GPIO 4
+     - GPIO 5
    * - 3
      - 10kΩ Resistor
      - One pin
-     - GPIO 4
+     - GPIO 5
    * - 3
      - 10kΩ Resistor
      - Other pin
@@ -1953,7 +1953,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/7.Thermometer.png
+.. image:: _static/project/BASIC/4.rgb2.png
    :width: 700
    :align: center
 
@@ -1963,13 +1963,13 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 
 After flashing the firmware, the ESP32 creates a Wi-Fi hotspot named **ESP32-RGB** . Once a smartphone or computer connects to this network, accessing **192.168.4.1** opens the control page, which offers comprehensive lighting controls:
 
-Power Control: Toggle the LED strip on or off; turning it off clears all LEDs and resets the mode.
+ - Power Control: Toggle the LED strip on or off; turning it off clears all LEDs and resets the mode.
 
-Three Dynamic Modes: Chase, Gradient (rainbow fade), and Flow (flowing halo); switching modes takes effect immediately.
+ - Three Dynamic Modes: Chase, Gradient (rainbow fade), and Flow (flowing halo); switching modes takes effect immediately.
 
-Custom RGB Color Mixing: Enable custom mode via the toggle switch to independently adjust the Red, Green, and Blue channels with real-time color preview.
+ - Custom RGB Color Mixing: Enable custom mode via the toggle switch to independently adjust the Red, Green, and Blue channels with real-time color preview.
 
-Physical Button: A short press of the button connected to GPIO4 cycles through the modes (Chase → Gradient → Flow → Off → Cycle).
+ - Physical Button: A short press of the button connected to GPIO4 cycles through the modes (Chase → Gradient → Flow → Off → Cycle).
 
 ----
 
