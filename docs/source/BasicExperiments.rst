@@ -462,10 +462,11 @@ This experiment is an advanced project on analog sensor signal acquisition and m
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-the" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
-   #include <Arduino.h>
+
+ #include <Arduino.h>
 
  // Pin definition
  #define NTC_ADC_PIN    34
@@ -578,12 +579,12 @@ This experiment is an advanced project on analog sensor signal acquisition and m
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-dht" onclick="toggleCode('code-container-dht', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-dht" onclick="toggleCode('code-container-the', 'expand-btn-dht')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-dht { transition: max-height 0.4s ease-in-out; }
+   #code-container-the { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -1782,3 +1783,4 @@ This experiment is a comprehensive project of human-computer interaction and mul
 - When any key of the matrix keyboard is pressed, the character of the key (0-9, A-D, *, #) will be displayed in real time in the center of the OLED screen in a large font (font size 4). The screen will remain unchanged after the key is released, and will be updated to the new character the next time a new key is pressed, achieving clear key visual feedback.
 
 ----
+
