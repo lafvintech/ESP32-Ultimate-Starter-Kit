@@ -1595,7 +1595,7 @@ This experiment is a comprehensive project integrating IoT remote control and se
 **Display Effect:**
 
 .. image:: _static/project/IOT/3.SG902.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -1634,7 +1634,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/4.rgb.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -1954,7 +1954,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 **Display Effect:**
 
 .. image:: _static/project/IOT/4.rgb2.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -1995,7 +1995,7 @@ This experiment is an integrated project combining infrared (IR) remote control 
 **Wiring Diagram:**
 
 .. image:: _static/project/IOT/5.ir.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
@@ -2306,7 +2306,7 @@ This experiment is an integrated project combining infrared (IR) remote control 
 **Display Effect:**
 
 .. image:: _static/project/IOT/5.IR2.png
-   :width: 700
+   :width: 600
    :align: center
 
 .. raw:: html
