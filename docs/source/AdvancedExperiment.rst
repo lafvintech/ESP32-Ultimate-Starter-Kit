@@ -2318,3 +2318,235 @@ This experiment is an integrated project combining infrared (IR) remote control 
 - When you point an IR remote control at the receiver and press any button, the name of the corresponding button appears in large text in the center of the page; when no button is pressed, a "—" placeholder is displayed.
 
 ----
+
+
+6. Custom Display
+-----------------
+
+This experiment is a comprehensive project integrating web interaction with OLED display functionality, designed to teach you how to remotely edit text displayed on an OLED screen via a webpage. You will master the following core skills:
+
+- SSD1306 OLED Display Driver: Controlling a 128×64 pixel OLED screen using the Adafruit_SSD1306 library and mastering display functions such as **clearDisplay()**, **setCursor()**, **println()**, and **display()**.
+
+- Web Forms and HTTP POST Requests: Designing HTML forms to capture user input and submitting data via POST requests, allowing the server to parse form parameters and update the displayed content.
+
+- String Array Management: Using **String lines[4]** to store four lines of text and utilizing array indexing to update each line independently.
+
+- Automatic Form Pre-filling: Automatically populating input fields with the currently displayed content upon page load, making it easier for users to edit existing text.
+
+- Page Redirection: Automatically redirecting the user back to the homepage after form submission using **server.sendHeader("Location", "/")** to ensure a smooth user experience.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 0.96 Inch Dispaly
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/10.OLED.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - SSD1306 OLED
+     - VCC
+     - 3.3V
+   * - 1
+     - SSD1306 OLED
+     - GND
+     - GND
+   * - 1
+     - SSD1306 OLED
+     - SCL
+     - GPIO 22
+   * - 1
+     - SSD1306 OLED
+     - SDA
+     - GPIO 21
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-servo" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+ #include <Wire.h>
+ #include <Adafruit_GFX.h>
+ #include <Adafruit_SSD1306.h>
+ #define SCREEN_WIDTH 128
+ #define SCREEN_HEIGHT 64
+ #define OLED_RESET    -1
+
+ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+ const char* ap_ssid = "ESP32_WEB_OLED";
+ const char* ap_password = NULL;
+
+ WebServer server(80);
+
+ String lines[4] = {"ESP32_WEB_OLED", "192.168.4.1", "Connect to WiFi", "Then edit text"};
+
+ void updateDisplay() {
+   display.clearDisplay();
+   display.setTextColor(SSD1306_WHITE);
+   display.setTextSize(1);
+   
+   for (int i = 0; i < 4; i++) {
+     display.setCursor(0, i * 16);
+     display.println(lines[i]);
+   }
+   display.display();
+ }
+
+ void handleRoot() {
+   String html = "<!DOCTYPE html><html>";
+   html += "<head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>";
+   html += "<title>OLED Controller</title>";
+   html += "<style>";
+   html += "*{margin:0;padding:0;box-sizing:border-box;}";
+   html += "body{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;background:#f5f5f7;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}";
+   html += ".container{width:100%;max-width:500px;margin:0 auto;}";
+   html += ".card{background:#ffffff;border-radius:20px;padding:32px 24px;box-shadow:0 2px 10px rgba(0,0,0,0.02),0 1px 2px rgba(0,0,0,0.03);}";
+   html += ".input-group{margin-bottom:20px;}";
+   html += ".input-group label{display:block;color:#6c6c70;font-size:13px;font-weight:500;margin-bottom:8px;letter-spacing:0.3px;}";
+   html += ".input-group input{width:100%;padding:14px 16px;background:#f9f9fb;border:1px solid #e5e5ea;border-radius:14px;color:#1c1c1e;font-size:15px;font-weight:400;transition:all 0.2s ease;}";
+   html += ".input-group input:focus{outline:none;border-color:#007aff;background:#ffffff;}";
+   html += "button{width:100%;padding:14px;background:#007aff;color:#ffffff;border:none;border-radius:14px;font-size:16px;font-weight:500;cursor:pointer;margin-top:12px;transition:all 0.2s ease;}";
+   html += "button:hover{background:#0051d5;}";
+   html += "button:active{transform:scale(0.98);}";
+   html += "</style>";
+   html += "</head><body>";
+   
+   html += "<div class='container'>";
+   html += "<div class='card'>";
+   html += "<form method='POST' action='/update'>";
+   
+   for (int i = 0; i < 4; i++) {
+     html += "<div class='input-group'>";
+     html += "<label>LINE " + String(i+1) + "</label>";
+     html += "<input type='text' name='line" + String(i) + "' value='" + lines[i] + "'>";
+     html += "</div>";
+   }
+   
+   html += "<button type='submit'>UPDATE DISPLAY</button>";
+   html += "</form>";
+   html += "</div>";
+   html += "</div>";
+   html += "</body></html>";
+
+   server.send(200, "text/html", html);
+ }
+
+ void handleUpdate() {
+   for (int i = 0; i < 4; i++) {
+     String argName = "line" + String(i);
+     if (server.hasArg(argName)) {
+       String value = server.arg(argName);
+       if (value.length() > 0) {
+         lines[i] = value;
+       }
+     }
+   }
+   
+   updateDisplay();
+   
+   server.sendHeader("Location", "/");
+   server.send(303, "text/plain", "");
+ }
+
+ void setup() {
+   Serial.begin(115200);
+   delay(100);
+   
+   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+     Serial.println(F("SSD1306 init failed"));
+     for (;;);
+   }
+   
+   WiFi.mode(WIFI_AP);
+   WiFi.softAP(ap_ssid, ap_password);
+   
+   IPAddress IP = WiFi.softAPIP();
+   Serial.print("AP IP: ");
+   Serial.println(IP);
+   
+   server.on("/", handleRoot);
+   server.on("/update", HTTP_POST, handleUpdate);
+   
+   server.begin();
+   Serial.println("HTTP server started");
+   
+   updateDisplay();
+ }
+
+ void loop() {
+   server.handleClient();
+   delay(10);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-oled" onclick="toggleCode('code-container-oled', 'expand-btn-oled')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-oled { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/3.SG902.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_WEB_OLED**. Once a smartphone or computer connects to this hotspot, access **192.168.4.1** to open the control page:
+
+ - The page displays four text input fields, corresponding to the four lines of content shown on the OLED screen. 
+
+ - When a user modifies the text in any field and clicks the "UPDATE DISPLAY" button, the OLED screen immediately updates to show the new content; simultaneously, the page automatically refreshes to the home screen, with the input fields reflecting the latest content.
+
+----
