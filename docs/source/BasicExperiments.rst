@@ -987,8 +987,6 @@ This experiment is an introductory project for audio frequency generation and mu
 
 **Wiring Table**
 
-**Wiring Table**
-
 .. list-table:: 
    :header-rows: 1
    :widths: 10 20 20 25
