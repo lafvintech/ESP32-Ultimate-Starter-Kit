@@ -177,11 +177,10 @@ This kit uses an ESP32 board with a CP2102 USB-to-UART bridge. Ensure the CP2102
 .. video:: _static/arduino/driver_ins.mp4
     :width: 100%
 
-
 ----
 
-3.Install ESP32 Core Board 
--------------------------------
+3. Install ESP32 Core Board 
+--------------------------
 
 Add Additional Boards Manager URL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
