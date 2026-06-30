@@ -2266,7 +2266,9 @@ This experiment is a comprehensive project involving digital circuit expansion a
      - Other pin
      - GND
 
-.. image:: _static/project/BASIC/13.jsq.png
+- **The schematic diagram is shown below:**
+
+.. image:: _static/project/BASIC/13.jsq1.png
    :width: 500
    :align: center
 
@@ -2274,6 +2276,13 @@ This experiment is a comprehensive project involving digital circuit expansion a
 
    <div style="margin-top: 30px;"></div>
 
+.. image:: _static/project/BASIC/13.jsq1.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
 **Example code:**
 
