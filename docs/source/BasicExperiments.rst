@@ -1990,7 +1990,7 @@ This experiment serves as an introductory project for digital display and segmen
 **Wiring Diagram:**
 
 .. image:: _static/project/BASIC/12.SMG2.png
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -2126,7 +2126,7 @@ This experiment serves as an introductory project for digital display and segmen
 **Display Effect:**
 
 .. image:: _static/project/BASIC/12.SMG3.png
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -2164,7 +2164,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
 **Wiring Diagram:**
 
 .. image:: _static/project/BASIC/13.jsq3.png
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -2467,7 +2467,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
 **Display Effect:**
 
 .. image:: _static/project/BASIC/12.SMG3.png
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -2475,5 +2475,628 @@ This experiment is a comprehensive project involving digital circuit expansion a
    <div style="margin-top: 30px;"></div>
 
 After programming, the 4-digit 7-segment display shows the current count (initially 0000). Each time the button (GPIO18) is pressed, the count increments by 1 and the display updates synchronously, creating a cyclic counter that operates within the 0–9999 range.
+
+----
+
+14. NTP_Clock
+-------------
+
+This experiment differs little from the previous one; the components used are identical, so there is no need to dismantle the wiring—simply modifying the code is sufficient to display the time using NTP synchronization.
+You will master the following core skills:
+
+ - Wi-Fi Connection Management: Use **WiFi.begin()** to connect to a home router and enable network connectivity for the ESP32. 
+
+ - NTP Time Synchronization: Retrieve UTC time from an NTP server using **configTime()** and **getLocalTime()**, then convert it to the local time zone. 
+
+ - Time Data Parsing: Extract hours, minutes, and seconds from the **struct tm** structure, and split them into tens and units digits for display.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 4-7-Segment Display
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/14.clock.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - 74HC595 Shift Register
+     - VCC
+     - 5V
+   * - 1
+     - 74HC595 Shift Register
+     - GND
+     - GND
+   * - 1
+     - 74HC595 Shift Register
+     - MR (Master Reset)
+     - 5V
+   * - 1
+     - 74HC595 Shift Register
+     - OE (Output Enable)
+     - GND
+   * - 1
+     - 74HC595 Shift Register
+     - DS (Data/Serial Input)
+     - GPIO 15
+   * - 1
+     - 74HC595 Shift Register
+     - TCP (Latch/Storage Clock)
+     - GPIO 5
+   * - 1
+     - 74HC595 Shift Register
+     - HCP (Shift Clock)
+     - GPIO 4
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 1 (D1)
+     - GPIO 25
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 2 (D2)
+     - GPIO 26
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 3 (D3)
+     - GPIO 27
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 4 (D4)
+     - GPIO 23
+   * - 2
+     - 4-Digit 7-Segment Display
+     - a
+     - 74HC595 Q0
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - b
+     - 74HC595 Q1
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - c
+     - 74HC595 Q2
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - d
+     - 74HC595 Q3
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - e
+     - 74HC595 Q4
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - f
+     - 74HC595 Q5
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - g
+     - 74HC595 Q6
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - dp (optional)
+     - 74HC595 Q7
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-SMG2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <time.h>
+
+ // WiFi Configuration
+ const char* ssid = "2A811";
+ const char* password = "la1234567890";
+
+ //NTP Configuration
+ const char* ntpServer = "pool.ntp.org";
+ const long gmtOffset_sec = 28800;    // UTC+8
+ const int daylightOffset_sec = 0;
+
+ //74HC595 Pins
+ #define DATA_PIN   15    // DS
+ #define LATCH_PIN  5     // STCP
+ #define CLOCK_PIN  4     // SHCP
+
+ // Segment Display Digit 
+ #define DIGIT1_PIN 25
+ #define DIGIT2_PIN 26
+ #define DIGIT3_PIN 27
+ #define DIGIT4_PIN 23
+
+ //Segment Code Table 
+ const byte segCode[10] = {
+   0x3F, // 0
+   0x06, // 1
+   0x5B, // 2
+   0x4F, // 3
+   0x66, // 4
+   0x6D, // 5
+   0x7D, // 6
+   0x07, // 7
+   0x7F, // 8
+   0x6F  // 9
+ };
+
+ //Time Variables 
+ int currentHour = 0;
+ int currentMinute = 0;
+ int currentSecond = 0;
+ bool timeSynced = false;
+
+ void setup() {
+   Serial.begin(115200);
+
+   // Initialize 595 pins
+   pinMode(DATA_PIN, OUTPUT);
+   pinMode(LATCH_PIN, OUTPUT);
+   pinMode(CLOCK_PIN, OUTPUT);
+
+   // Initialize digit select pins (HIGH = off)
+   pinMode(DIGIT1_PIN, OUTPUT);
+   pinMode(DIGIT2_PIN, OUTPUT);
+   pinMode(DIGIT3_PIN, OUTPUT);
+   pinMode(DIGIT4_PIN, OUTPUT);
+
+   digitalWrite(DIGIT1_PIN, HIGH);
+   digitalWrite(DIGIT2_PIN, HIGH);
+   digitalWrite(DIGIT3_PIN, HIGH);
+   digitalWrite(DIGIT4_PIN, HIGH);
+
+   Serial.println("========================================");
+   Serial.println("NTP Clock");
+   Serial.println("========================================");
+
+   // ===== Connect to WiFi =====
+   Serial.print("Connecting to WiFi: ");
+   Serial.println(ssid);
+   WiFi.begin(ssid, password);
+
+   int retry = 0;
+   while (WiFi.status() != WL_CONNECTED && retry < 30) {
+     delay(500);
+     Serial.print(".");
+     retry++;
+   }
+
+   if (WiFi.status() == WL_CONNECTED) {
+     Serial.println(" OK");
+     Serial.print("IP: ");
+     Serial.println(WiFi.localIP());
+   } else {
+     Serial.println(" FAILED");
+   }
+
+   // ===== Get NTP Time =====
+   if (WiFi.status() == WL_CONNECTED) {
+     Serial.print("Getting NTP time");
+     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+
+     retry = 0;
+     while (retry < 20) {
+       struct tm timeinfo;
+       if (getLocalTime(&timeinfo)) {
+         currentHour = timeinfo.tm_hour;
+         currentMinute = timeinfo.tm_min;
+         currentSecond = timeinfo.tm_sec;
+         timeSynced = true;
+         Serial.println(" OK");
+         Serial.printf("Time: %02d:%02d:%02d\n", currentHour, currentMinute, currentSecond);
+         break;
+       }
+       delay(1000);
+       Serial.print(".");
+       retry++;
+     }
+
+     if (!timeSynced) {
+       Serial.println(" FAILED");
+       // Display 0000 when sync fails
+       currentHour = 0;
+       currentMinute = 0;
+       currentSecond = 0;
+     }
+   } else {
+     // WiFi failed, display 0000
+     currentHour = 0;
+     currentMinute = 0;
+     currentSecond = 0;
+     Serial.println("WiFi connection failed, displaying 0000");
+   }
+
+   Serial.println("========================================");
+   Serial.printf("Display: %02d%02d\n", currentHour, currentMinute);
+   Serial.println("========================================");
+ }
+
+ // ============================================
+ void loop() {
+   unsigned long now = millis();
+   static unsigned long lastUpdate = 0;
+
+   // ===== Update time every second =====
+   if (now - lastUpdate >= 1000) {
+     lastUpdate = now;
+
+     if (timeSynced) {
+       struct tm timeinfo;
+       if (getLocalTime(&timeinfo)) {
+         currentHour = timeinfo.tm_hour;
+         currentMinute = timeinfo.tm_min;
+         currentSecond = timeinfo.tm_sec;
+       }
+     }
+     // If not synced, keep displaying 0000
+   }
+
+   // ===== Display time =====
+   scanDisplay();
+ }
+ // Display 4 digits
+ void scanDisplay() {
+   int digits[4];
+   
+   if (timeSynced) {
+     digits[0] = currentHour / 10;      // Tens of hours
+     digits[1] = currentHour % 10;      // Ones of hours
+     digits[2] = currentMinute / 10;    // Tens of minutes
+     digits[3] = currentMinute % 10;    // Ones of minutes
+   } else {
+     // Display 0000 when time is not synced
+     digits[0] = 0;
+     digits[1] = 0;
+     digits[2] = 0;
+     digits[3] = 0;
+   }
+
+   // Dynamic scan 4 digits
+   showDigit(DIGIT1_PIN, digits[0]);
+   showDigit(DIGIT2_PIN, digits[1]);
+   showDigit(DIGIT3_PIN, digits[2]);
+   showDigit(DIGIT4_PIN, digits[3]);
+ }
+
+ // Display a single digit
+ void showDigit(byte digitPin, byte value) {
+   // Turn off all digits
+   digitalWrite(DIGIT1_PIN, HIGH);
+   digitalWrite(DIGIT2_PIN, HIGH);
+   digitalWrite(DIGIT3_PIN, HIGH);
+   digitalWrite(DIGIT4_PIN, HIGH);
+
+   // Send segment code
+   digitalWrite(LATCH_PIN, LOW);
+   shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, segCode[value]);
+   digitalWrite(LATCH_PIN, HIGH);
+
+   // Turn on current digit
+   digitalWrite(digitPin, LOW);
+
+   // Hold display
+   delayMicroseconds(1500);
+
+   // Turn off current digit
+   digitalWrite(digitPin, HIGH);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-SNG2" onclick="toggleCode('code-container-SMG2', 'expand-btn-SMG2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-SMG2 { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Code modification**
+
+- Please first update the Wi-Fi information in the code to a network you can connect to; otherwise, the device will be unable to connect to the internet for time synchronization.
+
+- This table lists common countries and their UTC offsets for easy reference.
+
+.. list-table:: Country UTC Offsets
+   :widths: 20 20 20 35
+   :header-rows: 1
+
+   * - Country / Region
+     - Time Zone
+     - UTC Offset
+     - Offset (Seconds)
+   * - China
+     - CST (China Standard Time)
+     - UTC+8
+     - 28800
+   * - Hong Kong
+     - HKT (Hong Kong Time)
+     - UTC+8
+     - 28800
+   * - Taiwan
+     - NST (National Standard Time)
+     - UTC+8
+     - 28800
+   * - Japan
+     - JST (Japan Standard Time)
+     - UTC+9
+     - 32400
+   * - South Korea
+     - KST (Korea Standard Time)
+     - UTC+9
+     - 32400
+   * - Singapore
+     - SGT (Singapore Time)
+     - UTC+8
+     - 28800
+   * - Malaysia
+     - MYT (Malaysia Time)
+     - UTC+8
+     - 28800
+   * - Philippines
+     - PHT (Philippine Time)
+     - UTC+8
+     - 28800
+   * - India
+     - IST (India Standard Time)
+     - UTC+5:30
+     - 19800
+   * - Thailand
+     - ICT (Indochina Time)
+     - UTC+7
+     - 25200
+   * - Vietnam
+     - ICT (Indochina Time)
+     - UTC+7
+     - 25200
+   * - Indonesia (Jakarta)
+     - WIB (Western Indonesia Time)
+     - UTC+7
+     - 25200
+   * - Australia (Sydney)
+     - AEST (Australian Eastern Standard Time)
+     - UTC+10
+     - 36000
+   * - Australia (Perth)
+     - AWST (Australian Western Standard Time)
+     - UTC+8
+     - 28800
+   * - New Zealand
+     - NZST (New Zealand Standard Time)
+     - UTC+12
+     - 43200
+   * - United Kingdom
+     - GMT (Greenwich Mean Time)
+     - UTC+0
+     - 0
+   * - France
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Germany
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Italy
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Spain
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Greece
+     - EET (Eastern European Time)
+     - UTC+2
+     - 7200
+   * - Turkey
+     - TRT (Turkey Time)
+     - UTC+3
+     - 10800
+   * - Russia (Moscow)
+     - MSK (Moscow Time)
+     - UTC+3
+     - 10800
+   * - United States (New York)
+     - EST (Eastern Standard Time)
+     - UTC-5
+     - -18000
+   * - United States (Chicago)
+     - CST (Central Standard Time)
+     - UTC-6
+     - -21600
+   * - United States (Denver)
+     - MST (Mountain Standard Time)
+     - UTC-7
+     - -25200
+   * - United States (Los Angeles)
+     - PST (Pacific Standard Time)
+     - UTC-8
+     - -28800
+   * - Canada (Toronto)
+     - EST (Eastern Standard Time)
+     - UTC-5
+     - -18000
+   * - Canada (Vancouver)
+     - PST (Pacific Standard Time)
+     - UTC-8
+     - -28800
+   * - Mexico
+     - CST (Central Standard Time)
+     - UTC-6
+     - -21600
+   * - Brazil (Sao Paulo)
+     - BRT (Brasilia Time)
+     - UTC-3
+     - -10800
+   * - Argentina
+     - ART (Argentina Time)
+     - UTC-3
+     - -10800
+   * - South Africa
+     - SAST (South Africa Standard Time)
+     - UTC+2
+     - 7200
+   * - Egypt
+     - EET (Eastern European Time)
+     - UTC+2
+     - 7200
+   * - UAE (Dubai)
+     - GST (Gulf Standard Time)
+     - UTC+4
+     - 14400
+   * - Saudi Arabia
+     - AST (Arabia Standard Time)
+     - UTC+3
+     - 10800
+   * - Israel
+     - IST (Israel Standard Time)
+     - UTC+2
+     - 7200
+   * - Afghanistan
+     - AFT (Afghanistan Time)
+     - UTC+4:30
+     - 16200
+   * - Nepal
+     - NPT (Nepal Time)
+     - UTC+5:45
+     - 20700
+   * - Myanmar
+     - MMT (Myanmar Time)
+     - UTC+6:30
+     - 23400
+   * - Sri Lanka
+     - SLST (Sri Lanka Standard Time)
+     - UTC+5:30
+     - 19800
+   * - Pakistan
+     - PKT (Pakistan Standard Time)
+     - UTC+5
+     - 18000
+   * - Bangladesh
+     - BST (Bangladesh Standard Time)
+     - UTC+6
+     - 21600
+   * - Ukraine
+     - EET (Eastern European Time)
+     - UTC+2
+     - 7200
+   * - Portugal
+     - WET (Western European Time)
+     - UTC+0
+     - 0
+   * - Netherlands
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Switzerland
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Sweden
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Norway
+     - CET (Central European Time)
+     - UTC+1
+     - 3600
+   * - Finland
+     - EET (Eastern European Time)
+     - UTC+2
+     - 7200
+   * - Ireland
+     - GMT (Greenwich Mean Time)
+     - UTC+0
+     - 0
+   * - Iceland
+     - GMT (Greenwich Mean Time)
+     - UTC+0
+     - 0
+   * - Kenya
+     - EAT (East Africa Time)
+     - UTC+3
+     - 10800
+   * - Nigeria
+     - WAT (West Africa Time)
+     - UTC+1
+     - 3600
+   * - Morocco
+     - WET (Western European Time)
+     - UTC+0
+     - 0
+   * - Argentina
+     - ART (Argentina Time)
+     - UTC-3
+     - -10800
+   * - Chile
+     - CLT (Chile Standard Time)
+     - UTC-3
+     - -10800
+   * - Colombia
+     - COT (Colombia Time)
+     - UTC-5
+     - -18000
+   * - Peru
+     - PET (Peru Time)
+     - UTC-5
+     - -18000
+   * - Venezuela
+     - VET (Venezuela Time)
+     - UTC-4
+     - -14400
+
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/14.clock2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is flashed, the ESP32 automatically connects to the specified Wi-Fi network and requests the current time from an NTP server upon a successful connection. Once the time is retrieved, a 4-digit digital display shows the current time in real-time using the "HH:MM" (hours:minutes) format.
 
 ----
