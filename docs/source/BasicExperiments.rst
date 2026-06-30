@@ -2163,7 +2163,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
 
 **Wiring Diagram:**
 
-.. image:: _static/project/BASIC/12.SMG2.png
+.. image:: _static/project/BASIC/13.jsq3.png
    :width: 500
    :align: center
 
