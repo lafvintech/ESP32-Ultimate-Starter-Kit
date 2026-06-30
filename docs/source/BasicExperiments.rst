@@ -2136,3 +2136,335 @@ This experiment serves as an introductory project for digital display and segmen
 After the program is uploaded, the 7-segment display starts at 0 and increments by one digit every second, displaying up to 9 before returning to 0 to restart the cycle, creating a continuous "0-1-2-3-4-5-6-7-8-9-0-1..." display loop.
 
 ----
+
+13. 4-Digit Counter
+-------------------
+
+This experiment is a comprehensive project involving digital circuit expansion and dynamic scanning display. It aims to teach you how to use the 74HC595 shift register to expand GPIO capabilities for driving a 4-digit, 7-segment display and to control a counter using push-buttons. You will master the following core skills:
+
+- 74HC595 Shift Register Driving: Understand the principle of serial-in/parallel-out operation, master the **`shiftOut()`** function for data transmission, and control 8 segment outputs using only 3 GPIO pins.
+
+- Dynamic Scanning Display: Utilize the human eye's persistence of vision by rapidly cycling through the digit-select pins of the 4-digit display (switching digits every 1.5ms) to show multiple digits simultaneously, thereby conserving pin resources.
+
+- Common-Cathode Display Driving: Activate digits with a low-level signal and segments with a high-level signal; understand the driving differences between common-cathode and common-anode displays.
+
+- Button Debouncing: Implement non-blocking debouncing using **`millis()`** to accurately detect button presses and prevent false triggers caused by mechanical contact bounce.
+
+- BMC (Binary-to-Segment) Encoding: Use a hexadecimal segment code lookup table (e.g., `0x3F` for the digit '0') to efficiently store segment data for digits.
+
+- Multi-digit Decomposition Algorithm: Use division and modulo operations to split the counter value (0–9999) into thousands, hundreds, tens, and ones places for 4-digit display.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 4-7-Segment Display
+ - Button
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/12.SMG2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - 74HC595 Shift Register
+     - VCC
+     - 5V
+   * - 1
+     - 74HC595 Shift Register
+     - GND
+     - GND
+   * - 1
+     - 74HC595 Shift Register
+     - MR (Master Reset)
+     - 5V
+   * - 1
+     - 74HC595 Shift Register
+     - OE (Output Enable)
+     - GND
+   * - 1
+     - 74HC595 Shift Register
+     - DS (Data/Serial Input)
+     - GPIO 15
+   * - 1
+     - 74HC595 Shift Register
+     - TCP (Latch/Storage Clock)
+     - GPIO 5
+   * - 1
+     - 74HC595 Shift Register
+     - HCP (Shift Clock)
+     - GPIO 4
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 1 (D1)
+     - GPIO 25
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 2 (D2)
+     - GPIO 26
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 3 (D3)
+     - GPIO 27
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - DIGIT 4 (D4)
+     - GPIO 23
+   * - 2
+     - 4-Digit 7-Segment Display
+     - a
+     - 74HC595 Q0
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - b
+     - 74HC595 Q1
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - c
+     - 74HC595 Q2
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - d
+     - 74HC595 Q3
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - e
+     - 74HC595 Q4
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - f
+     - 74HC595 Q5
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - g
+     - 74HC595 Q6
+   * - 2
+     - 4-Digit 7-Segment Display 
+     - dp (optional)
+     - 74HC595 Q7
+   * - 3
+     - Button (Push Switch)
+     - One pin
+     - GPIO 18
+   * - 3
+     - Button (Push Switch)
+     - Other pin
+     - GND
+
+.. image:: _static/project/BASIC/13.jsq.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-SMG2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ //74HC595
+ #define DATA_PIN   15    //DS
+ #define LATCH_PIN  5    //TCP
+ #define CLOCK_PIN  4   //HCP
+
+ //CE---GND
+ //MR---VIN
+
+ //7-Segment Display
+ #define DIGIT1_PIN 25     
+ #define DIGIT2_PIN 26
+ #define DIGIT3_PIN 27
+ #define DIGIT4_PIN 23
+
+ //Button
+ #define BUTTON_PIN 18    
+
+ // Q0=a Q1=b Q2=c Q3=d
+ // Q4=e Q5=f Q6=g Q7=dp
+
+ const byte segCode[10] =
+ {
+   0x3F, //0
+   0x06, //1
+   0x5B, //2
+   0x4F, //3
+   0x66, //4
+   0x6D, //5
+   0x7D, //6
+   0x07, //7
+   0x7F, //8
+   0x6F  //9
+ };
+
+
+ volatile int counter = 0;
+
+ bool lastButton = HIGH;
+ unsigned long lastDebounce = 0;
+ const int debounceTime = 30;
+
+ //---------------------------------
+
+ void setup()
+ {
+   pinMode(DATA_PIN, OUTPUT);
+   pinMode(LATCH_PIN, OUTPUT);
+   pinMode(CLOCK_PIN, OUTPUT);
+
+   pinMode(DIGIT1_PIN, OUTPUT);
+   pinMode(DIGIT2_PIN, OUTPUT);
+   pinMode(DIGIT3_PIN, OUTPUT);
+   pinMode(DIGIT4_PIN, OUTPUT);
+
+   pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+   digitalWrite(DIGIT1_PIN, HIGH);
+   digitalWrite(DIGIT2_PIN, HIGH);
+   digitalWrite(DIGIT3_PIN, HIGH);
+   digitalWrite(DIGIT4_PIN, HIGH);
+ }
+
+ //---------------------------------
+
+ void loop()
+ {
+   scanDisplay();
+   readButton();
+ }
+
+ //---------------------------------
+
+ void readButton()
+ {
+   bool reading = digitalRead(BUTTON_PIN);
+
+   if (reading != lastButton)
+   {
+     lastDebounce = millis();
+   }
+
+   if ((millis() - lastDebounce) > debounceTime)
+   {
+     static bool buttonState = HIGH;
+
+     if (reading != buttonState)
+     {
+       buttonState = reading;
+
+       if (buttonState == LOW)
+       {
+         counter++;
+
+         if (counter > 9999)
+           counter = 0;
+       }
+     }
+   }
+
+   lastButton = reading;
+ }
+
+ //---------------------------------
+
+ void scanDisplay()
+ {
+   int num = counter;
+
+   int digit[4];
+
+   digit[0] = num / 1000;
+   digit[1] = (num / 100) % 10;
+   digit[2] = (num / 10) % 10;
+   digit[3] = num % 10;
+
+   showDigit(DIGIT1_PIN, digit[0]);
+   showDigit(DIGIT2_PIN, digit[1]);
+   showDigit(DIGIT3_PIN, digit[2]);
+   showDigit(DIGIT4_PIN, digit[3]);
+ }
+
+ //---------------------------------
+
+ void showDigit(byte digitPin, byte value)
+ {
+   digitalWrite(DIGIT1_PIN, HIGH);
+   digitalWrite(DIGIT2_PIN, HIGH);
+   digitalWrite(DIGIT3_PIN, HIGH);
+   digitalWrite(DIGIT4_PIN, HIGH);
+
+   digitalWrite(LATCH_PIN, LOW);
+   shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, segCode[value]);
+   digitalWrite(LATCH_PIN, HIGH);
+
+   digitalWrite(digitPin, LOW);
+
+   delayMicroseconds(1500);
+
+   digitalWrite(digitPin, HIGH);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-SNG2" onclick="toggleCode('code-container-SMG2', 'expand-btn-SMG2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-SMG2 { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/12.SMG3.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After programming, the 4-digit 7-segment display shows the current count (initially 0000). Each time the button (GPIO18) is pressed, the count increments by 1 and the display updates synchronously, creating a cyclic counter that operates within the 0–9999 range.
+
+----
