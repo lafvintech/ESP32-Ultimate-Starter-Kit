@@ -2276,7 +2276,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
 
    <div style="margin-top: 30px;"></div>
 
-.. image:: _static/project/BASIC/13.jsq1.png
+.. image:: _static/project/BASIC/13.jsq2.png
    :width: 500
    :align: center
 
