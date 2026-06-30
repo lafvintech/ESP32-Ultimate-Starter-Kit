@@ -172,10 +172,10 @@ This kit uses an ESP32 board with a CP2102 USB-to-UART bridge. Ensure the CP2102
 
 - Click here to access the official driver download page `download CP210X <https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads>`_
 
-- For detailed download and installation instructions, please watch the video below.
-
 .. video:: _static/arduino/driver_ins.mp4
     :width: 100%
+
+- Please watch the video above for detailed download and installation instructions.
 
 ----
 
