@@ -109,7 +109,7 @@ This introductory chapter guides you through the process of building fun, intera
 
  - ESP32 Development Board
  - LED
- - potentiometer 10k 
+ - Potentiometer 10k 
  - Breadboard and Jumper Wires
 
 **Wiring Diagram:**
@@ -226,7 +226,7 @@ This introductory chapter guides you through the process of building fun, intera
  - ESP32 Development Board
  - Button (2 PCS)
  - LED (Yellow、Red)
- - Resistor (220Ω)
+ - Resistor (220Ω、10KΩ)
  - Breadboard and Jumper Wires
 
 **Wiring Diagram:**
@@ -773,7 +773,8 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 **Materials Needed:**
 
  - ESP32 Development Board
- - DHT11 Sensor
+ - RC522 RFID Module
+ - ID Card
  - Breadboard and Jumper Wires
 
 **Wiring Diagram:**

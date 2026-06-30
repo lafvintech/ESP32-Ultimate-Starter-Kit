@@ -1377,7 +1377,7 @@ You can learn more about resistor from Wiki: `Resistor - Wikipedia <https://en.w
 
 ----
 
-26. potentiometer
+26. Potentiometer
 ------------------
 
 .. image:: _static/Component/26.10K.png
@@ -1684,7 +1684,7 @@ This power supply module operates using a 9V battery and provides both 3.3V and 
 
 ----
 
-33. Battery clip And Battery Box
+33. Battery Clip And Battery Box
 --------------------------------
 
 .. image:: _static/Component/34.battery.png
