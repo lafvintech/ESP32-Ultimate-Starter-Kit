@@ -1968,3 +1968,171 @@ After the program is uploaded, the system enters monitoring mode.
 
 ----
 
+12. 7-Segment Display
+---------------------
+
+This experiment serves as an introductory project for digital display and segment encoding, designed to teach you how to drive a 7-segment display using an ESP32 to cycle through the digits 0–9. You will master the following core skills:
+
+- 7-Segment Display Principles: Understand the internal layout of the eight LED segments (a–g) and learn how to drive common-cathode and common-anode displays.
+
+- Segment Encoding and Truth Tables: Create a mapping table (2D array) of segment codes corresponding to digits 0–9 and understand the logic behind encoding these displays.
+
+- Arrays and Loop Control: Use an array (e.g., `int segmentPins[]`) to manage the seven pins and employ `for` loops for batch initialization and control.
+
+- LED Segment Control: Use `digitalWrite()` to control the on/off state of individual segments, combining them to form the desired numeric characters.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 7-Segment Display
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/12.SMG2.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - 7-Segment Display 
+     - a
+     - GPIO 26
+   * - 1
+     - 7-Segment Display 
+     - b
+     - GPIO 25
+   * - 1
+     - 7-Segment Display 
+     - c
+     - GPIO 23
+   * - 1
+     - 7-Segment Display 
+     - d
+     - GPIO 19
+   * - 1
+     - 7-Segment Display 
+     - e
+     - GPIO 18
+   * - 1
+     - 7-Segment Display 
+     - f
+     - GPIO 27
+   * - 1
+     - 7-Segment Display 
+     - g
+     - GPIO 14
+   * - 1
+     - 7-Segment Display 
+     - COM(-)
+     - GND
+
+.. image:: _static/project/BASIC/12.SMG.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-SMG" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ int segmentPins[] = {13, 12, 5, 25, 27, 14, 26};
+
+ byte digits[10][7] = {
+   {1,1,1,1,1,1,0}, // 0
+   {0,1,1,0,0,0,0}, // 1
+   {1,1,0,1,1,0,1}, // 2
+   {1,1,1,1,0,0,1}, // 3
+   {0,1,1,0,0,1,1}, // 4
+   {1,0,1,1,0,1,1}, // 5
+   {1,0,1,1,1,1,1}, // 6
+   {1,1,1,0,0,0,0}, // 7
+   {1,1,1,1,1,1,1}, // 8
+   {1,1,1,1,0,1,1}  // 9
+ };
+
+ void setup() {
+   for (int i = 0; i < 7; i++) {
+     pinMode(segmentPins[i], OUTPUT);
+   }
+ }
+
+ void displayNumber(int num) {
+   if (num < 0 || num > 9) return;
+   for (int i = 0; i < 7; i++) {
+     digitalWrite(segmentPins[i], digits[num][i]);
+   }
+ }
+
+ void loop() {
+   for (int i = 0; i < 10; i++) {
+     displayNumber(i);
+     delay(1000);
+   }
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-SNG" onclick="toggleCode('code-container-SMG', 'expand-btn-SMG')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-SMG { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/12.SMG3.png
+   :width: 500
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is uploaded, the 7-segment display starts at 0 and increments by one digit every second, displaying up to 9 before returning to 0 to restart the cycle, creating a continuous "0-1-2-3-4-5-6-7-8-9-0-1..." display loop.
+
+----
