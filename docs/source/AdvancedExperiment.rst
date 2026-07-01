@@ -2577,7 +2577,7 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
 
 **Wiring Diagram:**
 
-.. image:: _static/project/IOT/7.fan.png
+.. image:: _static/project/IOT/6.FAN.png
    :width: 600
    :align: center
 
@@ -2610,19 +2610,19 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
    * - 2
      - DC Motor
      - Positive (+)
-     - Relay COM (Common)
+     - Relay COM 
    * - 2
      - DC Motor
      - Negative (-)
-     - Relay NO (Normally Open)
+     - GND
    * - 3
      - External Power Supply
      - Positive (+)
-     - Relay COM (Common)
+     - Relay NO
    * - 3
      - External Power Supply
      - Negative (-)
-     - Motor Negative (-)
+     - GND
 
 **Example code:**
 
@@ -3154,7 +3154,7 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/7.fan2.png
+.. image:: _static/project/IOT/6.FAN2.png
    :width: 600
    :align: center
 
