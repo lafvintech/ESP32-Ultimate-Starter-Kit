@@ -3425,7 +3425,7 @@ When the device is tilted, the bubble moves smoothly in the direction of the til
 
 ----
 
-15. Variable Speed Fan
+16. Variable Speed Fan
 ------------------------
 
 This experiment is a comprehensive project combining PWM-based motor speed control with push-button input. It aims to teach you how to use an ESP32 to control the speed of a DC motor via PWM signals and to cycle through speed levels using a push-button. You will master the following core skills:
@@ -3469,49 +3469,49 @@ This experiment is a comprehensive project combining PWM-based motor speed contr
      - Pin
      - Connect to
    * - 1
-     - L298N Motor Driver
-     - VCC
+     - L293D 
+     - VCC(VSS)
      - 5V
    * - 1
-     - L298N Motor Driver
+     - L293D
      - GND
      - GND
    * - 1
-     - L298N Motor Driver
+     - L293D
      - ENA
-     - GPIO 25 (PWM)
+     - GPIO 25 
    * - 1
-     - L298N Motor Driver
+     - L293D
      - IN1
      - GPIO 26
    * - 1
-     - L298N Motor Driver
+     - L293D
      - IN2
      - GPIO 27
    * - 2
-     - DC Fan/Motor
+     - DC Motor
      - Positive (+)
-     - L298N OUT1
+     - L293D OUT1
    * - 2
-     - DC Fan/Motor
+     - DC Motor
      - Negative (-)
-     - L298N OUT2
+     - L293D OUT2
    * - 3
-     - Button (Push Switch)
+     - Button 
      - One pin
      - GPIO 4
    * - 3
-     - Button (Push Switch)
+     - Button
      - Other pin
      - GND
    * - 4
      - External Power Supply
      - Positive (+)
-     - L298N 12V/9V
+     - L293D VS
    * - 4
      - External Power Supply
      - Negative (-)
-     - L298N GND
+     - L293D GND
 
 - The L293D pinout diagram is shown below：
 
