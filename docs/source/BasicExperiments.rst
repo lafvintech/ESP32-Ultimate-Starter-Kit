@@ -2466,7 +2466,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/12.SMG3.png
+.. image:: _static/project/BASIC/13.jsq4.gif
    :width: 700
    :align: center
 
