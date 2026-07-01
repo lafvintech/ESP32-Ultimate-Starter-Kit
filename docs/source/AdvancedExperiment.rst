@@ -2556,17 +2556,17 @@ After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_WEB_
 
 This experiment is a comprehensive IoT project focused on remote motor control. It aims to teach you how to remotely control a relay module driven by an ESP32 via a web interface, enabling the switching of a DC motor. You will master the following core skills:
 
- - **Relay Driving Principles:** Understand the mechanism of relays as electrically controlled switches, using GPIO high/low signal outputs to control external high-power devices.
+ - Relay Driving Principles: Understand the mechanism of relays as electrically controlled switches, using GPIO high/low signal outputs to control external high-power devices.
 
- - **Wi-Fi AP Mode Application:** Configure the ESP32 as a wireless access point (hotspot), allowing direct connection from a smartphone without the need for a router.
+ - Wi-Fi AP Mode Application: Configure the ESP32 as a wireless access point (hotspot), allowing direct connection from a smartphone without the need for a router.
 
- - **RESTful API Design:** Implement control command transmission via the **/control?state=on/off** endpoint and status retrieval via the **/status** endpoint, supporting JSON-formatted responses.
+ - RESTful API Design: Implement control command transmission via the **/control?state=on/off** endpoint and status retrieval via the **/status** endpoint, supporting JSON-formatted responses.
 
- - **Frontend Interaction & Real-time Feedback:** Incorporate visual elements such as fan rotation animations, toggle switches, and status badges to ensure immediate feedback and a smooth user experience.
+ - Frontend Interaction & Real-time Feedback: Incorporate visual elements such as fan rotation animations, toggle switches, and status badges to ensure immediate feedback and a smooth user experience.
 
- - **AJAX Asynchronous Communication:** Use the **fetch()** API for seamless page updates without reloading, and implement automatic status polling every 2 seconds to keep the interface synchronized.
+ - AJAX Asynchronous Communication: Use the **fetch()** API for seamless page updates without reloading, and implement automatic status polling every 2 seconds to keep the interface synchronized.
 
- - **Accidental Input Prevention & State Synchronization:** Utilize an **isUpdating** flag to prevent concurrent requests, ensuring consistency between control commands and the UI state.
+ - Accidental Input Prevention & State Synchronization: Utilize an **isUpdating** flag to prevent concurrent requests, ensuring consistency between control commands and the UI state.
 
 **Materials Needed:**
 
