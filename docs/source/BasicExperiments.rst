@@ -3424,3 +3424,249 @@ After flashing the program, the OLED screen displays a comprehensive digital lev
 When the device is tilted, the bubble moves smoothly in the direction of the tilt, the angle readings update synchronously, and the bar graph adjusts accordingly, mimicking the behavior of a real physical level.
 
 ----
+
+15. Variable Speed Fan
+------------------------
+
+This experiment is a comprehensive project combining PWM-based motor speed control with push-button input. It aims to teach you how to use an ESP32 to control the speed of a DC motor via PWM signals and to cycle through speed levels using a push-button. You will master the following core skills:
+
+ - PWM Speed ​​Control: Configuring the ESP32's PWM channels (5 kHz frequency, 8-bit resolution) using `ledcAttach()` and `ledcWrite()` to achieve continuous (stepless) motor speed adjustment across a range of 0–255.
+
+ - L298N Motor Driver Module: Controlling motor direction (forward/reverse) via the IN1 and IN2 pins, and regulating speed by applying the PWM signal to the ENA (enable) pin.
+
+ - Cyclic Speed ​​Control Logic: Using a push-button to cycle through speed modes—"Off → Low → Medium → High → Off"—while outputting the current speed level status via the serial monitor.
+
+ - State Machine Management: Managing the current speed level using a variable (`speedLevel`, ranging from 0 to 3), where each level corresponds to a specific PWM duty cycle.
+
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Motor  Module
+ - L293D 
+ - Button
+ - Power Supply Board
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/16.FAN2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - L298N Motor Driver
+     - VCC
+     - 5V
+   * - 1
+     - L298N Motor Driver
+     - GND
+     - GND
+   * - 1
+     - L298N Motor Driver
+     - ENA
+     - GPIO 25 (PWM)
+   * - 1
+     - L298N Motor Driver
+     - IN1
+     - GPIO 26
+   * - 1
+     - L298N Motor Driver
+     - IN2
+     - GPIO 27
+   * - 2
+     - DC Fan/Motor
+     - Positive (+)
+     - L298N OUT1
+   * - 2
+     - DC Fan/Motor
+     - Negative (-)
+     - L298N OUT2
+   * - 3
+     - Button (Push Switch)
+     - One pin
+     - GPIO 4
+   * - 3
+     - Button (Push Switch)
+     - Other pin
+     - GND
+   * - 4
+     - External Power Supply
+     - Positive (+)
+     - L298N 12V/9V
+   * - 4
+     - External Power Supply
+     - Negative (-)
+     - L298N GND
+
+- The L293D pinout diagram is shown below：
+
+.. image:: _static/project/BASIC/16.FAN.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-FAN2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #define IN1_PIN  26
+ #define IN2_PIN  27
+ #define ENA_PIN  25
+ #define BTN_PIN  4
+
+ #define SPEED_OFF   0
+ #define SPEED_LOW   110
+ #define SPEED_MID   180
+ #define SPEED_HIGH  230
+
+ #define DEBOUNCE_DELAY  50
+
+ int currentSpeed = SPEED_OFF;
+ int speedLevel = 0;
+ bool lastButtonState = HIGH;
+ unsigned long lastDebounceTime = 0;
+
+ // PWM configuration
+ #define PWM_CHANNEL  0
+ #define PWM_FREQ     5000
+ #define PWM_RES      8
+
+ void setup() {
+   Serial.begin(115200);
+   
+   pinMode(IN1_PIN, OUTPUT);
+   pinMode(IN2_PIN, OUTPUT);
+   pinMode(BTN_PIN, INPUT_PULLUP);
+   
+   // ESP32 new core uses ledcAttach
+   ledcAttach(ENA_PIN, PWM_FREQ, PWM_RES);
+   
+   motorStop();
+   
+   Serial.println("3-speed fan started");
+ }
+
+ void loop() {
+   int buttonState = digitalRead(BTN_PIN);
+   
+   if (buttonState == LOW && lastButtonState == HIGH) {
+     unsigned long currentTime = millis();
+     if (currentTime - lastDebounceTime > DEBOUNCE_DELAY) {
+       nextSpeedLevel();
+       lastDebounceTime = currentTime;
+     }
+   }
+   
+   lastButtonState = buttonState;
+ }
+
+ void nextSpeedLevel() {
+   speedLevel++;
+   if (speedLevel > 3) {
+     speedLevel = 0;
+   }
+   
+   switch (speedLevel) {
+     case 0:
+       currentSpeed = SPEED_OFF;
+       motorStop();
+       Serial.println("Fan: OFF");
+       break;
+     case 1:
+       currentSpeed = SPEED_LOW;
+       motorForward(currentSpeed);
+       Serial.println("Fan: Speed 1 (Low)");
+       break;
+     case 2:
+       currentSpeed = SPEED_MID;
+       motorForward(currentSpeed);
+       Serial.println("Fan: Speed 2 (Medium)");
+       break;
+     case 3:
+       currentSpeed = SPEED_HIGH;
+       motorForward(currentSpeed);
+       Serial.println("Fan: Speed 3 (High)");
+       break;
+   }
+ }
+
+ void motorForward(int speedValue) {
+   digitalWrite(IN1_PIN, HIGH);
+   digitalWrite(IN2_PIN, LOW);
+   // ESP32 new core uses ledcWrite
+   ledcWrite(ENA_PIN, speedValue);
+ }
+
+ void motorStop() {
+   digitalWrite(IN1_PIN, LOW);
+   digitalWrite(IN2_PIN, LOW);
+   ledcWrite(ENA_PIN, 0);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-FAN2" onclick="toggleCode('code-container-FAN2', 'expand-btn-FAN2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-FAN2 { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/16.FAN3.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is flashed, the system enters standby mode. Each short press of the button (GPIO4) cycles the motor speed through the sequence: Off → Low → Medium → High → Off. The serial monitor simultaneously outputs the current speed level, facilitating debugging and observation.
+
+----
