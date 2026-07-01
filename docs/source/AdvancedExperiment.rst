@@ -2573,6 +2573,7 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
  - ESP32 Development Board
  - Relay Module
  - DC Motor
+ - Power Supply
  - Breadboard and Jumper Wires
 
 **Wiring Diagram:**
@@ -3176,5 +3177,690 @@ After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_Moto
 When the switch is turned on, the relay engages (GPIO27 outputs a high level), powering the external motor; the fan animation spins, and the status updates accordingly. When the switch is turned off, the relay disengages, the motor stops, and the page status updates to reflect the change.
 
 ----
+
+8. 3D Attitude Monitor
+----------------------
+
+This experiment is an advanced integrated project combining 3D pose visualization with real-time sensor data streaming. It aims to teach you how to push real-time data from an MPU6050 6-axis sensor to a web interface using Server-Sent Events (SSE) and render the 3D pose using Three.js. You will master the following core skills:
+
+- MPU6050 Sensor Integration: Reading acceleration, angular velocity, and temperature data via the **Adafruit_MPU6050** library, and configuring measurement ranges and filter bandwidths.
+
+- Asynchronous Web Server: Implementing a non-blocking HTTP service using **AsyncWebServer** to support high-concurrency connections.
+
+- Server-Sent Events (SSE): Enabling one-way, real-time data streaming from server to client via **EventSource**—replacing traditional polling to reduce latency and resource consumption.
+
+- Three.js 3D Engine: Constructing a browser-based 3D scene featuring a cube, particle system, starry background, and grid helpers to dynamically render the device's pose.
+
+- Sensor-to-3D Synchronization: Mapping MPU6050 gyroscope angular velocity data to the rotation angles of a 3D object, ensuring real-time synchronization between the physical device and the 3D model.
+
+- Multi-Stream Data Pushing: Streaming gyroscope (50ms), accelerometer (200ms), and temperature (1000ms) data at distinct intervals to optimize bandwidth usage and response speed.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - MPU6050 6-axis Sensor Module
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/7.MPU6050.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+    <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - MPU6050
+     - VCC
+     - 3.3V
+   * - 1
+     - MPU6050
+     - GND
+     - GND
+   * - 1
+     - MPU6050
+     - SCL
+     - GPIO 22
+   * - 1
+     - MPU6050
+     - SDA
+     - GPIO 21
+
+**Example code:**
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-mpu6050" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+     #include <Arduino.h>
+ #include <WiFi.h>
+ #include <AsyncTCP.h>
+ #include <ESPAsyncWebServer.h>
+ #include <Adafruit_MPU6050.h>
+ #include <Adafruit_Sensor.h>
+ #include <Arduino_JSON.h>
+ #include <Wire.h>
+
+ // ================= WIFI HOTSPOT =================
+ const char* ssid = "ESP32_MPU6050";
+ const char* password = NULL;  
+
+ // ================= MPU6050 =================
+ Adafruit_MPU6050 mpu;
+
+ // ================= WEB SERVER =================
+ AsyncWebServer server(80);
+ AsyncEventSource events("/events");
+ JSONVar readings;
+
+ // ================= VARIABLES =================
+ unsigned long lastTime = 0;
+ unsigned long lastTimeAcc = 0;
+ unsigned long lastTimeTemperature = 0;
+ unsigned long gyroDelay = 50;
+ unsigned long accelerometerDelay = 200;
+ unsigned long temperatureDelay = 1000;
+
+ // ================= HTML PAGE =================
+ const char index_html[] PROGMEM = R"rawliteral(
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <title>ESP32 | 3D Attitude Monitor</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+   <link rel="icon" href="data:,">
+   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+   <script type="importmap">
+     {
+       "imports": {
+         "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+       }
+     }
+   </script>
+   <style>
+     * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+     }
+
+     body {
+       font-family: 'Inter', sans-serif;
+       background: #ffffff;
+       min-height: 100vh;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       padding: 32px;
+     }
+
+     .dashboard {
+       max-width: 1300px;
+       width: 100%;
+       display: flex;
+       flex-wrap: wrap;
+       gap: 28px;
+       justify-content: center;
+       align-items: stretch;
+     }
+
+     .canvas-card, .data-card {
+       flex: 1;
+       min-width: 380px;
+       background: #ffffff;
+       border-radius: 32px;
+       border: 1px solid #e0e4e8;
+       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
+       overflow: hidden;
+       transition: all 0.2s ease;
+     }
+
+     .canvas-card:hover, .data-card:hover {
+       box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+       border-color: #c0c8d0;
+     }
+
+     .canvas-header {
+       padding: 20px 28px 8px 28px;
+       display: flex;
+       justify-content: space-between;
+       align-items: baseline;
+       border-bottom: 1px solid #eef2f6;
+     }
+
+     .canvas-header h2 {
+       font-weight: 600;
+       font-size: 1.2rem;
+       letter-spacing: -0.2px;
+       color: #1a2634;
+     }
+
+     .badge {
+       background: #eef2ff;
+       padding: 6px 14px;
+       border-radius: 40px;
+       font-size: 0.7rem;
+       font-weight: 500;
+       color: #3b82f6;
+       border: 1px solid #dbeafe;
+     }
+
+     #canvas-container {
+       width: 100%;
+       aspect-ratio: 1 / 1;
+       margin: 12px auto;
+       position: relative;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background: #f8fafc;
+     }
+
+     .reset-btn {
+       display: block;
+       width: calc(100% - 56px);
+       margin: 12px 28px 28px 28px;
+       background: #f1f5f9;
+       border: 1px solid #e2e8f0;
+       padding: 12px 0;
+       border-radius: 60px;
+       font-family: 'Inter', sans-serif;
+       font-weight: 500;
+       font-size: 0.9rem;
+       color: #1e293b;
+       cursor: pointer;
+       transition: all 0.2s ease;
+     }
+
+     .reset-btn:hover {
+       background: #e6edf5;
+       border-color: #cbd5e1;
+       transform: scale(0.98);
+     }
+
+     .data-card {
+       padding: 0;
+       display: flex;
+       flex-direction: column;
+     }
+
+     .data-header {
+       padding: 20px 28px 8px 28px;
+       border-bottom: 1px solid #eef2f6;
+       margin-bottom: 0;
+     }
+
+     .data-header h2 {
+       font-weight: 600;
+       font-size: 1.2rem;
+       color: #1a2634;
+     }
+
+     .data-header p {
+       font-size: 0.75rem;
+       color: #6c7a8e;
+       margin-top: 8px;
+       letter-spacing: 0.3px;
+     }
+
+     .data-content {
+       padding: 20px 24px 28px 24px;
+       flex: 1;
+     }
+
+     .sensor-group {
+       background: #f8fafc;
+       border-radius: 24px;
+       padding: 18px 20px;
+       margin-bottom: 20px;
+       border: 1px solid #eef2f6;
+       transition: all 0.2s;
+     }
+
+     .sensor-group:hover {
+       background: #f1f5f9;
+     }
+
+     .sensor-group h3 {
+       font-size: 0.8rem;
+       text-transform: uppercase;
+       letter-spacing: 1.5px;
+       font-weight: 600;
+       color: #5b6e8c;
+       margin-bottom: 16px;
+     }
+
+     .reading-row {
+       display: flex;
+       justify-content: space-between;
+       align-items: baseline;
+       padding: 10px 0;
+       border-bottom: 1px solid #eef2f6;
+       font-size: 1rem;
+     }
+
+     .reading-row:last-child {
+       border-bottom: none;
+     }
+
+     .reading-label {
+       font-weight: 500;
+       color: #4a5a72;
+       letter-spacing: 0.2px;
+     }
+
+     .reading-value {
+       font-weight: 600;
+       font-size: 1.4rem;
+       font-family: 'Inter', monospace;
+       color: #1e293b;
+     }
+
+     @media (max-width: 860px) {
+       body { padding: 20px; }
+       .dashboard { gap: 20px; }
+       .canvas-card, .data-card { min-width: 320px; }
+       .reading-value { font-size: 1.2rem; }
+     }
+   </style>
+ </head>
+ <body>
+
+ <div class="dashboard">
+   <div class="canvas-card">
+     <div class="canvas-header">
+       <h2>Dynamic Attitude</h2>
+       <div class="badge">Live Sync</div>
+     </div>
+     <div id="canvas-container"></div>
+     <button class="reset-btn" onclick="resetOrientation()">Reset Orientation</button>
+   </div>
+
+   <div class="data-card">
+     <div class="data-header">
+       <h2>MPU6050 Data Stream</h2>
+     </div>
+     <div class="data-content">
+       <div class="sensor-group">
+         <h3>Gyroscope</h3>
+         <div class="reading-row"><span class="reading-label">X-Axis</span><span id="gyroX" class="reading-value">0.00</span></div>
+         <div class="reading-row"><span class="reading-label">Y-Axis</span><span id="gyroY" class="reading-value">0.00</span></div>
+         <div class="reading-row"><span class="reading-label">Z-Axis</span><span id="gyroZ" class="reading-value">0.00</span></div>
+       </div>
+
+       <div class="sensor-group">
+         <h3>Accelerometer</h3>
+         <div class="reading-row"><span class="reading-label">X-Axis</span><span id="accX" class="reading-value">0.00</span></div>
+         <div class="reading-row"><span class="reading-label">Y-Axis</span><span id="accY" class="reading-value">0.00</span></div>
+         <div class="reading-row"><span class="reading-label">Z-Axis</span><span id="accZ" class="reading-value">0.00</span></div>
+       </div>
+
+       <div class="sensor-group">
+         <h3>Temperature</h3>
+         <div class="reading-row"><span class="reading-label">Chip Temp</span><span id="temp" class="reading-value">0.00</span></div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <script type="module">
+   import * as THREE from 'three';
+
+   const container = document.getElementById('canvas-container');
+   const scene = new THREE.Scene();
+   scene.background = new THREE.Color(0xf8fafc);
+   scene.fog = new THREE.FogExp2(0xf8fafc, 0.006);
+
+   let camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+   camera.position.set(0, 0, 5);
+   camera.lookAt(0, 0, 0);
+
+   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+   renderer.setSize(container.clientWidth, container.clientHeight);
+   renderer.setPixelRatio(window.devicePixelRatio);
+   renderer.shadowMap.enabled = true;
+   container.appendChild(renderer.domElement);
+
+   const geometry = new THREE.BoxGeometry(1.8, 1.8, 1.8);
+   const material = new THREE.MeshStandardMaterial({
+     color: 0x7cb9e8,
+     emissive: 0x1a4d8c,
+     emissiveIntensity: 0.15,
+     roughness: 0.35,
+     metalness: 0.5,
+     transparent: false
+   });
+   
+   const cube = new THREE.Mesh(geometry, material);
+   cube.castShadow = true;
+   cube.receiveShadow = false;
+   scene.add(cube);
+
+   const edgesGeo = new THREE.EdgesGeometry(geometry);
+   const edgesMat = new THREE.LineBasicMaterial({ color: 0x5a9ee0, linewidth: 1 });
+   const wireframe = new THREE.LineSegments(edgesGeo, edgesMat);
+   cube.add(wireframe);
+   
+   const coreMat = new THREE.MeshStandardMaterial({
+     color: 0xa0ceff,
+     emissive: 0x2a6aaa,
+     emissiveIntensity: 0.1,
+     transparent: false
+   });
+   const coreCube = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.0, 1.0), coreMat);
+   cube.add(coreCube);
+   
+   const ringParticles = [];
+   const ringGeometry = new THREE.SphereGeometry(0.05, 6, 6);
+   const ringMat = new THREE.MeshStandardMaterial({ color: 0x5a9ee0, emissive: 0x2a6aaa, emissiveIntensity: 0.3 });
+   for (let i = 0; i < 48; i++) {
+     const particle = new THREE.Mesh(ringGeometry, ringMat.clone());
+     particle.userData = { angle: (i / 48) * Math.PI * 2, radius: 1.4, speed: 0.008 };
+     particle.scale.setScalar(0.7);
+     cube.add(particle);
+     ringParticles.push(particle);
+   }
+   
+   const starGeometry = new THREE.BufferGeometry();
+   const starCount = 400;
+   const starPositions = new Float32Array(starCount * 3);
+   for (let i = 0; i < starCount; i++) {
+     starPositions[i*3] = (Math.random() - 0.5) * 200;
+     starPositions[i*3+1] = (Math.random() - 0.5) * 100;
+     starPositions[i*3+2] = (Math.random() - 0.5) * 80 - 40;
+   }
+   starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+   const starMat = new THREE.PointsMaterial({ color: 0xb8d4fc, size: 0.06, transparent: true, opacity: 0.4 });
+   const stars = new THREE.Points(starGeometry, starMat);
+   scene.add(stars);
+   
+   const gridHelper = new THREE.GridHelper(12, 24, 0x9cbee0, 0xcad8f0);
+   gridHelper.position.y = -1.4;
+   gridHelper.material.transparent = true;
+   gridHelper.material.opacity = 0.3;
+   scene.add(gridHelper);
+   
+   const ambientLight = new THREE.AmbientLight(0xe8f0ff, 0.65);
+   scene.add(ambientLight);
+   const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+   mainLight.position.set(3, 5, 2);
+   mainLight.castShadow = true;
+   scene.add(mainLight);
+   const fillLight = new THREE.PointLight(0xaac9ff, 0.6);
+   fillLight.position.set(-2, 1, 3);
+   scene.add(fillLight);
+   const backLight = new THREE.PointLight(0xffccaa, 0.35);
+   backLight.position.set(0, 2, -3);
+   scene.add(backLight);
+   const rimLight = new THREE.PointLight(0x7fb4ff, 0.5);
+   rimLight.position.set(1, 1.5, -2);
+   scene.add(rimLight);
+   
+   let targetRotX = 0, targetRotY = 0, targetRotZ = 0;
+   let currentRotX = 0, currentRotY = 0, currentRotZ = 0;
+   
+   function applyOrientationCorrection(gx, gy, gz) {
+     let newX = gy;
+     let newY = -gx;
+     let newZ = -gz;
+     return { x: newX, y: newY, z: newZ };
+   }
+   
+   window.updateGyroForCube = function(gyroX_val, gyroY_val, gyroZ_val) {
+     const sensitivity = 0.018;
+     let dx = gyroX_val * sensitivity;
+     let dy = gyroY_val * sensitivity;
+     let dz = gyroZ_val * sensitivity;
+     
+     const corrected = applyOrientationCorrection(dx, dy, dz);
+     targetRotX += corrected.x;
+     targetRotY += corrected.y;
+     targetRotZ += corrected.z;
+     
+     targetRotX = Math.min(Math.max(targetRotX, -Math.PI), Math.PI);
+     targetRotY = Math.min(Math.max(targetRotY, -Math.PI), Math.PI);
+     targetRotZ = Math.min(Math.max(targetRotZ, -Math.PI), Math.PI);
+   };
+   
+   window.resetOrientation = function() {
+     targetRotX = 0;
+     targetRotY = 0;
+     targetRotZ = 0;
+     currentRotX = 0;
+     currentRotY = 0;
+     currentRotZ = 0;
+     cube.rotation.set(0, 0, 0);
+   };
+   
+   let time = 0;
+   function animateParticles() {
+     ringParticles.forEach((p, idx) => {
+       const angle = p.userData.angle + time * 1.5;
+       const r = p.userData.radius;
+       p.position.x = Math.cos(angle) * r;
+       p.position.z = Math.sin(angle) * r;
+       p.position.y = Math.sin(angle * 2) * 0.2;
+       p.scale.setScalar(0.5 + Math.sin(angle * 5) * 0.15);
+     });
+     time += 0.012;
+     stars.rotation.y += 0.0005;
+     stars.rotation.x += 0.0003;
+   }
+   
+   function animate3D() {
+     requestAnimationFrame(animate3D);
+     currentRotX += (targetRotX - currentRotX) * 0.12;
+     currentRotY += (targetRotY - currentRotY) * 0.12;
+     currentRotZ += (targetRotZ - currentRotZ) * 0.12;
+     
+     cube.rotation.x = currentRotX;
+     cube.rotation.y = currentRotY;
+     cube.rotation.z = currentRotZ;
+     
+     animateParticles();
+     
+     renderer.render(scene, camera);
+   }
+   
+   window.addEventListener('resize', () => {
+     const width = container.clientWidth;
+     const height = container.clientHeight;
+     renderer.setSize(width, height);
+     camera.aspect = width / height;
+     camera.updateProjectionMatrix();
+   });
+   
+   animate3D();
+   
+   setTimeout(() => {
+     const rect = container.getBoundingClientRect();
+     renderer.setSize(rect.width, rect.height);
+     camera.aspect = rect.width / rect.height;
+     camera.updateProjectionMatrix();
+   }, 100);
+ </script>
+
+ <script type="text/javascript">
+   if (!!window.EventSource) {
+     var source = new EventSource('/events');
+     
+     source.addEventListener('gyro_readings', function(e) {
+       var obj = JSON.parse(e.data);
+       let gx = parseFloat(obj.gyroX);
+       let gy = parseFloat(obj.gyroY);
+       let gz = parseFloat(obj.gyroZ);
+       
+       document.getElementById("gyroX").innerHTML = gx.toFixed(2);
+       document.getElementById("gyroY").innerHTML = gy.toFixed(2);
+       document.getElementById("gyroZ").innerHTML = gz.toFixed(2);
+       
+       if (window.updateGyroForCube) {
+         window.updateGyroForCube(gx, gy, gz);
+       }
+     }, false);
+     
+     source.addEventListener('accelerometer_readings', function(e) {
+       var obj = JSON.parse(e.data);
+       document.getElementById("accX").innerHTML = parseFloat(obj.accX).toFixed(2);
+       document.getElementById("accY").innerHTML = parseFloat(obj.accY).toFixed(2);
+       document.getElementById("accZ").innerHTML = parseFloat(obj.accZ).toFixed(2);
+     }, false);
+     
+     source.addEventListener('temperature_reading', function(e) {
+       document.getElementById("temp").innerHTML = parseFloat(e.data).toFixed(2);
+     }, false);
+   }
+ </script>
+
+ </body>
+ </html>
+ )rawliteral";
+
+ // ================= SENSOR FUNCTIONS =================
+ String getGyroReadings() {
+   sensors_event_t a, g, temp;
+   mpu.getEvent(&a, &g, &temp);
+   readings["gyroX"] = String(g.gyro.x, 2);
+   readings["gyroY"] = String(g.gyro.y, 2);
+   readings["gyroZ"] = String(g.gyro.z, 2);
+   return JSON.stringify(readings);
+ }
+
+ String getAccReadings() {
+   sensors_event_t a, g, temp;
+   mpu.getEvent(&a, &g, &temp);
+   readings["accX"] = String(a.acceleration.x, 2);
+   readings["accY"] = String(a.acceleration.y, 2);
+   readings["accZ"] = String(a.acceleration.z, 2);
+   return JSON.stringify(readings);
+ }
+
+ String getTemperature() {
+   sensors_event_t a, g, temp;
+   mpu.getEvent(&a, &g, &temp);
+   return String(temp.temperature, 2);
+ }
+
+ // ================= SETUP =================
+ void setup() {
+   Serial.begin(115200);
+   delay(1000);
+   Serial.println("Program Start");
+
+   Wire.begin(21, 22);
+   Serial.println("Checking MPU6050...");
+   if (!mpu.begin()) {
+     Serial.println("MPU6050 not found");
+     while (1) { delay(10); }
+   }
+   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+   Serial.println("MPU6050 OK");
+
+   // Start WiFi Hotspot
+   Serial.println("Starting WiFi Hotspot...");
+   WiFi.softAP(ssid, password);
+   
+   IPAddress IP = WiFi.softAPIP();
+   Serial.print("Hotspot IP Address: ");
+   Serial.println(IP);
+   Serial.print("Connect to WiFi: ");
+   Serial.println(ssid);
+   Serial.print("Then open browser and visit: http://");
+   Serial.println(IP);
+
+   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+     request->send_P(200, "text/html", index_html);
+   });
+   events.onConnect([](AsyncEventSourceClient *client) {
+     Serial.println("Client Connected");
+   });
+   server.addHandler(&events);
+   server.begin();
+   Serial.println("Server Started");
+ }
+
+ // ================= LOOP =================
+ void loop() {
+   if ((millis() - lastTime) > gyroDelay) {
+     events.send(getGyroReadings().c_str(), "gyro_readings", millis());
+     lastTime = millis();
+   }
+   if ((millis() - lastTimeAcc) > accelerometerDelay) {
+     events.send(getAccReadings().c_str(), "accelerometer_readings", millis());
+     lastTimeAcc = millis();
+   }
+   if ((millis() - lastTimeTemperature) > temperatureDelay) {
+     events.send(getTemperature().c_str(), "temperature_reading", millis());
+     lastTimeTemperature = millis();
+   }
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-MPU6050" onclick="toggleCode('code-container-MPU6050', 'expand-btn-MPU6050')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-MPU6050 { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/7.MPU60502.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_MPU6050**. Connect your smartphone or computer to this network and visit **192.168.4.1** to access the monitoring page:
+
+ - It displays a dynamic cube—featuring a glowing core, orbiting particles, and a starry background—whose rotation synchronizes in real-time with the physical orientation of the MPU6050 sensor. A "Reset Orientation" button allows you to reset the 3D model to its default position.
+
+ - Data from the gyroscope (X/Y/Z-axis angular velocity), accelerometer (X/Y/Z-axis acceleration), and chip temperature is displayed in real-time via grouped cards; values ​​update every second, providing clear visual feedback.
+
+As you tilt or rotate the development board, the 3D cube rotates and the numerical data on the right refreshes simultaneously, delivering an immersive, "what-you-see-is-what-you-get" interactive experience.
+
+----
+
+
 
 
