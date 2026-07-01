@@ -3516,7 +3516,7 @@ This experiment is a comprehensive project combining PWM-based motor speed contr
 - The L293D pinout diagram is shown below：
 
 .. image:: _static/project/BASIC/16.FAN.png
-   :width: 700
+   :width: 500
    :align: center
 
 .. raw:: html
