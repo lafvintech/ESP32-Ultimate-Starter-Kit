@@ -2519,7 +2519,7 @@ You will master the following core skills:
    * - 1
      - 74HC595 Shift Register
      - VCC
-     - 5V
+     - 5V(VIN)
    * - 1
      - 74HC595 Shift Register
      - GND
@@ -2527,7 +2527,7 @@ You will master the following core skills:
    * - 1
      - 74HC595 Shift Register
      - MR (Master Reset)
-     - 5V
+     - 5V(VIN)
    * - 1
      - 74HC595 Shift Register
      - OE (Output Enable)
