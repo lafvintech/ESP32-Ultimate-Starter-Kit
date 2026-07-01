@@ -2551,3 +2551,630 @@ After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_WEB_
 
 ----
 
+7. Web control Fan
+-------------------
+
+This experiment is a comprehensive IoT project focused on remote motor control. It aims to teach you how to remotely control a relay module driven by an ESP32 via a web interface, enabling the switching of a DC motor. You will master the following core skills:
+
+ - **Relay Driving Principles:** Understand the mechanism of relays as electrically controlled switches, using GPIO high/low signal outputs to control external high-power devices.
+
+ - **Wi-Fi AP Mode Application:** Configure the ESP32 as a wireless access point (hotspot), allowing direct connection from a smartphone without the need for a router.
+
+ - **RESTful API Design:** Implement control command transmission via the **/control?state=on/off** endpoint and status retrieval via the **/status** endpoint, supporting JSON-formatted responses.
+
+ - **Frontend Interaction & Real-time Feedback:** Incorporate visual elements such as fan rotation animations, toggle switches, and status badges to ensure immediate feedback and a smooth user experience.
+
+ - **AJAX Asynchronous Communication:** Use the **fetch()** API for seamless page updates without reloading, and implement automatic status polling every 2 seconds to keep the interface synchronized.
+
+ - **Accidental Input Prevention & State Synchronization:** Utilize an **isUpdating** flag to prevent concurrent requests, ensuring consistency between control commands and the UI state.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - Relay Module
+ - DC Motor
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/7.fan.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+    
+   <div style="margin-top: 30px;"></div>    
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - Relay Module
+     - VCC
+     - 5V
+   * - 1
+     - Relay Module
+     - GND
+     - GND
+   * - 1
+     - Relay Module
+     - IN (Signal)
+     - GPIO 27
+   * - 2
+     - DC Motor
+     - Positive (+)
+     - Relay COM (Common)
+   * - 2
+     - DC Motor
+     - Negative (-)
+     - Relay NO (Normally Open)
+   * - 3
+     - External Power Supply
+     - Positive (+)
+     - Relay COM (Common)
+   * - 3
+     - External Power Supply
+     - Negative (-)
+     - Motor Negative (-)
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-fan" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+
+ // ========== WiFi AP Configuration ==========
+ const char* ap_ssid = "ESP32_Motor_Control";
+ const char* ap_password = NULL;               
+
+ // ========== Pin Definition ==========
+ const int relayPin = 27;    // Relay control pin 
+ // ========== Web Server ==========
+ WebServer server(80);
+
+ // ========== Current State ==========
+ bool motorState = false;    // false=OFF, true=ON
+
+ // ========== HTML Page ==========
+ const char index_html[] PROGMEM = R"rawliteral(
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+     <title>ESP32 Motor Control</title>
+     <style>
+         * {
+             margin: 0;
+             padding: 0;
+             box-sizing: border-box;
+         }
+         
+         body {
+             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+             background: #ffffff;
+             min-height: 100vh;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             padding: 20px;
+         }
+         
+         .container {
+             background: #ffffff;
+             border-radius: 32px;
+             padding: 40px 30px;
+             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.02);
+             text-align: center;
+             max-width: 420px;
+             width: 100%;
+             border: 1px solid #f0f0f0;
+         }
+         
+         h1 {
+             font-size: 30px;
+             font-weight: 700;
+             color: #1a1a2e;
+             letter-spacing: -0.5px;
+             margin-bottom: 4px;
+         }
+         
+         h1 .highlight {
+             background: linear-gradient(135deg, #667eea, #764ba2);
+             -webkit-background-clip: text;
+             -webkit-text-fill-color: transparent;
+             background-clip: text;
+         }
+         
+         .subtitle {
+             color: #999;
+             font-size: 14px;
+             font-weight: 400;
+             margin-bottom: 28px;
+             letter-spacing: 1px;
+         }
+         
+         /* Fan Animation */
+         .fan-container {
+             margin: 10px auto 25px;
+             position: relative;
+             display: inline-block;
+         }
+         
+         .fan {
+             width: 140px;
+             height: 140px;
+             position: relative;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+         
+         .fan-blade {
+             position: absolute;
+             width: 60px;
+             height: 22px;
+             background: linear-gradient(135deg, #667eea, #764ba2);
+             border-radius: 20px;
+             transform-origin: center;
+             box-shadow: 0 2px 10px rgba(102, 126, 234, 0.25);
+             transition: all 0.3s ease;
+         }
+         
+         .fan-blade:nth-child(1) { transform: rotate(0deg) translateX(50px); }
+         .fan-blade:nth-child(2) { transform: rotate(72deg) translateX(50px); }
+         .fan-blade:nth-child(3) { transform: rotate(144deg) translateX(50px); }
+         .fan-blade:nth-child(4) { transform: rotate(216deg) translateX(50px); }
+         .fan-blade:nth-child(5) { transform: rotate(288deg) translateX(50px); }
+         
+         .fan-center {
+             position: absolute;
+             width: 30px;
+             height: 30px;
+             background: radial-gradient(circle, #ffffff 30%, #e8e8e8 100%);
+             border-radius: 50%;
+             box-shadow: 0 0 20px rgba(102, 126, 234, 0.15);
+             z-index: 10;
+             border: 3px solid #667eea;
+         }
+         
+         .fan.spinning {
+             animation: spin 0.8s linear infinite;
+         }
+         
+         @keyframes spin {
+             from { transform: rotate(0deg); }
+             to { transform: rotate(360deg); }
+         }
+         
+         .fan.stopped .fan-blade {
+             opacity: 0.3;
+             filter: grayscale(0.8);
+             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+         }
+         
+         .fan.stopped .fan-center {
+             border-color: #ccc;
+             background: radial-gradient(circle, #f5f5f5 30%, #e0e0e0 100%);
+         }
+         
+         /* Toggle Switch */
+         .switch-container {
+             margin-bottom: 28px;
+         }
+         
+         .switch-label {
+             font-size: 13px;
+             color: #999;
+             margin-bottom: 12px;
+             letter-spacing: 2px;
+             text-transform: uppercase;
+             font-weight: 600;
+         }
+         
+         .switch {
+             position: relative;
+             display: inline-block;
+             width: 80px;
+             height: 42px;
+         }
+         
+         .switch input {
+             opacity: 0;
+             width: 0;
+             height: 0;
+         }
+         
+         .slider {
+             position: absolute;
+             cursor: pointer;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             background: #e0e0e0;
+             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+             border-radius: 42px;
+             box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+         }
+         
+         .slider:before {
+             position: absolute;
+             content: "";
+             height: 34px;
+             width: 34px;
+             left: 4px;
+             bottom: 4px;
+             background-color: white;
+             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+             border-radius: 50%;
+             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+         }
+         
+         input:checked + .slider {
+             background: linear-gradient(135deg, #667eea, #764ba2);
+             box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+         }
+         
+         input:checked + .slider:before {
+             transform: translateX(38px);
+         }
+         
+         input:disabled + .slider {
+             opacity: 0.5;
+             cursor: not-allowed;
+         }
+         
+         /* Status Card */
+         .status-card {
+             background: #f8f9fc;
+             border-radius: 20px;
+             padding: 20px;
+             margin-bottom: 0;
+             border: 1px solid #f0f0f0;
+         }
+         
+         .status-text {
+             font-size: 16px;
+             font-weight: 500;
+             color: #1a1a2e;
+             margin-bottom: 12px;
+         }
+         
+         .status-badge {
+             display: inline-flex;
+             align-items: center;
+             gap: 10px;
+             padding: 10px 24px;
+             border-radius: 40px;
+             font-size: 14px;
+             font-weight: 600;
+             letter-spacing: 0.5px;
+             transition: all 0.3s ease;
+         }
+         
+         .status-badge.running {
+             background: #10b981;
+             color: white;
+             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+         }
+         
+         .status-badge.stopped {
+             background: #ef4444;
+             color: white;
+             box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25);
+         }
+         
+         .dot {
+             width: 10px;
+             height: 10px;
+             border-radius: 50%;
+             display: inline-block;
+             animation: pulse 1.5s ease-in-out infinite;
+         }
+         
+         .dot.green {
+             background: #ffffff;
+             box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+         }
+         
+         .dot.red {
+             background: #ffffff;
+             box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+         }
+         
+         @keyframes pulse {
+             0%, 100% { opacity: 1; transform: scale(1); }
+             50% { opacity: 0.6; transform: scale(0.8); }
+         }
+         
+         /* Responsive */
+         @media (max-width: 480px) {
+             .container { 
+                 padding: 28px 20px; 
+                 border-radius: 24px;
+                 box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+             }
+             h1 { font-size: 26px; }
+             .fan { width: 120px; height: 120px; }
+             .fan-blade { 
+                 width: 50px; 
+                 height: 18px;
+             }
+             .fan-blade:nth-child(1) { transform: rotate(0deg) translateX(42px); }
+             .fan-blade:nth-child(2) { transform: rotate(72deg) translateX(42px); }
+             .fan-blade:nth-child(3) { transform: rotate(144deg) translateX(42px); }
+             .fan-blade:nth-child(4) { transform: rotate(216deg) translateX(42px); }
+             .fan-blade:nth-child(5) { transform: rotate(288deg) translateX(42px); }
+             .fan-center { width: 26px; height: 26px; }
+             .switch { width: 72px; height: 38px; }
+             .slider:before { height: 30px; width: 30px; }
+             input:checked + .slider:before { transform: translateX(34px); }
+         }
+     </style>
+     <script>
+         let isUpdating = false;
+         
+         function setMotor(state) {
+             if (isUpdating) return;
+             isUpdating = true;
+             
+             const toggle = document.getElementById('motorToggle');
+             
+             fetch('/control?state=' + (state ? 'on' : 'off'))
+                 .then(response => response.json())
+                 .then(data => {
+                     if (data.success) {
+                         updateUI(data.state === 'on');
+                     } else {
+                         toggle.checked = !state;
+                     }
+                 })
+                 .catch(error => {
+                     console.error('Error:', error);
+                     toggle.checked = !state;
+                 })
+                 .finally(() => {
+                     isUpdating = false;
+                 });
+         }
+         
+         function updateUI(isOn) {
+             const toggle = document.getElementById('motorToggle');
+             const statusBadge = document.getElementById('statusBadge');
+             const statusText = document.getElementById('statusText');
+             const fan = document.getElementById('fan');
+             
+             toggle.checked = isOn;
+             
+             if (isOn) {
+                 statusBadge.className = 'status-badge running';
+                 statusBadge.innerHTML = '<span class="dot green"></span> RUNNING';
+                 statusText.textContent = '🔄 Motor is spinning';
+                 fan.className = 'fan spinning';
+             } else {
+                 statusBadge.className = 'status-badge stopped';
+                 statusBadge.innerHTML = '<span class="dot red"></span> STOPPED';
+                 statusText.textContent = '⏸️ Motor is idle';
+                 fan.className = 'fan stopped';
+             }
+         }
+         
+         function getStatus() {
+             fetch('/status')
+                 .then(response => response.json())
+                 .then(data => {
+                     if (data.success) {
+                         updateUI(data.state === 'on');
+                     }
+                 })
+                 .catch(error => console.error('Status error:', error));
+         }
+         
+         // Toggle change handler
+         document.addEventListener('DOMContentLoaded', () => {
+             getStatus();
+             const toggle = document.getElementById('motorToggle');
+             toggle.addEventListener('change', (e) => {
+                 setMotor(e.target.checked);
+             });
+         });
+         
+         // Auto refresh every 2 seconds
+         setInterval(getStatus, 2000);
+     </script>
+ </head>
+ <body>
+     <div class="container">
+         <h1>⚡ <span class="highlight">Motor</span> Control</h1>
+         <div class="subtitle">ESP32 DC Motor Controller</div>
+         
+         <!-- Fan Animation -->
+         <div class="fan-container">
+             <div class="fan stopped" id="fan">
+                 <div class="fan-blade"></div>
+                 <div class="fan-blade"></div>
+                 <div class="fan-blade"></div>
+                 <div class="fan-blade"></div>
+                 <div class="fan-blade"></div>
+                 <div class="fan-center"></div>
+             </div>
+         </div>
+         
+         <div class="switch-container">
+             <div class="switch-label">⚙️ Power Control</div>
+             <label class="switch">
+                 <input type="checkbox" id="motorToggle">
+                 <span class="slider"></span>
+             </label>
+         </div>
+         
+         <div class="status-card">
+             <div class="status-text" id="statusText">⏸️ Motor is idle</div>
+             <div>
+                 <span id="statusBadge" class="status-badge stopped">
+                     <span class="dot red"></span> STOPPED
+                 </span>
+             </div>
+         </div>
+     </div>
+ </body>
+ </html>
+ )rawliteral";
+
+ // ========== Relay Control Functions ==========
+ void setMotor(bool state) {
+     if (state) {
+         digitalWrite(relayPin, HIGH);   // Relay energized, motor ON
+         motorState = true;
+         Serial.println("Motor: ON");
+     } else {
+         digitalWrite(relayPin, LOW);    // Relay released, motor OFF
+         motorState = false;
+         Serial.println("Motor: OFF");
+     }
+ }
+
+ // ========== Web Request Handlers ==========
+ void handleRoot() {
+     server.send(200, "text/html", index_html);
+ }
+
+ void handleControl() {
+     if (server.hasArg("state")) {
+         String state = server.arg("state");
+         
+         if (state == "on") {
+             setMotor(true);
+         } else if (state == "off") {
+             setMotor(false);
+         }
+         
+         String json = "{\"success\":true,\"state\":\"" + state + "\"}";
+         server.send(200, "application/json", json);
+     } else {
+         server.send(400, "application/json", "{\"success\":false,\"error\":\"Missing state parameter\"}");
+     }
+ }
+
+ void handleStatus() {
+     String stateStr = motorState ? "on" : "off";
+     String json = "{\"success\":true,\"state\":\"" + stateStr + "\"}";
+     server.send(200, "application/json", json);
+ }
+
+ void handleNotFound() {
+     server.send(404, "text/plain", "404: Not Found");
+ }
+
+ // ========== Setup ==========
+ void setup() {
+     Serial.begin(115200);
+     delay(100);
+     
+     // Configure relay pin
+     pinMode(relayPin, OUTPUT);
+     digitalWrite(relayPin, LOW);   // Initial: relay OFF, motor stopped
+     
+     Serial.println();
+     Serial.println("=== ESP32 Motor Control Server ===");
+     
+     // Configure AP mode (no password)
+     Serial.print("Setting AP mode: ");
+     Serial.println(ap_ssid);
+     
+     WiFi.softAP(ap_ssid, ap_password);
+     
+     IPAddress apIP = WiFi.softAPIP();
+     Serial.print("AP IP address: ");
+     Serial.println(apIP);
+     
+     // Configure web server routes
+     server.on("/", handleRoot);
+     server.on("/control", handleControl);
+     server.on("/status", handleStatus);
+     server.onNotFound(handleNotFound);
+     
+     // Start server
+     server.begin();
+     Serial.println("HTTP server started on port 80");
+     Serial.println("Connect to WiFi: " + String(ap_ssid));
+     Serial.println("Then open browser: http://" + apIP.toString());
+     Serial.println("====================================");
+ }
+
+ // ========== Loop ==========
+ void loop() {
+     server.handleClient();
+     delay(10);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-fan" onclick="toggleCode('code-container-fan', 'expand-btn-fan')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-fan { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/7.fan2.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+    <div style="margin-top: 30px;"></div>
+
+
+After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_Motor_Control**. Once a smartphone or computer connects to this network, accessing **192.168.4.1** opens the control page. The page features:
+
+ - Fan animation: The blades spin when running and turn gray and stationary when stopped.
+
+ - Toggle switch: Tap to switch the motor's state; includes animated feedback.
+
+ - Status badge: Displays "RUNNING" (green) or "STOPPED" (red) with a pulsing indicator light.
+
+ - Status text: Displays "Motor is spinning" or "Motor is idle."
+
+When the switch is turned on, the relay engages (GPIO27 outputs a high level), powering the external motor; the fan animation spins, and the status updates accordingly. When the switch is turned off, the relay disengages, the motor stops, and the page status updates to reflect the change.
+
+----
+
+
