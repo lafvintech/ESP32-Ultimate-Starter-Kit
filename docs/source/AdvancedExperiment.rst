@@ -3239,14 +3239,15 @@ This experiment is an advanced integrated project combining 3D pose visualizatio
      - GPIO 21
 
 **Example code:**
+
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-mpu6050" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-MPU6050" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
-     #include <Arduino.h>
+ #include <Arduino.h>
  #include <WiFi.h>
  #include <AsyncTCP.h>
  #include <ESPAsyncWebServer.h>
