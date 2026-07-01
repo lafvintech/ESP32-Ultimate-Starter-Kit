@@ -2835,6 +2835,24 @@ You will master the following core skills:
 
 - Please first update the Wi-Fi information in the code to a network you can connect to; otherwise, the device will be unable to connect to the internet for time synchronization.
 
+.. image:: _static/project/BASIC/14.clock2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+- To display the real-time time for your country or region, please replace the UTC time in the code with your local time zone.
+
+.. image:: _static/project/BASIC/14.clock3.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+  
 - This table lists common countries and their UTC offsets for easy reference.
 
 .. list-table:: Country UTC Offsets
@@ -2847,14 +2865,6 @@ You will master the following core skills:
      - Offset (Seconds)
    * - China
      - CST (China Standard Time)
-     - UTC+8
-     - 28800
-   * - Hong Kong
-     - HKT (Hong Kong Time)
-     - UTC+8
-     - 28800
-   * - Taiwan
-     - NST (National Standard Time)
      - UTC+8
      - 28800
    * - Japan
@@ -3087,9 +3097,11 @@ You will master the following core skills:
      - -14400
 
 
+- Click here to look up UTC times for other regions. `UTC Time Lookup <https://time.is/>`_
+
 **Display Effect:**
 
-.. image:: _static/project/BASIC/14.clock2.png
+.. image:: _static/project/BASIC/14.clock4.png
    :width: 700
    :align: center
 
