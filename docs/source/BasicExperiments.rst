@@ -2478,7 +2478,7 @@ After programming, the 4-digit 7-segment display shows the current count (initia
 
 ----
 
-14. NTP_Clock
+14. NTP Clock
 -------------
 
 This experiment differs little from the previous one; the components used are identical, so there is no need to dismantle the wiring—simply modifying the code is sufficient to display the time using NTP synchronization.
@@ -2853,9 +2853,9 @@ You will master the following core skills:
 
    <div style="margin-top: 30px;"></div>
   
-- This table lists common countries and their UTC offsets for easy reference.
+- This table lists common countries and their UTC offsets for easy reference:
 
-.. list-table:: Country UTC Offsets
+.. list-table:: 
    :widths: 20 20 20 35
    :header-rows: 1
 
@@ -3110,5 +3110,317 @@ You will master the following core skills:
    <div style="margin-top: 30px;"></div>
 
 After the program is flashed, the ESP32 automatically connects to the specified Wi-Fi network and requests the current time from an NTP server upon a successful connection. Once the time is retrieved, a 4-digit digital display shows the current time in real-time using the "HH:MM" (hours:minutes) format.
+
+----
+
+15. Simple Level
+----------------
+
+This experiment is a comprehensive project covering sensor fusion and attitude estimation. It aims to teach you how to use the MPU6050 6-axis Inertial Measurement Unit (IMU) to acquire acceleration and angular velocity data, calculate the device's tilt angles (Roll and Pitch) using a complementary filter algorithm, and display a dynamic level indicator in real-time on an OLED screen. You will master the following core skills:
+
+ - MPU6050 Sensor Driver: Reading accelerometer and gyroscope data via the Adafruit_MPU6050 library and understanding the physical principles behind measuring gravity components (accelerometer) and angular velocity (gyroscope).
+
+ - Attitude Estimation Algorithms: Calculating static tilt angles from accelerometer data using **atan2()** and determining dynamic angular changes by integrating gyroscope angular velocity.
+
+ - Complementary Filter Fusion: Fusing data from the accelerometer (accurate at low frequencies but noisy) and the gyroscope (fast high-frequency response but prone to drift) using a weighting coefficient (**alpha=0.92**) to achieve stable, responsive attitude estimation.
+
+ - Sensor Bandwidth Configuration: Setting the MPU6050 filter bandwidth to 260Hz to increase the data update rate and capture rapid movements.
+
+ - Real-time Graphics Rendering: Drawing crosshairs, a dynamic bubble indicator, angle values, and a bar-style level indicator on the OLED screen to provide intuitive visual feedback.
+
+ - Microsecond-level Timing: Using **micros()** to precisely calculate sampling intervals, thereby improving integration precision and the accuracy of the attitude estimation.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - MPU6050 Attitude Sensor
+ - 0.96-inch OLED Display
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/15.SPY.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - MPU6050
+     - VCC
+     - 3.3V
+   * - 1
+     - MPU6050
+     - GND
+     - GND
+   * - 1
+     - MPU6050
+     - SCL
+     - GPIO 22
+   * - 1
+     - MPU6050
+     - SDA
+     - GPIO 21
+   * - 2
+     - 0.96 OLED
+     - VCC
+     - 3.3V
+   * - 2
+     - 0.96 OLED
+     - GND
+     - GND
+   * - 2
+     - 0.96 OLED
+     - SCL
+     - GPIO 22
+   * - 2
+     - 0.96 OLED
+     - SDA
+     - GPIO 21
+
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-SPY2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <Wire.h>
+ #include <Adafruit_MPU6050.h>
+ #include <Adafruit_SSD1306.h>
+ #include <Adafruit_GFX.h>
+
+ // OLED display settings
+ #define SCREEN_WIDTH 128
+ #define SCREEN_HEIGHT 64
+ #define OLED_RESET -1
+ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+ // MPU6050 object
+ Adafruit_MPU6050 mpu;
+
+ // Variables for angle calculation
+ float roll = 0;
+ float pitch = 0;
+ unsigned long lastTime = 0;
+
+ // Circle position for visual level indicator
+ int circleX = SCREEN_WIDTH / 2;
+ int circleY = SCREEN_HEIGHT / 2;
+ const int MAX_RADIUS = 28;
+ const int CENTER_X = SCREEN_WIDTH / 2;
+ const int CENTER_Y = SCREEN_HEIGHT / 2;
+
+ // Smoothing for bubble movement (optional)
+ float smoothRoll = 0;
+ float smoothPitch = 0;
+ float smoothFactor = 0.3;  // Lower = smoother but more lag, Higher = more responsive
+
+ void setup() {
+   Serial.begin(115200);
+   delay(100);
+   
+   // Initialize OLED
+   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+     Serial.println("SSD1306 allocation failed");
+     while (1);
+   }
+   display.clearDisplay();
+   display.setTextSize(1);
+   display.setTextColor(SSD1306_WHITE);
+   
+   // Initialize MPU6050
+   if (!mpu.begin()) {
+     Serial.println("MPU6050 not found!");
+     while (1);
+   }
+   
+   // OPTIMIZATION 1: Configure MPU6050 for faster response
+   mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
+   mpu.setGyroRange(MPU6050_RANGE_250_DEG);
+   mpu.setFilterBandwidth(MPU6050_BAND_260_HZ);  // Changed from 21Hz to 260Hz for faster response
+   
+   Serial.println("MPU6050 initialized!");
+   lastTime = millis();
+   
+   // Welcome screen
+   display.clearDisplay();
+   display.setCursor(20, 20);
+   display.println("Level Tool");
+   display.setCursor(15, 40);
+   display.println("Calibrating...");
+   display.display();
+   delay(2000);
+ }
+
+ void loop() {
+   // Read sensor data
+   sensors_event_t a, g, temp;
+   mpu.getEvent(&a, &g, &temp);
+   
+   // Calculate angles from accelerometer
+   float accelRoll = atan2(a.acceleration.y, a.acceleration.z) * 180 / PI;
+   float accelPitch = atan2(-a.acceleration.x, sqrt(a.acceleration.y * a.acceleration.y + a.acceleration.z * a.acceleration.z)) * 180 / PI;
+   
+   // OPTIMIZATION 2: Increase dt calculation accuracy
+   unsigned long now = micros();  // Changed from millis() to micros() for more precise timing
+   float dt = (now - lastTime) / 1000000.0;
+   if (dt > 0.1) dt = 0.01;  // Limit maximum dt to prevent jumps
+   lastTime = now;
+   
+   // Gyroscope integration
+   roll = roll + g.gyro.x * dt;
+   pitch = pitch + g.gyro.y * dt;
+   
+   // OPTIMIZATION 3: Adjust complementary filter for faster response
+   // Lower alpha = faster response but more drift, Higher alpha = smoother but more lag
+   float alpha = 0.92;  // Reduced from 0.97 to 0.92 for faster response
+   roll = alpha * roll + (1 - alpha) * accelRoll;
+   pitch = alpha * pitch + (1 - alpha) * accelPitch;
+   
+   // OPTIMIZATION 4: Optional smoothing for bubble (comment out if you want raw response)
+   // smoothRoll = smoothRoll * (1 - smoothFactor) + roll * smoothFactor;
+   // smoothPitch = smoothPitch * (1 - smoothFactor) + pitch * smoothFactor;
+   // float displayRoll = smoothRoll;
+   // float displayPitch = smoothPitch;
+   
+   // Use raw angles for fastest response
+   float displayRoll = roll;
+   float displayPitch = pitch;
+   
+   // Direction correction
+   int offsetX = constrain(map(-displayRoll, -30, 30, -MAX_RADIUS, MAX_RADIUS), -MAX_RADIUS, MAX_RADIUS);
+   int offsetY = constrain(map(-displayPitch, -30, 30, MAX_RADIUS, -MAX_RADIUS), -MAX_RADIUS, MAX_RADIUS);
+   
+   circleX = CENTER_X + offsetX;
+   circleY = CENTER_Y + offsetY;
+   
+   // Draw level indicator
+   drawLevelDisplay(displayRoll, displayPitch);
+   
+   // OPTIMIZATION 5: Reduced delay for higher refresh rate
+   delay(10);  // Changed from 50ms to 10ms (100Hz refresh rate)
+ }
+
+ void drawLevelDisplay(float roll, float pitch) {
+   display.clearDisplay();
+   
+   // Draw outer frame
+   display.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SSD1306_WHITE);
+   
+   // Draw reference crosshair
+   display.drawLine(CENTER_X, 0, CENTER_X, SCREEN_HEIGHT, SSD1306_WHITE);
+   display.drawLine(0, CENTER_Y, SCREEN_WIDTH, CENTER_Y, SSD1306_WHITE);
+   
+   // Draw center circle marker
+   display.drawCircle(CENTER_X, CENTER_Y, 3, SSD1306_WHITE);
+   display.fillCircle(CENTER_X, CENTER_Y, 1, SSD1306_WHITE);
+   
+   // Draw moving bubble circle
+   display.drawCircle(circleX, circleY, 6, SSD1306_WHITE);
+   display.fillCircle(circleX, circleY, 4, SSD1306_WHITE);
+   
+   // Draw angle values
+   display.setCursor(5, 10);
+   display.print("R:");
+   display.print(roll, 1);
+   display.print((char)247);
+   display.print("  ");
+   
+   display.setCursor(5, 20);
+   display.print("P:");
+   display.print(pitch, 1);
+   display.print((char)247);
+   
+   // Draw level status
+   display.setCursor(70, 10);
+   if (abs(roll) < 2 && abs(pitch) < 2) {
+     display.println("LEVEL");
+   } else {
+     display.println("TILT ");
+   }
+   
+   // Draw simple bar indicator for roll
+   int rollBarWidth = map(abs(roll), 0, 30, 0, SCREEN_WIDTH - 20);
+   if (rollBarWidth > SCREEN_WIDTH - 20) rollBarWidth = SCREEN_WIDTH - 20;
+   
+   display.drawRect(10, 54, SCREEN_WIDTH - 20, 5, SSD1306_WHITE);
+   if (roll > 0) {
+     display.fillRect(SCREEN_WIDTH - 10 - rollBarWidth, 54, rollBarWidth, 5, SSD1306_WHITE);
+   } else if (roll < 0) {
+     display.fillRect(10, 54, rollBarWidth, 5, SSD1306_WHITE);
+   }
+   
+   display.display();
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-SPY" onclick="toggleCode('code-container-SPY', 'expand-btn-SPY')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-SPY { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/15.SPY2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After flashing the program, the OLED screen displays a comprehensive digital level interface:
+
+ - Crosshair reference lines: Fixed at the center of the screen to serve as a horizontal baseline.
+
+ - Dynamic bubble: Moves in response to device tilt, simulating the behavior of a bubble in a real spirit level.
+
+ - Angle readings: Real-time display of Roll and Pitch angles with 0.1° precision.
+
+ - Level status indicator: Displays "LEVEL" when the absolute values ​​of both angles are less than 2°; otherwise, displays "TILT".
+
+ - Bar-style level indicator: A bar graph at the bottom of the screen visually represents the degree of left-right tilt.
+
+When the device is tilted, the bubble moves smoothly in the direction of the tilt, the angle readings update synchronously, and the bar graph adjusts accordingly, mimicking the behavior of a real physical level.
 
 ----
