@@ -4057,19 +4057,19 @@ This experiment is a comprehensive embedded game development project designed to
      - Pin
      - Connect to
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - VCC
      - 3.3V
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - GND
      - GND
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - SCL
      - GPIO 22
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - SDA
      - GPIO 21
    * - 2
@@ -4098,6 +4098,530 @@ This experiment is a comprehensive embedded game development project designed to
      - GPIO 33
    * - 3
      - Passive Buzzer
+     - Negative (-)
+     - GND
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-game" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <Wire.h>
+ #include <Adafruit_GFX.h>
+ #include <Adafruit_SSD1306.h>
+
+ // OLED configuration
+ #define SCREEN_WIDTH 128
+ #define SCREEN_HEIGHT 64
+ #define OLED_RESET -1
+ #define SCREEN_ADDRESS 0x3C
+ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+ // Joystick pins
+ #define JOYSTICK_X_PIN    34
+ #define JOYSTICK_Y_PIN    35
+ #define JOYSTICK_SW_PIN   32
+
+ // Buzzer pin
+ #define BUZZER_PIN        33
+
+ // Direction inversion
+ #define INVERT_UP_DOWN true    
+ #define INVERT_LEFT_RIGHT false 
+
+ // Game configuration
+ #define GRID_SIZE 8
+ #define GRID_WIDTH 16
+ #define GRID_HEIGHT 8
+ #define GAME_START_ROW 1
+ #define GAME_END_ROW 7
+ #define GAME_HEIGHT 7
+ #define MAX_SNAKE_LENGTH 112
+
+ // Game state
+ enum GameState { STATE_TITLE, STATE_PLAYING, STATE_GAME_OVER };
+
+ // Snake structure
+ struct Snake {
+   int x[MAX_SNAKE_LENGTH];
+   int y[MAX_SNAKE_LENGTH];
+   int length;
+   int direction;      
+   int nextDirection;
+ } snake;
+
+ // Food
+ struct Food {
+   int x;
+   int y;
+ } food;
+
+ // Game variables
+ GameState gameState = STATE_TITLE;
+ int score = 0;
+ int highScore = 0;
+ unsigned long lastMoveTime = 0;
+ int moveDelay = 200;
+
+ // Joystick parameters
+ const int JOYSTICK_DEADZONE = 800;
+ const int JOYSTICK_CENTER = 2048;
+
+ // Buzzer control variables
+ unsigned long buzzerStartTime = 0;
+ int buzzerDuration = 0;
+ int buzzerFrequency = 0;
+ bool buzzerActive = false;
+
+ // Function declarations
+ void initGame();
+ void generateFood();
+ void handleJoystick();
+ void updateGame();
+ void moveSnake();
+ void wrapPosition(int &x, int &y);
+ bool checkSelfCollision();
+ void drawTitle();
+ void drawGame();
+ void drawGameOver();
+ void playBuzzer(int frequency, int duration);
+ void updateBuzzer();
+
+ void setup() {
+   pinMode(JOYSTICK_SW_PIN, INPUT_PULLUP);
+   pinMode(BUZZER_PIN, OUTPUT);
+   
+   display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
+   display.clearDisplay();
+   display.display();
+   
+   randomSeed(analogRead(34) + analogRead(35));
+   
+   drawTitle();
+ }
+
+ void loop() {
+   handleJoystick();
+   
+   if(gameState == STATE_PLAYING) {
+     updateGame();
+   }
+   
+   updateBuzzer();  // Update buzzer state
+   delay(10);
+ }
+
+ void initGame() {
+   snake.length = 3;
+   snake.direction = 0;
+   snake.nextDirection = 0;
+   
+   int startX = GRID_WIDTH / 2;
+   int startY = GAME_START_ROW + (GAME_HEIGHT / 2);
+   
+   for(int i = 0; i < snake.length; i++) {
+     snake.x[i] = startX - i;
+     snake.y[i] = startY;
+   }
+   
+   generateFood();
+   
+   score = 0;
+   moveDelay = 200;
+ }
+
+ void generateFood() {
+   bool validPosition = false;
+   
+   while(!validPosition) {
+     food.x = random(0, GRID_WIDTH);
+     food.y = random(GAME_START_ROW, GAME_END_ROW + 1);
+     
+     validPosition = true;
+     for(int i = 0; i < snake.length; i++) {
+       if(snake.x[i] == food.x && snake.y[i] == food.y) {
+         validPosition = false;
+         break;
+       }
+     }
+   }
+ }
+
+ void handleJoystick() {
+   int xValue = analogRead(JOYSTICK_X_PIN);
+   int yValue = analogRead(JOYSTICK_Y_PIN);
+   int swValue = digitalRead(JOYSTICK_SW_PIN);
+   
+   if(gameState == STATE_PLAYING) {
+     // Left/right control
+     int leftRight = 0;
+     if(yValue < JOYSTICK_CENTER - JOYSTICK_DEADZONE) leftRight = -1;
+     else if(yValue > JOYSTICK_CENTER + JOYSTICK_DEADZONE) leftRight = 1;
+     
+     // Up/down control
+     int upDown = 0;
+     if(xValue < JOYSTICK_CENTER - JOYSTICK_DEADZONE) upDown = -1;
+     else if(xValue > JOYSTICK_CENTER + JOYSTICK_DEADZONE) upDown = 1;
+     
+     // Apply inversion settings
+     if(INVERT_UP_DOWN) upDown = -upDown;
+     if(INVERT_LEFT_RIGHT) leftRight = -leftRight;
+     
+     // Execute left/right movement
+     if(leftRight == -1) {
+       if(snake.direction != 0) snake.nextDirection = 2;
+     }
+     else if(leftRight == 1) {
+       if(snake.direction != 2) snake.nextDirection = 0;
+     }
+     
+     // Execute up/down movement
+     if(upDown == -1) {
+       if(snake.direction != 1) snake.nextDirection = 3;
+     }
+     else if(upDown == 1) {
+       if(snake.direction != 3) snake.nextDirection = 1;
+     }
+   }
+   
+   // Button control
+   if(swValue == LOW) {
+     delay(200);
+     if(gameState == STATE_TITLE) {
+       initGame();
+       gameState = STATE_PLAYING;
+       lastMoveTime = millis();
+     }
+     else if(gameState == STATE_GAME_OVER) {
+       gameState = STATE_TITLE;
+       drawTitle();
+     }
+   }
+ }
+
+ void updateGame() {
+   if(millis() - lastMoveTime >= moveDelay) {
+     moveSnake();
+     lastMoveTime = millis();
+   }
+   drawGame();
+ }
+
+ void moveSnake() {
+   snake.direction = snake.nextDirection;
+   
+   int newHeadX = snake.x[0];
+   int newHeadY = snake.y[0];
+   
+   switch(snake.direction) {
+     case 0: newHeadX++; break;
+     case 1: newHeadY++; break;
+     case 2: newHeadX--; break;
+     case 3: newHeadY--; break;
+   }
+   
+   wrapPosition(newHeadX, newHeadY);
+   
+   bool ateFood = (newHeadX == food.x && newHeadY == food.y);
+   
+   for(int i = snake.length; i > 0; i--) {
+     snake.x[i] = snake.x[i-1];
+     snake.y[i] = snake.y[i-1];
+   }
+   
+   snake.x[0] = newHeadX;
+   snake.y[0] = newHeadY;
+   
+   if(ateFood) {
+     snake.length++;
+     score++;
+     
+     // Play food sound (ascending tone)
+     playBuzzer(1200, 80);  // Higher pitch, short duration
+     
+     if(score > highScore) {
+       highScore = score;
+     }
+     
+     if(moveDelay > 80) {
+       moveDelay -= 2;
+     }
+     
+     generateFood();
+   }
+   
+   if(checkSelfCollision()) {
+     gameState = STATE_GAME_OVER;
+     drawGameOver();
+     
+     // Play death sound (descending tone)
+     playDeathSound();
+   }
+ }
+
+ void wrapPosition(int &x, int &y) {
+   if(x < 0) x = GRID_WIDTH - 1;
+   if(x >= GRID_WIDTH) x = 0;
+   if(y < GAME_START_ROW) y = GAME_END_ROW;
+   if(y > GAME_END_ROW) y = GAME_START_ROW;
+ }
+
+ bool checkSelfCollision() {
+   for(int i = 1; i < snake.length; i++) {
+     if(snake.x[0] == snake.x[i] && snake.y[0] == snake.y[i]) {
+       return true;
+     }
+   }
+   return false;
+ }
+
+ // Buzzer functions
+ void playBuzzer(int frequency, int duration) {
+   buzzerFrequency = frequency;
+   buzzerDuration = duration;
+   buzzerStartTime = millis();
+   buzzerActive = true;
+   tone(BUZZER_PIN, frequency);
+ }
+
+ void playDeathSound() {
+   // Play descending tone effect for death
+   // We'll use a sequence of decreasing frequencies
+   int deathNotes[] = {800, 600, 400, 200, 100};
+   int noteDuration = 150;
+   
+   for(int i = 0; i < 5; i++) {
+     tone(BUZZER_PIN, deathNotes[i], noteDuration);
+     delay(noteDuration + 20);
+   }
+   noTone(BUZZER_PIN);
+   buzzerActive = false;
+ }
+
+ void updateBuzzer() {
+   if(buzzerActive) {
+     if(millis() - buzzerStartTime >= buzzerDuration) {
+       noTone(BUZZER_PIN);
+       buzzerActive = false;
+     }
+   }
+ }
+
+ void drawTitle() {
+   display.clearDisplay();
+   
+   display.setTextSize(2);
+   display.setTextColor(SSD1306_WHITE);
+   display.setCursor(28, 15);
+   display.println("SNAKE");
+   
+   display.setTextSize(1);
+   display.setCursor(35, 38);
+   display.print("BEST: ");
+   display.print(highScore);
+   
+   display.setCursor(25, 52);
+   display.print("PRESS TO START");
+   
+   display.display();
+ }
+
+ void drawGame() {
+   display.clearDisplay();
+   
+   // Draw food (8x8 block)
+   display.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, 
+                    GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_WHITE);
+   
+   // Draw snake
+   for(int i = 0; i < snake.length; i++) {
+     if(i == 0) {
+       // Snake head (filled + border, more prominent)
+       display.fillRect(snake.x[i] * GRID_SIZE, snake.y[i] * GRID_SIZE,
+                       GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_WHITE);
+       display.drawRect(snake.x[i] * GRID_SIZE, snake.y[i] * GRID_SIZE,
+                       GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_BLACK);
+     } else {
+       // Snake body (filled block)
+       display.fillRect(snake.x[i] * GRID_SIZE, snake.y[i] * GRID_SIZE,
+                       GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_WHITE);
+     }
+   }
+   
+   // Display current score
+   display.setTextSize(1);
+   display.setTextColor(SSD1306_WHITE);
+   display.setCursor(2, 0);
+   display.print("SCORE:");
+   display.print(score);
+   
+   display.display();
+ }
+
+ void drawGameOver() {
+   display.clearDisplay();
+   
+   display.setTextSize(2);
+   display.setCursor(15, 12);
+   display.println("GAME OVER");
+   
+   display.setTextSize(1);
+   display.setCursor(35, 35);
+   display.print("SCORE: ");
+   display.print(score);
+   
+   display.setCursor(20, 52);
+   display.print("PRESS TO RETURN");
+   
+   display.display();
+ }
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-game" onclick="toggleCode('code-container-game', 'expand-btn-game')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-game { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/19.game2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After flashing the program, the OLED screen displays the title page, showing the game name, a "PRESS TO START" prompt, and the current high score. Press the joystick button to start the game:
+
+ - Joystick controls: Move the joystick up, down, left, or right to control the snake's direction; the snake wraps around the screen edges (passing from one side to the other).
+
+ - Scoring by eating: When the snake's head touches the food, its body grows by one segment, the score increases by 1, and the buzzer emits a short, high-pitched tone.
+
+ - Increasing speed: The snake's movement speed gradually increases with each piece of food consumed; at maximum difficulty, the movement interval drops to 80ms.
+
+ - Game Over: The game ends if the snake's head collides with its own body; "GAME OVER" and the current score are displayed, and the buzzer plays a "game over" sound effect.
+
+ - Restart: Press the joystick button again to return to the title page, then press any directional input or the button to start a new game.
+
+----
+
+20. Weather Desk 
+----------------
+
+This experiment involves an integrated environmental monitoring and intelligent alarm system. It aims to teach you how to collect environmental data using a DHT11 temperature and humidity sensor and a photosensitive sensor, display this data in real-time on an OLED screen, and trigger a buzzer alarm based on environmental conditions. You will master the following core skills:
+
+ - **Multi-sensor data acquisition:** Simultaneously reading DHT11 temperature and humidity data (every 2 seconds) and digital signals from the photosensitive sensor to achieve multi-dimensional environmental sensing.
+
+ - **OLED information display:** Displaying temperature, humidity, lighting status, and alarm information in designated zones on a 128×64 OLED screen for clear data visualization.
+
+ - **Combined alarm logic:** Automatically triggering a buzzer alarm when ambient light is too low (nighttime or obstruction) or the temperature exceeds 40°C, implementing an intelligent "OR" logic warning system.
+
+ - **Non-blocking timed sampling:** Using **millis()** to perform timed data acquisition and display updates every 2 seconds, avoiding the use of **delay()** which would block the main loop.
+
+ - **Status feedback and debugging:** Synchronously outputting sensor data, lighting status, and alarm trigger reasons via the serial port to facilitate system debugging and status monitoring.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+  - 0.96-inch OLED Display
+  - Joystick Module
+  - Passive Buzzer
+  - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/19.game.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - SSD1306 OLED
+     - VCC
+     - 3.3V
+   * - 1
+     - SSD1306 OLED
+     - GND
+     - GND
+   * - 1
+     - SSD1306 OLED
+     - SCL
+     - GPIO 22
+   * - 1
+     - SSD1306 OLED
+     - SDA
+     - GPIO 21
+   * - 2
+     - DHT11 Sensor
+     - VCC
+     - 3.3V
+   * - 2
+     - DHT11 Sensor
+     - GND
+     - GND
+   * - 2
+     - DHT11 Sensor
+     - DATA
+     - GPIO 27
+   * - 3
+     - Light Sensor Module (Digital)
+     - VCC
+     - 3.3V
+   * - 3
+     - Light Sensor Module
+     - GND
+     - GND
+   * - 3
+     - Light Sensor Module
+     - DO (Digital Output)
+     - GPIO 35
+   * - 4
+     - Active Buzzer
+     - Positive (+)
+     - GPIO 4
+   * - 4
+     - Active Buzzer
      - Negative (-)
      - GND
 
