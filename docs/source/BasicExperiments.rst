@@ -3866,7 +3866,7 @@ This experiment is a comprehensive project involving an RFID access control syst
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-FAN2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-door" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -3882,7 +3882,7 @@ This experiment is a comprehensive project involving an RFID access control syst
  #define SCK_PIN   18  // GPIO 18
 
  // Servo pin
- #define SERVO_PIN 27  // Servo signal pin connected to GPIO 15
+ #define SERVO_PIN 27  // Servo signal pin connected to GPIO 27
 
  // Create RFID and servo objects
  MFRC522 rfid(SS_PIN, RST_PIN);
@@ -3967,12 +3967,12 @@ This experiment is a comprehensive project involving an RFID access control syst
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-FAN2" onclick="toggleCode('code-container-FAN2', 'expand-btn-FAN2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-door" onclick="toggleCode('code-container-door', 'expand-btn-door')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-FAN2 { transition: max-height 0.4s ease-in-out; }
+   #code-container-door { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
