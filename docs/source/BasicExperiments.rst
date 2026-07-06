@@ -3670,3 +3670,129 @@ This experiment is a comprehensive project combining PWM-based motor speed contr
 After the program is flashed, the system enters standby mode. Each short press of the button (GPIO4) cycles the motor speed through the sequence: Off → Low → Medium → High → Off. The serial monitor simultaneously outputs the current speed level, facilitating debugging and observation.
 
 ----
+
+17. Stepper Motor Drive And Control
+------------------------------------
+
+This experiment serves as an introductory project for stepper motor driving and control, designed to teach you how to use an ESP32 to drive a 28BYJ-48 stepper motor and achieve precise angular control for both clockwise and counter-clockwise rotation. You will master the following core skills:
+
+- Stepper motor operating principles: Understand how the motor uses pulse signals to rotate the rotor in discrete steps and grasp the relationship between the step angle and the number of pulses.
+
+- Using the Stepper library: Simplify motor control using the **`Stepper.h`** library, specifically mastering **`setSpeed()`** to configure rotation speed and **`step()`** to send pulses.
+
+- 28BYJ-48 gear reduction parameters: Understand that this model operates at 2,048 steps per revolution in single-step mode (due to a 1:64 gear reduction ratio, resulting in approximately 0.175° per step) and how different driving modes affect the step count.
+
+- Pin configuration: Master the mapping between the 28BYJ-48's four-phase windings and the driver pins (IN1→IN3→IN2→IN4) to ensure proper motor operation.
+
+- Forward and reverse control: Control the direction of rotation using positive and negative step values ​​(positive for clockwise, negative for counter-clockwise).
+
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - 28BYJ-48 Stepper Motor
+ - ULN2003 Motor Driver
+ - Power Supply Board
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/17.Stepper.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - ULN2003 Stepper Driver
+     - VCC
+     - 5V
+   * - 1
+     - ULN2003 Stepper Driver
+     - GND
+     - GND
+   * - 1
+     - ULN2003 Stepper Driver
+     - IN1
+     - GPIO 21
+   * - 1
+     - ULN2003 Stepper Driver
+     - IN2
+     - GPIO 19
+   * - 1
+     - ULN2003 Stepper Driver
+     - IN3
+     - GPIO 18
+   * - 1
+     - ULN2003 Stepper Driver
+     - IN4
+     - GPIO 5
+   * - 2
+     - 28BYJ-48 Stepper Motor
+     - Red
+     - ULN2003 VCC (5V)
+   * - 2
+     - 28BYJ-48 Stepper Motor
+     - Orange
+     - ULN2003 IN1
+   * - 2
+     - 28BYJ-48 Stepper Motor
+     - Yellow
+     - ULN2003 IN2
+   * - 2
+     - 28BYJ-48 Stepper Motor
+     - Pink
+     - ULN2003 IN3
+   * - 2
+     - 28BYJ-48 Stepper Motor
+     - Blue
+     - ULN2003 IN4
+
+
+**Example code:**
+
+.. code-block:: cpp
+
+ #include <Stepper.h>
+ // 28BYJ-48 parameters
+ const int stepsPerRevolution = 2048;  // Single-step mode: 2048 steps/revolution
+ const int rolePerMinute = 15;         // Speed (RPM), recommended 10-15, max ~17
+ Stepper myStepper(stepsPerRevolution, 21, 19, 18, 5);  // Sequence: IN1, IN3, IN2, IN4
+ void setup() {
+   myStepper.setSpeed(rolePerMinute);
+ }
+ void loop() {  
+   // Rotate one revolution clockwise
+   myStepper.step(stepsPerRevolution);
+   delay(1000);  // Pause 1 second
+   
+   // Rotate one revolution counterclockwise
+   myStepper.step(-stepsPerRevolution);
+   delay(1000);
+ }
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/17.Stepper2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is uploaded, the stepper motor rotates one full revolution (2,048 steps) clockwise at 15 RPM, pauses for one second, then rotates one full revolution counter-clockwise and pauses for another second; this cycle repeats, creating a reciprocating rotation demonstration.
+
+----
