@@ -3739,26 +3739,6 @@ This experiment serves as an introductory project for stepper motor driving and 
      - ULN2003 Stepper Driver
      - IN4
      - GPIO 5
-   * - 2
-     - 28BYJ-48 Stepper Motor
-     - Red
-     - ULN2003 VCC (5V)
-   * - 2
-     - 28BYJ-48 Stepper Motor
-     - Orange
-     - ULN2003 IN1
-   * - 2
-     - 28BYJ-48 Stepper Motor
-     - Yellow
-     - ULN2003 IN2
-   * - 2
-     - 28BYJ-48 Stepper Motor
-     - Pink
-     - ULN2003 IN3
-   * - 2
-     - 28BYJ-48 Stepper Motor
-     - Blue
-     - ULN2003 IN4
 
 
 **Example code:**
