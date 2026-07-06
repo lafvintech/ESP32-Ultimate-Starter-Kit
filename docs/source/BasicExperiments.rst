@@ -3676,15 +3676,15 @@ After the program is flashed, the system enters standby mode. Each short press o
 
 This experiment serves as an introductory project for stepper motor driving and control, designed to teach you how to use an ESP32 to drive a 28BYJ-48 stepper motor and achieve precise angular control for both clockwise and counter-clockwise rotation. You will master the following core skills:
 
-- Stepper motor operating principles: Understand how the motor uses pulse signals to rotate the rotor in discrete steps and grasp the relationship between the step angle and the number of pulses.
+ - Stepper motor operating principles: Understand how the motor uses pulse signals to rotate the rotor in discrete steps and grasp the relationship between the step angle and the number of pulses.
 
-- Using the Stepper library: Simplify motor control using the **`Stepper.h`** library, specifically mastering **`setSpeed()`** to configure rotation speed and **`step()`** to send pulses.
+ - Using the Stepper library: Simplify motor control using the **`Stepper.h`** library, specifically mastering **`setSpeed()`** to configure rotation speed and **`step()`** to send pulses.
 
-- 28BYJ-48 gear reduction parameters: Understand that this model operates at 2,048 steps per revolution in single-step mode (due to a 1:64 gear reduction ratio, resulting in approximately 0.175° per step) and how different driving modes affect the step count.
+ - 28BYJ-48 gear reduction parameters: Understand that this model operates at 2,048 steps per revolution in single-step mode (due to a 1:64 gear reduction ratio, resulting in approximately 0.175° per step) and how different driving modes affect the step count.
 
-- Pin configuration: Master the mapping between the 28BYJ-48's four-phase windings and the driver pins (IN1→IN3→IN2→IN4) to ensure proper motor operation.
+ - Pin configuration: Master the mapping between the 28BYJ-48's four-phase windings and the driver pins (IN1→IN3→IN2→IN4) to ensure proper motor operation.
 
-- Forward and reverse control: Control the direction of rotation using positive and negative step values ​​(positive for clockwise, negative for counter-clockwise).
+ - Forward and reverse control: Control the direction of rotation using positive and negative step values ​​(positive for clockwise, negative for counter-clockwise).
 
 
 **Materials Needed:**
@@ -3774,5 +3774,239 @@ This experiment serves as an introductory project for stepper motor driving and 
    <div style="margin-top: 30px;"></div>
 
 After the program is uploaded, the stepper motor rotates one full revolution (2,048 steps) clockwise at 15 RPM, pauses for one second, then rotates one full revolution counter-clockwise and pauses for another second; this cycle repeats, creating a reciprocating rotation demonstration.
+
+----
+
+18. RFID Door Lock System
+-------------------------
+
+This experiment is a comprehensive project involving an RFID access control system. It aims to teach the integration of RFID card recognition with servo motor control to create a smart access system that unlocks upon card scanning and automatically resets. You will master the following core skills:
+
+ - RFID Card ID Reading: Reading the UID of ISO14443A-compliant RFID cards/tags using the MFRC522 module and understanding the principles of contactless near-field communication.
+
+ - Custom SPI Pin Configuration: Using `SPI.begin(SCK, MISO, MOSI, SS)` to customize bus pins, allowing for flexible adaptation to different development boards.
+
+ - ESP32 Servo Control: Controlling the servo motor's rotation angle via PWM signals to operate the door lock mechanism.
+
+ - Non-blocking Timer Design: Using `millis()` to trigger an automatic reset (locking the door) three seconds after opening, thereby avoiding the use of `delay()` which would block the main loop.
+
+ - Serial Status Logging: Printing real-time logs of card detection, UID information, servo actions, and system status to facilitate debugging and monitoring.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - MFRC522 RFID Module
+ - SG90 Servo 
+ - Power Supply Board
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/BASIC/18.RFIDDOOR.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - RC522 RFID Module
+     - VCC
+     - 3.3V
+   * - 1
+     - RC522 RFID Module
+     - GND
+     - GND
+   * - 1
+     - RC522 RFID Module
+     - RST
+     - GPIO 4
+   * - 1
+     - RC522 RFID Module
+     - SDA (SS)
+     - GPIO 5
+   * - 1
+     - RC522 RFID Module
+     - MOSI
+     - GPIO 23
+   * - 1
+     - RC522 RFID Module
+     - MISO
+     - GPIO 19
+   * - 1
+     - RC522 RFID Module
+     - SCK
+     - GPIO 18
+   * - 2
+     - SG90 Servo
+     - Red (VCC)
+     - 5V
+   * - 2
+     - SG90 Servo
+     - Brown (GND)
+     - GND
+   * - 2
+     - SG90 Servo
+     - Orange (Signal)
+     - GPIO 27
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-FAN2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <SPI.h>
+ #include <MFRC522.h>
+ #include <ESP32Servo.h>
+
+ // RFID module pin definitions
+ #define RST_PIN   4   // RFID-GPIO 4
+ #define SS_PIN    5   // SDA-GPIO 5
+ #define MOSI_PIN  23  // GPIO 23
+ #define MISO_PIN  19  // GPIO 19
+ #define SCK_PIN   18  // GPIO 18
+
+ // Servo pin
+ #define SERVO_PIN 27  // Servo signal pin connected to GPIO 15
+
+ // Create RFID and servo objects
+ MFRC522 rfid(SS_PIN, RST_PIN);
+ Servo myServo;
+
+ // Servo angles
+ const int OPEN_ANGLE = 90;    // Door open angle
+ const int CLOSE_ANGLE = 0;    // Door close angle
+
+ // Timing variables
+ unsigned long lastActiveTime = 0;
+ bool servoActive = false;
+ const unsigned long ACTIVE_DURATION = 3000; // 3 second hold time
+
+ void setup() {
+   Serial.begin(115200);
+
+   // Initialize custom SPI pins
+   SPI.begin(SCK_PIN, MISO_PIN, MOSI_PIN, SS_PIN);
+
+   // Initialize RFID module
+   rfid.PCD_Init();
+  
+   // Initialize servo
+   myServo.attach(SERVO_PIN);
+   myServo.write(CLOSE_ANGLE);  // Initial position at 0 degrees
+
+   // Print startup information
+   Serial.println("=========================");
+   Serial.println("ESP32 Access Control System Started");
+   Serial.println("=========================");
+   Serial.println("Please tap your card...");
+   Serial.println("=========================");
+ }
+
+ void loop() {
+   // Check if servo needs to reset
+   if (servoActive && (millis() - lastActiveTime >= ACTIVE_DURATION)) {
+     myServo.write(CLOSE_ANGLE);
+     servoActive = false;
+     Serial.println("[System] Servo reset (0°) - Door closed");
+     Serial.println("Please tap your card...");
+   }
+   
+   // Check if a new card is present
+   if (!rfid.PICC_IsNewCardPresent()) {
+     return;
+   }
+   
+   if (!rfid.PICC_ReadCardSerial()) {
+     return;
+   }
+   
+   // Card detected, print card UID
+   Serial.print("[Detected] Card UID: ");
+   for (byte i = 0; i < rfid.uid.size; i++) {
+     if (rfid.uid.uidByte[i] < 0x10) {
+       Serial.print("0");
+     }
+     Serial.print(rfid.uid.uidByte[i], HEX);
+     if (i < rfid.uid.size - 1) {
+       Serial.print(" ");
+     }
+   }
+   Serial.println();
+   
+   // Rotate servo to 90 degrees
+   myServo.write(OPEN_ANGLE);
+   servoActive = true;
+   lastActiveTime = millis();
+   Serial.println("[Action] Servo rotated to 90° - Door opened");
+   Serial.println("[Info] Door will close automatically in 3 seconds...");
+   
+   // Halt current card
+   rfid.PICC_HaltA();
+   
+   // Small delay to avoid re-reading the same card
+   delay(200);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-FAN2" onclick="toggleCode('code-container-FAN2', 'expand-btn-FAN2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-FAN2 { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/BASIC/18.RFIDDOOR2.png
+   :width: 700
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After the program is uploaded, the system enters standby mode, and the servo holds its position at 0° (door closed).
+
+ - When any RFID card or tag is brought near the reader, the serial port outputs the card's full UID (in hexadecimal format), and the servo immediately rotates to 90° (door open), while the serial port displays the message "Door opened."
+
+ - After 3 seconds, the servo automatically returns to 0° (door closed), and the system reverts to standby mode, awaiting the next card scan. This sequence completes the full automated access control process: "scan card → open door → delay → close door."
 
 ----
