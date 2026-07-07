@@ -71,11 +71,11 @@ This experiment is a comprehensive project focusing on hybrid control and state 
      - Other pin
      - LED Anode
    * - 3
-     - Button (Push Switch)
+     - Button 
      - One pin
      - GPIO 18
    * - 3
-     - Button (Push Switch)
+     - Button 
      - Other pin
      - GND
 
