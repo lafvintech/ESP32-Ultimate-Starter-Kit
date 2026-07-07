@@ -13,7 +13,288 @@ While foundational experiments taught you the basics of hands-on hardware intera
 
 ----
 
-1. TEMP And HUMI Meter
+1. LED_Control
+--------------
+
+This experiment is a comprehensive project focusing on hybrid control and state synchronization within the Internet of Things (IoT). It aims to teach you how to control an LED simultaneously via physical buttons and a web interface, while achieving real-time state synchronization and feedback. You will master the following core skills:
+
+ - Dual-channel control mode: The LED can be controlled by both a physical button (GPIO18) and a web-based button; these methods operate independently, enabling both local and remote control.
+
+ - Wi-Fi AP mode application: The ESP32 functions as an open (password-free) access point, allowing a smartphone to connect directly and access the control interface.
+
+ - RESTful API design: Implementation of endpoints such as `/toggle` (to switch the LED state) and `/state` (to query the current state), supporting frontend polling for synchronization.
+
+ - AJAX real-time state synchronization: The frontend polls the `/state` endpoint every 500ms, ensuring that the LED icon and status text on the webpage remain synchronized with the actual hardware state in real time.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - LED
+ - Button
+ - Resistor(220Ω)
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/9.LED.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - LED
+     - Anode (long leg)
+     - 220Ω Resistor
+   * - 1
+     - LED
+     - Cathode (short leg)
+     - GND
+   * - 2
+     - 220Ω Resistor
+     - One pin
+     - GPIO 19
+   * - 2
+     - 220Ω Resistor
+     - Other pin
+     - LED Anode
+   * - 3
+     - Button (Push Switch)
+     - One pin
+     - GPIO 18
+   * - 3
+     - Button (Push Switch)
+     - Other pin
+     - GND
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+ #include <Preferences.h>
+
+ // ---------- Hardware Definitions ----------
+ const int ledPin = 19;       // LED pin
+ const int buttonPin = 18;    // Physical button pin
+
+ bool ledState = false;       // LED state
+ bool lastButtonState = HIGH; // Last button state
+
+ // ---------- WiFi Configuration ----------
+ const char* apSSID = "ESP32_LED_Control";  // Access Point SSID (no password)
+ const char* apPassword = NULL;        // No password
+
+ // ---------- Create Web Server ----------
+ WebServer server(80);
+
+ Preferences preferences;
+
+ // ---------- HTML Configuration Page ----------
+ String configHTMLPage() {
+   String html = "<!DOCTYPE html><html><head>";
+   html += "<title>ESP32 WiFi Configuration</title>";
+   html += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+   html += "<style>"
+           "body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }"
+           ".container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }"
+           "h2 { text-align: center; color: #333; }"
+           "input, button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }"
+           "button { background-color: #4CAF50; color: white; border: none; cursor: pointer; font-size: 16px; }"
+           "button:hover { background-color: #45a049; }"
+           "</style></head><body>";
+
+   html += "<div class='container'>";
+   html += "<h2>WiFi Configuration</h2>";
+
+   html += "<form action='/configure' method='POST'>";
+   html += "<input type='text' name='ssid' placeholder='WiFi SSID' required>";
+   html += "<input type='password' name='password' placeholder='WiFi Password' required>";
+   html += "<button type='submit'>Connect</button>";
+   html += "</form>";
+
+   html += "</div></body></html>";
+   return html;
+ }
+
+ // ---------- HTML Control Page (Original Design) ----------
+ String controlHTMLPage() {
+   String html = "<!DOCTYPE html><html><head>";
+   html += "<title>ESP32 LED Control</title>";
+   html += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+   html += "<style>"
+           "body {"
+           "  font-family: Arial, sans-serif;"
+           "  display: flex;"
+           "  flex-direction: column;"
+           "  justify-content: center;"
+           "  align-items: center;"
+           "  height: 100vh;"
+           "  margin: 0;"
+           "  background-color: #f0f0f0;"
+           "}"
+           "h2 { color: #333; margin-bottom: 20px; }"
+
+           "/* LED bulb icon */"
+           "#ledIcon { width: 60px; height: 100px; margin: 20px auto; position: relative; }"
+           "#ledIcon .bulb { width: 60px; height: 60px; border-radius: 50%; background-color: #f44336; margin: 0 auto; transition: background-color 0.3s, box-shadow 0.3s; }"
+           "#ledIcon .base { width: 30px; height: 20px; background-color: #555; margin: -5px auto 0 auto; border-radius: 5px; }"
+
+           "#ledState { font-weight: bold; font-size: 1.5em; margin: 10px; }"
+           "button { padding: 15px 30px; font-size: 1.2em; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 30px; }"
+           ".on { background-color: #4CAF50; color: white; }"
+           ".off { background-color: #f44336; color: white; }"
+           "</style></head><body>";
+
+   html += "<h2>ESP32 LED Control</h2>";
+
+   html += "<div id='ledIcon'><div class='bulb'></div><div class='base'></div></div>";
+   html += "<p>LED Status: <span id='ledState'>" + String(ledState ? "ON" : "OFF") + "</span></p>";
+   html += "<button id='ledButton' class='" + String(ledState ? "on" : "off") + "' onclick='toggleLED()'>Button</button>";
+
+   html += "<script>"
+           "function toggleLED() {"
+           "  fetch('/toggle').then(()=>updateState());"
+           "}"
+           "function updateState() {"
+           "  fetch('/state').then(response=>response.text()).then(data=>{"
+           "    var state = data == '1';"
+           "    document.getElementById('ledState').innerText = state ? 'ON' : 'OFF';"
+           "    var btn = document.getElementById('ledButton');"
+           "    btn.className = state ? 'on' : 'off';"
+           "    var bulb = document.querySelector('#ledIcon .bulb');"
+           "    if(state){"
+           "      bulb.style.backgroundColor='#4CAF50';"
+           "      bulb.style.boxShadow='0 0 20px #4CAF50, 0 0 40px #4CAF50, 0 0 60px #4CAF50';"
+           "    } else {"
+           "      bulb.style.backgroundColor='#f44336';"
+           "      bulb.style.boxShadow='0 0 10px rgba(0,0,0,0.2)';"
+           "    }"
+           "  });"
+           "}"
+           "setInterval(updateState, 500);"
+           "</script>";
+
+   html += "</body></html>";
+   return html;
+ }
+
+ // ---------- Setup Routes ----------
+ void setupRoutes() {
+   server.on("/", [](){
+     server.send(200, "text/html", controlHTMLPage());
+   });
+
+   server.on("/toggle", [](){
+     ledState = !ledState;
+     server.send(200, "text/plain", ledState ? "1" : "0");
+   });
+
+   server.on("/state", [](){
+     server.send(200, "text/plain", ledState ? "1" : "0");
+   });
+ }
+
+ // ---------- Setup Access Point ----------
+ void setupAccessPoint() {
+   WiFi.softAP(apSSID, apPassword);
+ }
+
+ // ---------- Setup ----------
+ void setup() {
+   pinMode(ledPin, OUTPUT);
+   pinMode(buttonPin, INPUT_PULLUP);
+
+   preferences.begin("wifi-config", false);
+
+   setupAccessPoint();
+
+   setupRoutes();
+   server.begin();
+ }
+
+ // ---------- Main Loop ----------
+ void loop() {
+   server.handleClient();
+
+   bool buttonState = digitalRead(buttonPin);
+   if (buttonState == LOW && lastButtonState == HIGH) {
+     ledState = !ledState;
+     delay(50);
+   }
+   lastButtonState = buttonState;
+
+   digitalWrite(ledPin, ledState ? HIGH : LOW);
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-LED" onclick="toggleCode('code-container-LED', 'expand-btn-LED')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-LED { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/9.LED2.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After flashing the program, the ESP32 creates a password-free Wi-Fi hotspot named **ESP32_LED_Control**. Once a mobile phone or computer connects to this hotspot, access **192.168.4.1** to open the control page:
+
+ - Web-based control: Clicking the "Button" on the page toggles the LED state, and the LED icon on the page updates synchronously (glowing green when ON, red when OFF).
+
+ - Physical button control: Pressing the physical button connected to GPIO18 toggles the LED state, and the web page status updates automatically within 500ms.
+
+ - Real-time status synchronization: Regardless of whether control is via the web page or the physical button, the LED state remains synchronized, ensuring consistency among the web page status, the LED icon, and the actual hardware state.
+
+
+2. TEMP And HUMI Meter
 ----------------------
 
 This experiment is a core project in our introductory practical course on the Internet of Things (IoT). It aims to teach you how to set up an ESP32 as a Wi-Fi hotspot (AP mode) and build an embedded web server to display sensor data in real time on a webpage. You will master the following key skills:
@@ -407,7 +688,7 @@ This experiment is a core project in our introductory practical course on the In
 
 ----
 
-2. Ultrasonic Distance Meter
+3. Ultrasonic Distance Meter
 ----------------------------
 
 This experiment is an advanced project for IoT sensor applications, aiming to learn how to combine an ultrasonic ranging module (HC-SR04) with an ESP32 web server to build a real-time wireless ranging and monitoring system. You will master the following key skills:
@@ -979,7 +1260,7 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 
 ----
 
-3. Web-Control Servo
+4. Web-Control Servo
 ---------------------
 
 This experiment is a comprehensive project integrating IoT remote control and servo driving, designed to teach you how to remotely control the rotation of an SG90 servo motor via an ESP32 using a web interface. You will master the following core skills:
@@ -1610,7 +1891,7 @@ The ESP32 creates a Wi-Fi hotspot named **ESP32_Servo_Control**.
 
 ----
 
-4. Colorful RGB
+5. Colorful RGB
 ---------------
 
 This experiment is a comprehensive project on IoT-based smart lighting control. It aims to teach you how to drive WS2812B full-color RGB LED strips using an ESP32 and remotely control various dynamic lighting effects via a Wi-Fi-hosted web interface. You will master the following core skills:
@@ -1973,7 +2254,7 @@ After flashing the firmware, the ESP32 creates a Wi-Fi hotspot named **ESP32-RGB
 
 ----
 
-5. IR Display
+6. IR Display
 -------------
 
 This experiment is an integrated project combining infrared (IR) remote control decoding with IoT-based display. It aims to teach you how to use an ESP32 to read signals from an IR remote and display the corresponding button information in real-time via a Wi-Fi web page. You will master the following core skills:
@@ -2320,7 +2601,7 @@ This experiment is an integrated project combining infrared (IR) remote control 
 ----
 
 
-6. Custom Display
+7. Custom Display
 -----------------
 
 This experiment is a comprehensive project integrating web interaction with OLED display functionality, designed to teach you how to remotely edit text displayed on an OLED screen via a webpage. You will master the following core skills:
@@ -2551,7 +2832,7 @@ After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_WEB_
 
 ----
 
-7. Web control Fan
+8. Web control Fan
 -------------------
 
 This experiment is a comprehensive IoT project focused on remote motor control. It aims to teach you how to remotely control a relay module driven by an ESP32 via a web interface, enabling the switching of a DC motor. You will master the following core skills:
@@ -3178,7 +3459,7 @@ When the switch is turned on, the relay engages (GPIO27 outputs a high level), p
 
 ----
 
-8. 3D Attitude Monitor
+9. 3D Attitude Monitor
 ----------------------
 
 This experiment is an advanced integrated project combining 3D pose visualization with real-time sensor data streaming. It aims to teach you how to push real-time data from an MPU6050 6-axis sensor to a web interface using Server-Sent Events (SSE) and render the 3D pose using Three.js. You will master the following core skills:
@@ -3862,7 +4143,7 @@ As you tilt or rotate the development board, the 3D cube rotates and the numeric
 
 ----
 
-9. WEB Weather Station
+10. WEB Weather Station
 ----------------------
 
 This experiment is a comprehensive project involving an IoT-based environmental monitoring and intelligent alarm system. It aims to teach the integration of multi-sensor data acquisition, a web server, and a real-time alarm mechanism into a complete IoT application. You will master the following core skills:
