@@ -158,3 +158,22 @@ h2:hover .headerlink{
     }
 
 }
+
+/*==============================
+  代码块背景颜色 - 改为白色
+==============================*/
+.highlight {
+    background: #ffffff !important;
+}
+
+.highlight .hll {
+    background-color: #ffffff !important;
+}
+
+span.linenos.special {
+    background-color: #ffffff !important;
+}
+
+td.linenos .special {
+    background-color: #ffffff !important;
+}
