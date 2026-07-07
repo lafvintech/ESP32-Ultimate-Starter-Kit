@@ -745,8 +745,8 @@ This experiment is an introductory project on digital sensor driving and data ac
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/5.DHT11.png
-   :width: 800
+.. image:: _static/project/BASIC/5.DHT11_2.png
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -950,7 +950,7 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 **Display Effect:**
 
 .. image:: _static/project/BASIC/6.rfid2.png
-   :width: 800
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -963,8 +963,8 @@ This experiment is an introductory project to RFID (Radio Frequency Identificati
 
 ----
 
-7. Passive Buzzer
------------------
+7. Music Player
+--------------
 
 This experiment is an introductory project for audio frequency generation and music programming. It aims to learn how to use the tone() function of ESP32 to drive a passive buzzer to play a melody.
 
@@ -2159,6 +2159,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
  - ESP32 Development Board
  - 4-7-Segment Display
  - Button
+ - 74HC595
  - Breadboard and Jumper Wires
 
 **Wiring Diagram:**
@@ -2599,7 +2600,7 @@ You will master the following core skills:
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-SMG2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-NTP" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -2805,12 +2806,12 @@ You will master the following core skills:
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-SNG2" onclick="toggleCode('code-container-SMG2', 'expand-btn-SMG2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-NTP" onclick="toggleCode('code-container-NTP', 'expand-btn-NTP')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-SMG2 { transition: max-height 0.4s ease-in-out; }
+   #code-container-NTP { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -3196,7 +3197,7 @@ This experiment is a comprehensive project covering sensor fusion and attitude e
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-SPY2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-SPY" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 

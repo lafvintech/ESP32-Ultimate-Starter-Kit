@@ -84,7 +84,7 @@ This experiment is a comprehensive project focusing on hybrid control and state 
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-dht" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-LED" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -2074,7 +2074,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
  document.getElementById('redVal').textContent=d.r;document.getElementById('greenVal').textContent=d.g;document.getElementById('blueVal').textContent=d.b;
  custom=d.custom;updToggle();updColor(d.r,d.g,d.b);
  }
-})}
+ })}
  function togglePower(){fetch('/power',{method:'POST'}).then(()=>upd())}
  function setMode(m){fetch('/mode?mode='+m,{method:'POST'}).then(()=>upd())}
  function toggleCustom(){custom=!custom;fetch('/custom?state='+(custom?1:0),{method:'POST'}).then(()=>{updToggle();document.getElementById('rgbCtrl').className='rgb-ctrl'+(custom?' active':'');if(custom)updateRGB();upd()})}
@@ -2201,6 +2201,7 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
      }
      delay(1);
  }
+
 .. raw:: html
 
    </div>
@@ -2832,7 +2833,7 @@ After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_WEB_
 
 ----
 
-8. Web control Fan
+8. Web Control Fan
 -------------------
 
 This experiment is a comprehensive IoT project focused on remote motor control. It aims to teach you how to remotely control a relay module driven by an ESP32 via a web interface, enabling the switching of a DC motor. You will master the following core skills:

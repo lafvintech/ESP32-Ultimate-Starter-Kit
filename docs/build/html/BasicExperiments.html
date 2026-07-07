@@ -127,7 +127,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#thermometer">4. Thermometer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#temp-and-humi-detection">5. TEMP And HUMI Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scan-rfid">6. Scan RFID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#passive-buzzer">7. Passive Buzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#music-player">7. Music Player</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tilt-alarm">8. Tilt Alarm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#inch-display">9. 0.96 Inch Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#keyboard-display">10. Keyboard Display</a></li>
@@ -151,7 +151,7 @@
 <li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#colorful-rgb">5. Colorful RGB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ir-display">6. IR Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#custom-display">7. Custom Display</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-fan">8. Web control Fan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-fan">8. Web Control Fan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#d-attitude-monitor">9. 3D Attitude Monitor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-weather-station">10. WEB Weather Station</a></li>
 </ul>
@@ -855,7 +855,7 @@ function toggleCode(containerId, buttonId) {
   }
 }
 </script><div style="margin-top: 30px;"></div><p><strong>Display Effect:</strong></p>
-<a class="reference internal image-reference" href="_images/5.DHT11.png"><img alt="_images/5.DHT11.png" class="align-center" src="_images/5.DHT11.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/5.DHT11_2.png"><img alt="_images/5.DHT11_2.png" class="align-center" src="_images/5.DHT11_2.png" style="width: 700px;" /></a>
 <div style="margin-top: 30px;"></div><ul class="simple">
 <li><p>After programming, open the serial monitor <strong>(baud rate 115200)</strong>. The system will automatically collect the current ambient temperature and humidity data every 2 seconds and print it out in a clear, separated format.</p></li>
 <li><p>If the sensor connection is normal and the reading is successful, the current temperature and humidity values ​​will be displayed.</p></li>
@@ -1041,15 +1041,15 @@ function toggleCode(containerId, buttonId) {
 }
 
 </script><div style="margin-top: 30px;"></div><p><strong>Display Effect:</strong></p>
-<a class="reference internal image-reference" href="_images/6.rfid2.png"><img alt="_images/6.rfid2.png" class="align-center" src="_images/6.rfid2.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/6.rfid2.png"><img alt="_images/6.rfid2.png" class="align-center" src="_images/6.rfid2.png" style="width: 700px;" /></a>
 <div style="margin-top: 30px;"></div><ul class="simple">
 <li><p>After programming and correctly connecting the RC522 module, open the serial monitor <strong>(baud rate 115200)</strong>. The system will display a successful initialization message and wait for a card to approach.</p></li>
 <li><p>When any RFID card or tag approaches the reader, the serial port will immediately output the card’s unique UID (hexadecimal format). After the card is removed, the system continues to wait for the next card to arrive, achieving continuous scanning and identification.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="passive-buzzer">
-<h2>7. Passive Buzzer<a class="headerlink" href="#passive-buzzer" title="Link to this heading"></a></h2>
+<section id="music-player">
+<h2>7. Music Player<a class="headerlink" href="#music-player" title="Link to this heading"></a></h2>
 <p>This experiment is an introductory project for audio frequency generation and music programming. It aims to learn how to use the tone() function of ESP32 to drive a passive buzzer to play a melody.</p>
 <p><strong>Materials Needed:</strong></p>
 <blockquote>
@@ -2132,6 +2132,7 @@ function toggleCode(containerId, buttonId) {
 <li><p>ESP32 Development Board</p></li>
 <li><p>4-7-Segment Display</p></li>
 <li><p>Button</p></li>
+<li><p>74HC595</p></li>
 <li><p>Breadboard and Jumper Wires</p></li>
 </ul>
 </div></blockquote>
@@ -2572,7 +2573,7 @@ You will master the following core skills:</p>
 </table>
 <p><strong>Example code:</strong></p>
 <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-<div id="code-container-SMG2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;WiFi.h&gt;</span>
+<div id="code-container-NTP" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;WiFi.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;time.h&gt;</span>
 
 <span class="c1">// WiFi Configuration</span>
@@ -2773,12 +2774,12 @@ You will master the following core skills:</p>
 </div>
 </div>
 <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-  <button id="expand-btn-SNG2" onclick="toggleCode('code-container-SMG2', 'expand-btn-SMG2')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+  <button id="expand-btn-NTP" onclick="toggleCode('code-container-NTP', 'expand-btn-NTP')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
 </div>
 </div>
 
 <style>
-#code-container-SMG2 { transition: max-height 0.4s ease-in-out; }
+#code-container-NTP { transition: max-height 0.4s ease-in-out; }
 </style>
 
 <script>
@@ -3204,7 +3205,7 @@ function toggleCode(containerId, buttonId) {
 </table>
 <p><strong>Example code:</strong></p>
 <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-<div id="code-container-SPY2" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
+<div id="code-container-SPY" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Adafruit_MPU6050.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Adafruit_SSD1306.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Adafruit_GFX.h&gt;</span>
