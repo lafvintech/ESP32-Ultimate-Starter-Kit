@@ -4020,7 +4020,7 @@ This experiment is a comprehensive embedded game development project designed to
 
  - Joystick Direction Control: Reading ADC values ​​to determine joystick X/Y-axis movement, implementing dead-zone logic to prevent accidental inputs, and ensuring smooth directional control.
 
-  Snake Body Data Structure: Storing body coordinates in an array, implementing movement logic via "head-insertion" (shifting elements), and supporting dynamic body length expansion.
+ - Snake Body Data Structure: Storing body coordinates in an array, implementing movement logic via "head-insertion" (shifting elements), and supporting dynamic body length expansion.
 
  - Collision Detection & Food Generation: Detecting whether the snake's head consumes food or collides with walls or its own body, and generating new food at random, valid locations.
 
@@ -4538,27 +4538,28 @@ After flashing the program, the OLED screen displays the title page, showing the
 
 This experiment involves an integrated environmental monitoring and intelligent alarm system. It aims to teach you how to collect environmental data using a DHT11 temperature and humidity sensor and a photosensitive sensor, display this data in real-time on an OLED screen, and trigger a buzzer alarm based on environmental conditions. You will master the following core skills:
 
- - **Multi-sensor data acquisition:** Simultaneously reading DHT11 temperature and humidity data (every 2 seconds) and digital signals from the photosensitive sensor to achieve multi-dimensional environmental sensing.
+ - Multi-sensor data acquisition: Simultaneously reading DHT11 temperature and humidity data (every 2 seconds) and digital signals from the photosensitive sensor to achieve multi-dimensional environmental sensing.
 
- - **OLED information display:** Displaying temperature, humidity, lighting status, and alarm information in designated zones on a 128×64 OLED screen for clear data visualization.
+ - OLED information display: Displaying temperature, humidity, lighting status, and alarm information in designated zones on a 128×64 OLED screen for clear data visualization.
 
- - **Combined alarm logic:** Automatically triggering a buzzer alarm when ambient light is too low (nighttime or obstruction) or the temperature exceeds 40°C, implementing an intelligent "OR" logic warning system.
+ - Combined alarm logic: Automatically triggering a buzzer alarm when ambient light is too low (nighttime or obstruction) or the temperature exceeds 40°C, implementing an intelligent "OR" logic warning system.
 
- - **Non-blocking timed sampling:** Using **millis()** to perform timed data acquisition and display updates every 2 seconds, avoiding the use of **delay()** which would block the main loop.
+ - Non-blocking timed sampling: Using **millis()** to perform timed data acquisition and display updates every 2 seconds, avoiding the use of **delay()** which would block the main loop.
 
- - **Status feedback and debugging:** Synchronously outputting sensor data, lighting status, and alarm trigger reasons via the serial port to facilitate system debugging and status monitoring.
+ - Status feedback and debugging: Synchronously outputting sensor data, lighting status, and alarm trigger reasons via the serial port to facilitate system debugging and status monitoring.
 
 **Materials Needed:**
 
  - ESP32 Development Board
-  - 0.96-inch OLED Display
-  - Joystick Module
-  - Passive Buzzer
-  - Breadboard and Jumper Wires
+ - 0.96-inch OLED Display
+ - DHT11 Sensor
+ - Light Sensor 
+ - Active Buzzer
+ - Breadboard and Jumper Wires
 
 **Wiring Diagram:**
 
-.. image:: _static/project/BASIC/19.game.png
+.. image:: _static/project/BASIC/20.weather.png
    :width: 700
    :align: center
 
@@ -4577,19 +4578,19 @@ This experiment involves an integrated environmental monitoring and intelligent 
      - Pin
      - Connect to
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - VCC
      - 3.3V
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - GND
      - GND
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - SCL
      - GPIO 22
    * - 1
-     - SSD1306 OLED
+     - 0.96 OLED
      - SDA
      - GPIO 21
    * - 2
@@ -4605,16 +4606,16 @@ This experiment involves an integrated environmental monitoring and intelligent 
      - DATA
      - GPIO 27
    * - 3
-     - Light Sensor Module (Digital)
+     - Light Sensor 
      - VCC
      - 3.3V
    * - 3
-     - Light Sensor Module
+     - Light Sensor
      - GND
      - GND
    * - 3
-     - Light Sensor Module
-     - DO (Digital Output)
+     - Light Sensor 
+     - DO
      - GPIO 35
    * - 4
      - Active Buzzer
@@ -4630,7 +4631,7 @@ This experiment involves an integrated environmental monitoring and intelligent 
 .. raw:: html
 
    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
-   <div id="code-container-game" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+   <div id="code-container-weather" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
 
 .. code-block:: cpp
 
@@ -5007,12 +5008,12 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
    </div>
    <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
-     <button id="expand-btn-game" onclick="toggleCode('code-container-game', 'expand-btn-game')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+     <button id="expand-btn-weather" onclick="toggleCode('code-container-weather', 'expand-btn-weather')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
    </div>
    </div>
 
    <style>
-   #code-container-game { transition: max-height 0.4s ease-in-out; }
+   #code-container-weather { transition: max-height 0.4s ease-in-out; }
    </style>
 
    <script>
@@ -5035,7 +5036,7 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/19.game2.png
+.. image:: _static/project/BASIC/20.weather2.png
    :width: 700
    :align: center
 
@@ -5043,16 +5044,10 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
    <div style="margin-top: 30px;"></div>
 
-After flashing the program, the OLED screen displays the title page, showing the game name, a "PRESS TO START" prompt, and the current high score. Press the joystick button to start the game:
+After the program is flashed, the OLED screen displays the startup screen before entering the main interface, where temperature, humidity, and light status are displayed in real-time and updated every 2 seconds.
 
- - Joystick controls: Move the joystick up, down, left, or right to control the snake's direction; the snake wraps around the screen edges (passing from one side to the other).
+ - When the ambient light dims (causing the photosensitive sensor to output a high level) or the temperature exceeds 40°C, the buzzer immediately sounds an alarm; the OLED light status indicator displays "DARK," and the serial port outputs the cause of the alarm ("Dark," "Overheat," or both).
 
- - Scoring by eating: When the snake's head touches the food, its body grows by one segment, the score increases by 1, and the buzzer emits a short, high-pitched tone.
-
- - Increasing speed: The snake's movement speed gradually increases with each piece of food consumed; at maximum difficulty, the movement interval drops to 80ms.
-
- - Game Over: The game ends if the snake's head collides with its own body; "GAME OVER" and the current score are displayed, and the buzzer plays a "game over" sound effect.
-
- - Restart: Press the joystick button again to return to the title page, then press any directional input or the button to start a new game.
+ - When the light brightens and the temperature drops below 40°C, the buzzer automatically turns off, and the system returns to its normal state.
 
 ----

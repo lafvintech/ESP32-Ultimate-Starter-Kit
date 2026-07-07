@@ -8,16 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Components Introduction &mdash; ESP32 Ultimate Starter Kit  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fa446fe1" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=1e9b122a" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
@@ -66,7 +66,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#install-serial-port-tool">2. Install Serial Port Tool</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#install-esp32-core-board">3.Install ESP32 Core Board</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#install-esp32-core-board">3. Install ESP32 Core Board</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#add-additional-boards-manager-url">Add Additional Boards Manager URL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#download-the-esp32-core-package">Download the  ESP32 Core Package</a></li>
 </ul>
@@ -88,8 +88,33 @@
 <li class="toctree-l2"><a class="reference internal" href="#light-sensor">5. Light Sensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#water-level-sensor">6. Water Level Sensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ultrasonic-distance-sensor">7. Ultrasonic Distance Sensor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ir-receiver-module-and-remote-control">8. IR Receiver Module and Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ir-receiver-module-and-remote-control">8. IR Receiver Module And Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#joystick-module">9. Joystick Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rc522-rfid-module">10. RC522 RFID Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inch-oled-display">11. 0.96-inch OLED Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#x4-keypad">12. 4x4 Keypad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#relay">15. Relay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#segment-display">16. 7-segment Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#digit-7-segment-display">17. 4-Digit 7-Segment Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ws2812-rgb-8-leds-strip">18. WS2812 RGB 8 LEDs Strip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#active-passive-buzzer">19. Active/Passive Buzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#servo-motor">20. Servo Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dc-motor">21. DC Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stepper-motor-and-uln2003-driver-board">22. Stepper Motor And ULN2003 Driver Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#led">23. LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#button">24. Button</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resistor">25. Resistor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#potentiometer">26. Potentiometer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tilt-switch">27. Tilt Switch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hc595">28. 74HC595</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#l293d">28. L293D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thermistor">29. Thermistor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pn2222-transistor">30. PN2222 Transistor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#n4007-diode">31. 1N4007 Diode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#power-supply-module">32. Power Supply Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#battery-clip-and-battery-box">33. Battery Clip And Battery Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#breadboard">34. Breadboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jumper-wires">35. Jumper Wires</a></li>
 </ul>
 </li>
 </ul>
@@ -97,12 +122,36 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="BasicExperiments.html">Basic Experiments</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#led-blinking">1. LED Blinking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#button-led">2. Button LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#pwm-led">2. PWM LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#button-led">3. Button LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#thermometer">4. Thermometer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#temp-and-humi-detection">5. TEMP And HUMI Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#scan-rfid">6. Scan RFID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#passive-buzzer">7. Passive Buzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#tilt-alarm">8. Tilt Alarm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#inch-display">9. 0.96 Inch Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#keyboard-display">10. Keyboard Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#human-body-detection">11. Human Body Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#segment-display">12. 7-Segment Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#digit-counter">13. 4-Digit Counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#ntp-clock">14. NTP Clock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#simple-level">15. Simple Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#variable-speed-fan">16. Variable Speed Fan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#stepper-motor-drive-and-control">17. Stepper Motor Drive And Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#rfid-door-lock-system">18. RFID Door Lock System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#mini-game-snake">19. Mini Game: Snake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#weather-desk">20. Weather Desk</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedExperiment.html">Advanced Experiments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP and HUMI Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP And HUMI Meter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">2. Ultrasonic Distance Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-servo">3. Web-Control Servo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#colorful-rgb">4. Colorful RGB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ir-display">5. IR Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#custom-display">6. Custom Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-fan">7. Web control Fan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#d-attitude-monitor">8. 3D Attitude Monitor</a></li>
 </ul>
 </li>
 </ul>
@@ -134,7 +183,10 @@
   <section id="components-introduction">
 <h1>Components Introduction<a class="headerlink" href="#components-introduction" title="Link to this heading"></a></h1>
 <a class="reference internal image-reference" href="_images/1.fenmian.png"><img alt="_images/1.fenmian.png" class="align-center" src="_images/1.fenmian.png" style="width: 800px;" /></a>
-<div style="margin-top: 30px;"></div><hr class="docutils" />
+<div style="margin-top: 30px;"></div><p>Extensive Components and Smart Modules: The kit includes a variety of popular modules.</p>
+<p>such as ultrasonic sensors, RFID modules, servo motors, MPU6050 angle sensors, OLED displays, temperature and humidity sensors, and PIR motion sensors—enabling users to build dozens of creative DIY projects right out of the box.</p>
+<p>Below is the introduction to each component, which contains the operating principle of the component.</p>
+<hr class="docutils" />
 <section id="esp32-development-board">
 <h2>1. ESP32 Development Board<a class="headerlink" href="#esp32-development-board" title="Link to this heading"></a></h2>
 <a class="reference internal image-reference" href="_images/2.esp32_1.png"><img alt="_images/2.esp32_1.png" class="align-center" src="_images/2.esp32_1.png" style="width: 800px;" /></a>
@@ -238,7 +290,7 @@ assigned by default.</p>
 <ul class="simple">
 <li><p><strong>VCC:</strong> Power supply (3.3V or 5V)</p></li>
 <li><p><strong>GND:</strong> Ground connection</p></li>
-<li><p><strong>DATA:</strong> Digital output pin connected to ESP32 GPIO for reading temperature and humidity data</p></li>
+<li><p><strong>S:</strong> Digital output pin connected to ESP32 GPIO for reading temperature and humidity data</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -309,7 +361,7 @@ assigned by default.</p>
 <ul class="simple">
 <li><p><strong>VCC:</strong> Power supply (3.3V or 5V DC)</p></li>
 <li><p><strong>GND:</strong> Ground connection</p></li>
-<li><p><strong>AO:</strong> Analog output pin connected to ESP32 ADC for reading light intensity levels</p></li>
+<li><p><strong>DO:</strong> Digital output pin connected to the ESP32 ADC, used to read the light intensity level.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -338,7 +390,7 @@ assigned by default.</p>
 <ul class="simple">
 <li><p><strong>VCC:</strong> 3.3V (or 5V) power input — use 3.3V when reading AO with ESP32 ADC</p></li>
 <li><p><strong>GND:</strong> Ground</p></li>
-<li><p><strong>AO:</strong> Analog output — connect to an ESP32 ADC-capable pin (e.g., <cite>GPIO34</cite>, <cite>GPIO35</cite>, etc.)</p></li>
+<li><p><strong>S:</strong> Analog output — connect to an ESP32 ADC-capable pin (e.g., <cite>GPIO34</cite>, <cite>GPIO35</cite>, etc.)</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -380,8 +432,8 @@ assigned by default.</p>
 </div>
 </section>
 <section id="ir-receiver-module-and-remote-control">
-<h2>8. IR Receiver Module and Remote Control<a class="headerlink" href="#ir-receiver-module-and-remote-control" title="Link to this heading"></a></h2>
-<a class="reference internal image-reference" href="_static/Component/10.ir.png"><img alt="_static/Component/10.ir.png" class="align-center" src="_static/Component/10.ir.png" style="width: 800px;" /></a>
+<h2>8. IR Receiver Module And Remote Control<a class="headerlink" href="#ir-receiver-module-and-remote-control" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/10.ir.png"><img alt="_images/10.ir.png" class="align-center" src="_images/10.ir.png" style="width: 500px;" /></a>
 <div style="margin-top: 30px;"></div><p>This kit includes an infrared (IR) receiver module  and a simple IR remote. The receiver demodulates the 38 kHz carrier used by most remote controls and outputs a digital pulse train representing the encoded button commands.</p>
 <p><strong>Working principle:</strong></p>
 <ul class="simple">
@@ -419,7 +471,7 @@ assigned by default.</p>
 </ul>
 <p><strong>Core features:</strong></p>
 <ul class="simple">
-<li><p><strong>Axes:</strong> Two analog outputs (<cite>VRx</cite>, <cite>VRy</cite>) for X and Y</p></li>
+<li><p><strong>Axes:</strong> Two analog outputs (<cite>VRX</cite>, <cite>VRY</cite>) for X and Y</p></li>
 <li><p><strong>Switch:</strong> One digital output (<cite>SW</cite>) activated when the joystick is pressed</p></li>
 <li><p><strong>Power:</strong> 3.3V or 5V compatible</p></li>
 </ul>
@@ -428,18 +480,954 @@ assigned by default.</p>
 <ul class="simple">
 <li><p><strong>VCC:</strong> 3.3V</p></li>
 <li><p><strong>GND:</strong> Ground</p></li>
-<li><p><strong>VRx:</strong> Analog output for X-axis → ESP32 ADC pin (e.g., <cite>GPIO32</cite>)</p></li>
-<li><p><strong>VRy:</strong> Analog output for Y-axis → ESP32 ADC pin (e.g., <cite>GPIO33</cite>)</p></li>
+<li><p><strong>VRX:</strong> Analog output for X-axis → ESP32 ADC pin (e.g., <cite>GPIO32</cite>)</p></li>
+<li><p><strong>VRY:</strong> Analog output for Y-axis → ESP32 ADC pin (e.g., <cite>GPIO33</cite>)</p></li>
 <li><p><strong>SW:</strong> Digital switch output → any GPIO with pull-up (e.g., <cite>GPIO14</cite>)</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>Read <cite>VRx</cite> and <cite>VRy</cite> using ADC and map the values to a joystick range (e.g., 0..1023 or 0..4095). Center position often yields a mid-scale value; apply deadzone filtering to ignore small variations.</p></li>
+<li><p>Read <cite>VRX</cite> and <cite>VRY</cite> using ADC and map the values to a joystick range (e.g., 0..1023 or 0..4095). Center position often yields a mid-scale value; apply deadzone filtering to ignore small variations.</p></li>
 <li><p>Configure the <cite>SW</cite> pin with an internal pull-up and detect LOW for pressed state.</p></li>
 <li><p>For better stability, apply simple smoothing (moving average) to analog readings.</p></li>
 </ul>
 </div>
+</section>
+<hr class="docutils" />
+<section id="rc522-rfid-module">
+<h2>10. RC522 RFID Module<a class="headerlink" href="#rc522-rfid-module" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/12.mfrc522.png"><img alt="_images/12.mfrc522.png" class="align-center" src="_images/12.mfrc522.png" style="width: 800px;" /></a>
+<div style="margin-top: 30px;"></div><p>The RC522 is a highly integrated 13.56MHz RFID reader/writer module based on the MFRC522 chip from NXP. It supports ISO/IEC 14443 A/MIFARE communication protocol and is widely used for contactless identification and access control applications. The module communicates with the host controller via SPI interface, enabling fast and reliable data exchange.</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>The RC522 generates a 13.56MHz electromagnetic field through its antenna coil. When a compatible RFID card or tag enters this field, it draws power from the field and modulates the carrier wave to transmit its unique UID (Unique Identifier) and data. The RC522 demodulates the received signal, decodes the data, and makes it available through the SPI bus.</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Frequency:</strong> 13.56MHz industrial, scientific, and medical (ISM) band</p></li>
+<li><p><strong>Supported cards:</strong> MIFARE Classic 1K/4K, MIFARE Ultralight, NTAG series, and other ISO/IEC 14443 A compliant tags</p></li>
+<li><p><strong>Communication:</strong> SPI interface (up to 10 MHz clock speed)</p></li>
+<li><p><strong>Read/Write:</strong> Supports reading UID, reading and writing data blocks, and authentication</p></li>
+<li><p><strong>Operating distance:</strong> Up to 5cm (depending on antenna design and tag type)</p></li>
+<li><p><strong>Power:</strong> 3.3V supply (5V tolerant inputs with proper level shifting)</p></li>
+</ul>
+<p><strong>Pinout and connections:</strong></p>
+<ul class="simple">
+<li><p><strong>SDA (SS):</strong> SPI Slave Select → ESP32 GPIO (e.g., <cite>GPIO5</cite>)</p></li>
+<li><p><strong>SCK:</strong> SPI Clock → ESP32 SCK (e.g., <cite>GPIO18</cite>)</p></li>
+<li><p><strong>MOSI:</strong> SPI Master Out Slave In → ESP32 MOSI (e.g., <cite>GPIO23</cite>)</p></li>
+<li><p><strong>MISO:</strong> SPI Master In Slave Out → ESP32 MISO (e.g., <cite>GPIO19</cite>)</p></li>
+<li><p><strong>IRQ:</strong> Interrupt Request (optional) → ESP32 GPIO (e.g., <cite>GPIO4</cite>)</p></li>
+<li><p><strong>RST:</strong> Reset pin → ESP32 GPIO (e.g., <cite>GPIO22</cite>)</p></li>
+<li><p><strong>3.3V:</strong> 3.3V power supply</p></li>
+<li><p><strong>GND:</strong> Ground</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The RC522 is a 3.3V logic device. While its inputs are 5V tolerant, it is recommended to use a level shifter for the SPI lines when interfacing with 5V logic microcontrollers to ensure reliable communication and long-term stability.</p></li>
+<li><p>The module requires a stable 3.3V supply. Insufficient current (especially when reading/writing) may cause communication failures — ensure your power source can deliver at least 100mA.</p></li>
+<li><p>Always call <cite>PCD_Init()</cite> in your initialization routine. If the <cite>PCD_PerformSelfTest()</cite> fails, check the wiring, especially the antenna connections.</p></li>
+<li><p>When reading multiple cards, implement anti-collision logic (built into the MFRC522 library) to handle situations where multiple tags are in the field simultaneously.</p></li>
+<li><p>The antenna tuning capacitors are pre‑adjusted on most modules — avoid modifying them unless you have proper RF equipment.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="inch-oled-display">
+<h2>11. 0.96-inch OLED Display<a class="headerlink" href="#inch-oled-display" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/13.0.96oled.png"><img alt="_images/13.0.96oled.png" class="align-center" src="_images/13.0.96oled.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>The 0.96-inch OLED display module based on the SSD1306 driver IC is a compact, high-contrast monochrome display widely used in embedded projects. Unlike traditional LCDs, OLED (Organic Light-Emitting Diode) technology emits its own light, eliminating the need for a backlight and enabling deeper blacks, faster response times, and lower power consumption. The module typically supports either I²C or SPI interface, with I²C being the most common variant in hobbyist kits.</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>The SSD1306 is a single-chip CMOS OLED driver with a built-in controller and 128×64 pixels of SRAM display buffer. It receives pixel data from the host via I²C or SPI, stores it in its internal GDDRAM (Graphic Display Data RAM), and constantly refreshes the OLED panel by driving the individual pixels with the corresponding voltage levels. Each pixel is either ON (emitting light) or OFF, making the display inherently monochrome (usually white, blue, or yellow).</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Resolution:</strong> 128 × 64 pixels (some variants are 128 × 32)</p></li>
+<li><p><strong>Display size:</strong> 0.96 inches (diagonal)</p></li>
+<li><p><strong>Interface:</strong> I²C (most common) or 4-wire SPI (4-Wire SPI)</p></li>
+<li><p><strong>Driver IC:</strong> SSD1306</p></li>
+<li><p><strong>Viewing angle:</strong> ~160° (excellent visibility from all directions)</p></li>
+<li><p><strong>Refresh rate:</strong> Can exceed 100Hz (limited by communication speed)</p></li>
+<li><p><strong>Power consumption:</strong> Extremely low — ~20mA during normal operation, less than 10µA in sleep mode</p></li>
+<li><p><strong>Operating voltage:</strong> 3.0V ~ 5.5V (board usually includes a voltage regulator)</p></li>
+</ul>
+<p><strong>Pinout and connections:</strong></p>
+<ul class="simple">
+<li><p><strong>VCC:</strong> 3.3V ~ 5V power supply</p></li>
+<li><p><strong>GND:</strong> Ground</p></li>
+<li><p><strong>SCL:</strong> I²C Clock line → ESP32 SCL (e.g., <cite>GPIO22</cite>)</p></li>
+<li><p><strong>SDA:</strong> I²C Data line → ESP32 SDA (e.g., <cite>GPIO21</cite>)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>I²C address is typically <cite>0x3C</cite> .</p></li>
+<li><p>For I²C, the maximum clock speed is 400kHz (Fast Mode) — 100kHz is more stable for longer wiring.</p></li>
+<li><p>The display orientation can be changed via software — <cite>setRotation()</cite> or <cite>flipScreenVertically()</cite> functions are available in most libraries.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="x4-keypad">
+<h2>12. 4x4 Keypad<a class="headerlink" href="#x4-keypad" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/14.keypad.png"><img alt="_images/14.keypad.png" class="align-center" src="_images/14.keypad.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>Microcontroller system, if the use of more keys such as electronic code lock, telephone keypad, etc. generally have at least 12 to 16 keys, usually using a matrix keyboard.</p>
+<p>Matrix keypad is also called row keypad, it is a keypad with four I/O lines as row lines and four I/O lines as column lines. One key is set at each intersection of the row and column lines. Thus the number of keys on the keyboard is 4*4. This row and column keyboard structure can effectively improve the utilization of I/O ports in a microcontroller system.</p>
+<p>Their contacts are accessed via a header suitable for connection with a ribbon cable or insertion into a printed circuit board.
+In some keypads, each button connects with a separate contact in the header, while all the buttons share a common ground.</p>
+<p>More often, the buttons are matrix encoded, meaning that each of them bridges a unique pair of conductors in a matrix.
+This configuration is suitable for polling by a microcontroller, which can be programmed to send an output pulse to each of the four horizontal wires in turn.
+During each pulse, it checks the remaining four vertical wires in sequence, to determine which one, if any, is carrying a signal.
+Pullup or pulldown resistors should be added to the input wires to prevent the inputs of the microcontroller from behaving unpredictably when no signal is present.</p>
+</section>
+<hr class="docutils" />
+<section id="relay">
+<h2>15. Relay<a class="headerlink" href="#relay" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/15.relay2.png"><img alt="_images/15.relay2.png" class="align-center" src="_images/15.relay2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>What is a Relay?</strong></p>
+<p>A relay is like a switch that’s controlled by electricity instead of your finger. It has two separate circuits:
+- A low-power control circuit (connected to your ESP32)
+- A high-power load circuit (for the device you want to control)</p>
+<p>This separation is important because it keeps your ESP32 safe while letting you control powerful devices.</p>
+<p><strong>Why Use a Relay?</strong></p>
+<p>Relays are perfect when you need to:
+- Control high-voltage devices (like 120V/240V home appliances) with your low-voltage ESP32
+- Switch devices that need more current than your Pi can provide
+- Isolate your Pi from potentially dangerous voltages
+- Turn household devices on and off automatically</p>
+<p><strong>Our Relay Module</strong></p>
+<p>The relay module in this kit is ready to use with your ESP32:
+- It includes all necessary components (resistors, diodes, and transistors)
+- It can be connected directly to your ESP32 without extra components
+- It has clear markings for all connections
+- It includes an indicator LED that shows when the relay is activated</p>
+<p><strong>How a Relay Works - The Simple Version</strong></p>
+<p>Inside every relay is an electromagnet that controls a mechanical switch:</p>
+<ol class="arabic simple">
+<li><p>When you send a signal from your ESP32, the electromagnet is activated</p></li>
+<li><p>The electromagnet pulls a metal arm (the armature) toward it</p></li>
+<li><p>This movement connects or disconnects the electrical contacts</p></li>
+<li><p>When the signal stops, a spring pulls the arm back to its original position</p></li>
+</ol>
+<p><strong>The Relay’s Two States</strong></p>
+<p>A relay has two possible contact states:</p>
+<ul class="simple">
+<li><p><strong>Normally Open (NO)</strong>: The circuit is disconnected when the relay is off (like a light switch in the off position)</p></li>
+<li><p><strong>Normally Closed (NC)</strong>: The circuit is connected when the relay is off</p></li>
+</ul>
+<p>When you activate the relay, these states flip - NO contacts close and NC contacts open.</p>
+<p><strong>Safety First!</strong></p>
+<a class="reference internal image-reference" href="_images/15.relay.png"><img alt="_images/15.relay.png" class="align-center" src="_images/15.relay.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When working with relays that control household power (120V/240V):
+- NEVER touch the high-voltage terminals when power is connected
+- Make sure all high-voltage wiring is properly insulated
+- If you’re not experienced with electrical work, ask for help from someone who is</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="segment-display">
+<h2>16. 7-segment Display<a class="headerlink" href="#segment-display" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/16.1-DIGIT.png"><img alt="_images/16.1-DIGIT.png" class="align-center" src="_images/16.1-DIGIT.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>A 7-segment display is an 8-shaped component which packages 7 LEDs. Each LED is called a segment - when energized, one segment forms part of a numeral to be displayed.</p>
+<p>There are two types of pin connection: Common Cathode (CC) and Common Anode (CA). As the name suggests, a CC display has all the cathodes of the 7 LEDs connected when a CA display has all the anodes of the 7 segments connected.</p>
+<p>In this kit, we use the Common Cathode 7-segment display, here is the electronic symbol.</p>
+<a class="reference internal image-reference" href="_images/16.1-DIGIT2.png"><img alt="_images/16.1-DIGIT2.png" class="align-center" src="_images/16.1-DIGIT2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>Each of the LEDs in the display is given a positional segment with one of its connection pins led out from the rectangular plastic package. These LED pins are labeled from “a” through to “g” representing each individual LED. The other LED pins are connected together forming a common pin. So by forward biasing the appropriate pins of the LED segments in a particular order, some segments will brighten and others stay dim, thus showing the corresponding character on the display.</p>
+<p><strong>Display Codes</strong></p>
+<p>To help you get to know how 7-segment displays(Common Cathode) display Numbers, we have drawn the following table. Numbers are the number 0-F displayed on the 7-segment display; (DP) GFEDCBA refers to the corresponding LED set to 0 or 1, For example, 00111111 means that DP and G are set to 0, while others are set to 1. Therefore, the number 0 is displayed on the 7-segment display, while HEX Code corresponds to hexadecimal number.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Glyph Code</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Numbers</p></th>
+<th class="head"><p>Binary Code</p></th>
+<th class="head"><p>Hex Code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>00111111</p></td>
+<td><p>0x3f</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>00000110</p></td>
+<td><p>0x06</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>01011011</p></td>
+<td><p>0x5b</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>01001111</p></td>
+<td><p>0x4f</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>01100110</p></td>
+<td><p>0x66</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>01101101</p></td>
+<td><p>0x6d</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>01111101</p></td>
+<td><p>0x7d</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>00000111</p></td>
+<td><p>0x07</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>01111111</p></td>
+<td><p>0x7f</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>01101111</p></td>
+<td><p>0x6f</p></td>
+</tr>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>01110111</p></td>
+<td><p>0x77</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>01111100</p></td>
+<td><p>0x7c</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>00111001</p></td>
+<td><p>0x39</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>01011110</p></td>
+<td><p>0x5e</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>01111001</p></td>
+<td><p>0x79</p></td>
+</tr>
+<tr class="row-odd"><td><p>F</p></td>
+<td><p>01110001</p></td>
+<td><p>0x71</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="digit-7-segment-display">
+<h2>17. 4-Digit 7-Segment Display<a class="headerlink" href="#digit-7-segment-display" title="Link to this heading"></a></h2>
+<p>4-Digit 7-segment display consists of four 7- segment displays working together.</p>
+<a class="reference internal image-reference" href="_images/17.DIGHT.png"><img alt="_images/17.DIGHT.png" class="align-center" src="_images/17.DIGHT.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>The 4-digtal 7-segment display works independently. It uses the principle of human visual persistence to quickly display the characters of each 7-segment in a loop to form continuous strings.</p>
+<a class="reference internal image-reference" href="_images/17.DIGHT3.png"><img alt="_images/17.DIGHT3.png" class="align-center" src="_images/17.DIGHT3.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>For example, when “1234” is displayed on the display, “1” is displayed on the first 7-segment, and “234” is not displayed. After a period of time, the second 7-segment shows “2”, the 1st 3th 4th of 7-segment does not show, and so on, the four digital display show in turn. This process
+is very short (typically 5ms), and because of the optical afterglow effect and the principle of visual residue, we can see four characters at the same time.</p>
+<a class="reference internal image-reference" href="_images/17.DIGHT2.png"><img alt="_images/17.DIGHT2.png" class="align-center" src="_images/17.DIGHT2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Display Codes</strong></p>
+<p>To help you get to know how 7-segment displays(Common Cathode) display Numbers, we have drawn the following table. Numbers are the number 0-F displayed on the 7-segment display; (DP) GFEDCBA refers to the corresponding LED set to 0 or 1, For example, 00111111 means that DP and G are set to 0, while others are set to 1. Therefore, the number 0 is displayed on the 7-segment display, while HEX Code corresponds to hexadecimal number.</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Glyph Code</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Numbers</p></th>
+<th class="head"><p>Binary Code</p></th>
+<th class="head"><p>Hex Code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>00111111</p></td>
+<td><p>0x3f</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>00000110</p></td>
+<td><p>0x06</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>01011011</p></td>
+<td><p>0x5b</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>01001111</p></td>
+<td><p>0x4f</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>01100110</p></td>
+<td><p>0x66</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>01101101</p></td>
+<td><p>0x6d</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>01111101</p></td>
+<td><p>0x7d</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>00000111</p></td>
+<td><p>0x07</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>01111111</p></td>
+<td><p>0x7f</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>01101111</p></td>
+<td><p>0x6f</p></td>
+</tr>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>01110111</p></td>
+<td><p>0x77</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>01111100</p></td>
+<td><p>0x7c</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>00111001</p></td>
+<td><p>0x39</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>01011110</p></td>
+<td><p>0x5e</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>01111001</p></td>
+<td><p>0x79</p></td>
+</tr>
+<tr class="row-odd"><td><p>F</p></td>
+<td><p>01110001</p></td>
+<td><p>0x71</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="ws2812-rgb-8-leds-strip">
+<h2>18. WS2812 RGB 8 LEDs Strip<a class="headerlink" href="#ws2812-rgb-8-leds-strip" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/19.rgb.png"><img alt="_images/19.rgb.png" class="align-center" src="_images/19.rgb.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>The WS2812 RGB 8 LEDs Strip is composed of 8 RGB LEDs.
+Only one pin is required to control all the LEDs. Each RGB LED has a WS2812 chip, which can be controlled independently.
+It can realize 256-level brightness display and complete true color display of 16,777,216 colors.
+At the same time, the pixel contains an intelligent digital interface data latch signal shaping amplifier drive circuit,
+and a signal shaping circuit is built in to effectively ensure the color height of the pixel point light Consistent.</p>
+<p>It is flexible, can be docked, bent, and cut at will, and the back is equipped with adhesive tape, which can be fixed on the uneven surface at will, and can be installed in a narrow space.</p>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>Work Voltage: DC5V</p></li>
+<li><p>IC: One IC drives one RGB LED</p></li>
+<li><p>Consumption: 0.3w each LED</p></li>
+<li><p>Working Temperature: -15-50</p></li>
+<li><p>Color: Full color RGB</p></li>
+<li><p>RGB Type: 5050RGB(Built-in IC WS2812B)</p></li>
+<li><p>Light Strip Thickness: 2mm</p></li>
+<li><p>Each LED can be controlled individually</p></li>
+</ul>
+<p><strong>WS2812B Introdction</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf">WS2812B Datasheet</a></p></li>
+</ul>
+<p>WS2812B is a intelligent control LED light source that the control circuit and RGB chip are integrated in
+a package of 5050 components. It internal include intelligent digital port data latch and signal reshaping amplification drive circuit. Also include a precision internal oscillator and a 12V voltage programmable constant current control part, effectively ensuring the pixel point light color height consistent.</p>
+<p>The data transfer protocol use single NZR communication mode. After the pixel power-on reset, the DIN
+port receive data from controller, the first pixel collect initial 24bit data then sent to the internal data latch,
+the other data which reshaping by the internal signal reshaping amplification circuit sent to the next cascade
+pixel through the DO port. After transmission for each pixel, the signal to reduce 24bit. pixel adopt auto resha
+-ping transmit technology, making the pixel cascade number is not limited the signal transmission, only depend
+on the speed of signal transmission.</p>
+<p>LED with low driving voltage, environmental protection and energy saving, high brightness, scattering angle is large, good consistency, low power, long life and other advantages. The control chip integrated in LED
+above becoming more simple circuit, small volume, convenient installation.</p>
+</section>
+<hr class="docutils" />
+<section id="active-passive-buzzer">
+<h2>19. Active/Passive Buzzer<a class="headerlink" href="#active-passive-buzzer" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/21.actbuzzer.png"><img alt="_images/21.actbuzzer.png" class="align-center" src="_images/21.actbuzzer.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>What is a Buzzer?</strong></p>
+<p>A buzzer is an electronic device that makes a beeping sound when electricity flows through it. They’re used in many everyday devices like alarm clocks, microwaves, and toys to create sounds or alerts.</p>
+<p><strong>Active vs. Passive Buzzers - What’s the Difference?</strong></p>
+<p>There are two main types of buzzers:</p>
+<ol class="arabic simple">
+<li><p><strong>Active Buzzer</strong></p>
+<ul class="simple">
+<li><p>Has a built-in circuit that creates sound automatically.</p></li>
+<li><p>Just needs simple on/off power to work.</p></li>
+<li><p>Produces a single, fixed tone.</p></li>
+<li><p>Easy to identify: Usually has black tape covering it.</p></li>
+</ul>
+</li>
+<li><p><strong>Passive Buzzer</strong></p>
+<ul class="simple">
+<li><p>Has no built-in sound generator.</p></li>
+<li><p>Requires changing signals (like music notes) to make different sounds.</p></li>
+<li><p>Can produce different tones and simple melodies.</p></li>
+<li><p>Easy to identify: Usually has a green circuit board visible.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Connecting the Buzzer</strong></p>
+<a class="reference internal image-reference" href="_images/21.actbuzzer2.png"><img alt="_images/21.actbuzzer2.png" class="align-center" src="_images/21.actbuzzer2.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>The buzzer has two pins:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The longer pin is positive (+) called the anode.</p></li>
+<li><p>The shorter pin is negative (-) called the cathode.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to connect the pins correctly! If you mix them up, the buzzer won’t make any sound.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="servo-motor">
+<h2>20. Servo Motor<a class="headerlink" href="#servo-motor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/18.servo.png"><img alt="_images/18.servo.png" class="align-center" src="_images/18.servo.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>The SG90 is a miniature, lightweight, and cost-effective 9g servo motor widely used in robotics, RC models, and educational projects. It belongs to the class of positional rotation servos, where the output shaft rotates to a specific angular position based on the width of the input PWM (Pulse Width Modulation) signal. With a stall torque of approximately 1.8 kg·cm at 5V and a weight of just 9 grams, it is ideal for small-scale mechanisms like robotic arms, pan/tilt camera mounts, and micro-vehicle steering.</p>
+<p><strong>Working principle:</strong></p>
+<ul class="simple">
+<li><p>Inside the SG90, there is a DC motor, a potentiometer (feedback potentiometer) attached to the output shaft, a gear reduction train, and a control circuit. The control circuit generates a reference voltage from the potentiometer that corresponds to the current shaft position. It continuously compares this feedback voltage with the target position derived from the incoming PWM signal. If there is a difference, the motor rotates in the appropriate direction until the feedback matches the target, achieving closed-loop position control. The PWM signal has a fixed period of 20ms (50Hz), and the pulse width (typically 0.5ms to 2.5ms) determines the target angle.</p></li>
+</ul>
+<p><strong>Core features:</strong></p>
+<ul class="simple">
+<li><p><strong>Operating voltage:</strong> 4.8V ~ 6.0V (5V recommended)</p></li>
+<li><p><strong>Stall torque:</strong> 1.8 kg·cm &#64; 5V (approx. 0.18 N·m)</p></li>
+<li><p><strong>Speed:</strong> 0.1 sec/60° &#64; 5V (no load)</p></li>
+<li><p><strong>Rotation range:</strong> 0° ~ 180° (some variants support 0° ~ 360° continuous rotation)</p></li>
+<li><p><strong>Dead band width:</strong> 5 µs (the minimum pulse width change that produces a response)</p></li>
+<li><p><strong>Weight:</strong> 9g (including cables and connector)</p></li>
+<li><p><strong>Dimensions:</strong> 23 × 12.2 × 29 mm</p></li>
+<li><p><strong>Connector:</strong> 3-pin JR-style female header (compatible with standard servo extensions)</p></li>
+<li><p><strong>Operating temperature:</strong> -10°C ~ +50°C</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/18.servo2.png"><img alt="_images/18.servo2.png" class="align-center" src="_images/18.servo2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Pinout and connections:</strong></p>
+<ul class="simple">
+<li><p><strong>Brown/Black:</strong> Ground (GND) → ESP32 GND</p></li>
+<li><p><strong>Red:</strong> Power (VCC) → 5V external power supply (do not power from ESP32’s 3.3V pin)</p></li>
+<li><p><strong>Orange/Yellow:</strong> Signal (PWM input) → ESP32 GPIO with PWM capability (e.g., <cite>GPIO13</cite>)</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p><strong>Never power the SG90 directly from the ESP32’s 3.3V pin!</strong> The servo can draw peak currents of 200~400mA during operation, far exceeding the ESP32’s 3.3V regulator capacity (typically 150mA). This can cause voltage drops, resets, or permanent damage to the board. Always use a separate 5V power source with adequate current capability (at least 1A if driving multiple servos). Connect the grounds (ESP32 GND and servo power supply GND) together to ensure a common reference.</p></li>
+</ul>
+</div>
+<p><strong>PWM signal specifications:</strong></p>
+<a class="reference internal image-reference" href="_images/18.servo3.png"><img alt="_images/18.servo3.png" class="align-center" src="_images/18.servo3.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><ul class="simple">
+<li><p><strong>Period:</strong> 20ms (50Hz) — standard for analog servos</p></li>
+<li><p><strong>Pulse width range:</strong> 0.5ms ~ 2.5ms (typically maps to 0° ~ 180°)</p></li>
+<li><p><strong>Common mapping (most libraries):</strong>
+- 0° → 0.5ms → duty cycle 2.5% (for 50Hz)
+- 90° → 1.5ms → duty cycle 7.5%
+- 180° → 2.5ms → duty cycle 12.5%</p></li>
+<li><p><strong>Actual range may vary</strong> between individual units — it is recommended to calibrate the minimum and maximum values for each servo.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="dc-motor">
+<h2>21. DC Motor<a class="headerlink" href="#dc-motor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/20.motor1.png"><img alt="_images/20.motor1.png" class="align-center" src="_images/20.motor1.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><p>This is a 3V DC motor. When you give a high level and a low level to each of the 2 terminals, it will rotate.</p>
+<ul class="simple">
+<li><p><strong>Size</strong>: 25*20*15MM</p></li>
+<li><p><strong>Operation Voltage</strong>: 1-6V</p></li>
+<li><p><strong>Free-run Current</strong> (3V): 70m</p></li>
+<li><p><strong>A Free-run Speed</strong> (3V): 13000RPM</p></li>
+<li><p><strong>Stall Current</strong> (3V): 800mA</p></li>
+<li><p><strong>Shaft Diameter</strong>: 2mm</p></li>
+</ul>
+<p>Direct current (DC) motor is a continuous actuator that converts electrical energy into mechanical energy. DC motors make rotary pumps, fans, compressors, impellers, and other devices work by producing continuous angular rotation.</p>
+<p>A DC motor consists of two parts, the fixed part of the motor called the <strong>stator</strong> and the internal part of the motor called the <strong>rotor</strong> (or <strong>armature</strong> of a DC motor) that rotates to produce motion.
+The key to generating motion is to position the armature within the magnetic field of the permanent magnet (whose field extends from the north pole to the south pole). The interaction of the magnetic field and the moving charged particles (the current-carrying wire generates the magnetic field) produces the torque that rotates the armature.</p>
+<a class="reference internal image-reference" href="_images/20.motor2.png"><img alt="_images/20.motor2.png" class="align-center" src="_images/20.motor2.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><p>Current flows from the positive terminal of the battery through the circuit, through the copper brushes to the commutator, and then to the armature.
+But because of the two gaps in the commutator, this flow reverses halfway through each complete rotation.
+This continuous reversal essentially converts the DC power from the battery to AC, allowing the armature to experience torque in the right direction at the right time to maintain rotation.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nationalmaglab.org/education/magnet-academy/watch-play/interactive/dc-motor">DC Motor - MagLab</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Fleming%27s_left-hand_rule_for_motors">Fleming’s left-hand rule for motors - Wikipedia</a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="stepper-motor-and-uln2003-driver-board">
+<h2>22. Stepper Motor And ULN2003 Driver Board<a class="headerlink" href="#stepper-motor-and-uln2003-driver-board" title="Link to this heading"></a></h2>
+<p><strong>Stepper Motor</strong></p>
+<a class="reference internal image-reference" href="_images/22.stepper.png"><img alt="_images/22.stepper.png" class="align-center" src="_images/22.stepper.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>A stepper motor is an electromechanical device which converts electrical pulses into discrete mechanical movements. The shaft or spindle of a stepper motor rotates in discrete step increments when electrical command pulses are applied to it in the proper sequence.</p>
+<p>The motors rotation has several direct relationships to these applied input pulses. The sequence of the applied pulses is directly related to the direction of motor shafts rotation.</p>
+<p>The speed of the motor shafts rotation is directly related to the frequency of the input pulses and the length of rotation is directly related to the number of input pulses applied.</p>
+<p>One of the most significant advantages of a stepper motor is its ability to be accurately controlled in an open loop system. Open loop control means no feedback information about position is needed. This type of control eliminates the need for expensive sensing and feedback devices such as optical encoders.Your position is known simply by keeping track of the input step pulses</p>
+<p><strong>Stepper Motor 28BYJ-48 Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23.1%" />
+<col style="width: 26.9%" />
+<col style="width: 23.1%" />
+<col style="width: 26.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value/Specification</p></th>
+<th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value/Specification</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Model</p></td>
+<td><p>28BYJ-48</p></td>
+<td><p>In-traction Torque</p></td>
+<td><p>&gt;34.3mN.m (120Hz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rated voltage</p></td>
+<td><p>5VDC</p></td>
+<td><p>Self-positioning Torque</p></td>
+<td><p>&gt;34.3mN.m</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of Phase</p></td>
+<td><p>4</p></td>
+<td><p>Friction torque</p></td>
+<td><p>600–1200 gf.cm</p></td>
+</tr>
+<tr class="row-odd"><td><p>Speed Variation Ratio</p></td>
+<td><p>1/64</p></td>
+<td><p>Pull in torque</p></td>
+<td><p>300 gf.cm</p></td>
+</tr>
+<tr class="row-even"><td><p>Stride Angle</p></td>
+<td><p>5.625°/64</p></td>
+<td><p>Insulated resistance</p></td>
+<td><p>&gt;10MΩ (500V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Frequency</p></td>
+<td><p>100Hz</p></td>
+<td><p>Insulated electricity power</p></td>
+<td><p>600VAC/1mA/1s</p></td>
+</tr>
+<tr class="row-even"><td><p>DC resistance</p></td>
+<td><p>50Ω±7% (25°C)</p></td>
+<td><p>Insulation grade</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>Idle In-traction Frequency</p></td>
+<td><p>&gt;600Hz</p></td>
+<td><p>Rise in Temperature</p></td>
+<td><p>&lt;40K (120Hz)</p></td>
+</tr>
+<tr class="row-even"><td><p>Idle Out-traction Frequency</p></td>
+<td><p>&gt;1000Hz</p></td>
+<td><p>Noise</p></td>
+<td><p>&lt;35dB (120Hz, No load, 10cm)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interfacing circuits</strong></p>
+<p>The bipolar stepper motor usually has four wires coming out of it. Unlike unipolar steppers, bipolar steppers have no common center connection. They have two independent sets of coils instead. You can distinguish them from unipolar steppers by measuring the resistance between the wires. You should find two pairs of wires with equal resistance. If you’ve got the leads of your meter connected to two wires that are not connected (i.e. not attached to the same coil), you should see infinite resistance (or no continuity).</p>
+<a class="reference internal image-reference" href="_images/22.stepper2.png"><img alt="_images/22.stepper2.png" class="align-center" src="_images/22.stepper2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>ULN2003 Driver Board</strong></p>
+<a class="reference internal image-reference" href="_images/22.stepper3.png"><img alt="_images/22.stepper3.png" class="align-center" src="_images/22.stepper3.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><ul class="simple">
+<li><p>Size: 42mmx30mm</p></li>
+<li><p>Use ULN2003 driver chip, 500mA</p></li>
+<li><ol class="upperalpha simple">
+<li><ol class="upperalpha simple" start="2">
+<li><ol class="upperalpha simple" start="3">
+<li><p>D LED indicating the four phase stepper motor working condition.</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>White jack is the four phase stepper motor standard jack.</p></li>
+<li><p>Power pins are separated</p></li>
+<li><p>We kept the rest pins of the ULN2003 chip for your further prototyping.</p></li>
+</ul>
+<p>The simplest way of interfacing a unipolar stepper to ESP32 is to use a breakout for ULN2003A transistor array chip. The ULN2003A contains seven Darlington transistor drivers and is somewhat like having seven TIP120 transistors all in one package. The ULN2003A can pass up to 500 mA per channel and has an internal voltage drop of about 1V when on. It also contains internal clamp diodes to dissipate voltage spikes when driving inductive loads. To control the stepper, apply voltage to each of the coils in a specific sequence.</p>
+<p><strong>The sequence would go like this:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>8</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>4 ORG (Orange)</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>3 YEL (Yellow)</p></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2 PIK (Pink)</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1 BLU (Blue)</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here are schematics showing how to interface a unipolar stepper motor to four controller pins using a ULN2003A, and showing how to interface using four com.</p>
+<a class="reference internal image-reference" href="_images/22.stepper4.png"><img alt="_images/22.stepper4.png" class="align-center" src="_images/22.stepper4.png" style="width: 700px;" /></a>
+<div style="margin-top: 30px;"></div></section>
+<hr class="docutils" />
+<section id="led">
+<h2>23. LED<a class="headerlink" href="#led" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/23.LED.png"><img alt="_images/23.LED.png" class="align-center" src="_images/23.LED.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>A semiconductor light-emitting diode (LED) is a component that converts electrical energy into light energy through PN junctions. LEDs can be classified by wavelength into laser diodes, infrared LEDs, and visible LEDs, the latter being commonly referred to simply as LEDs.</p>
+<p>Due to the diode’s unidirectional conductivity, current flows in the direction of the arrow shown in its circuit symbol. To illuminate the LED, you must supply positive voltage to the anode and negative voltage to the cathode.</p>
+<a class="reference internal image-reference" href="_images/23.LED2.png"><img alt="_images/23.LED2.png" class="align-center" src="_images/23.LED2.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>An LED has two pins. The longer one is the anode, and shorter one, the cathode. Pay attention not to connect them inversely. There is fixed forward voltage drop in the LED, so it cannot be connected with the circuit directly because the supply voltage can outweigh this drop and cause the LED to be burnt. The forward voltage of the red, yellow, and green LED is 1.8 V and that of the white one is 2.6 V. Most LEDs can withstand a maximum current of 20 mA, so we need to connect a current limiting resistor in series.</p>
+<p>The formula of the resistance value is as follows:</p>
+<blockquote>
+<div><p>R = (Vsupply – VD)/I</p>
+</div></blockquote>
+<p><strong>R</strong> stands for the resistance value of the current limiting resistor.</p>
+<p><strong>Vsupply</strong> for voltage supply.</p>
+<p><strong>VD</strong> for voltage drop.</p>
+<p><strong>I</strong> for the working current of the LED.</p>
+<p>Here is the detailed introduction for the LED: <a class="reference external" href="https://en.wikipedia.org/wiki/Light-emitting_diode">led_wiki</a>.</p>
+</section>
+<hr class="docutils" />
+<section id="button">
+<h2>24. Button<a class="headerlink" href="#button" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/24.button.png"><img alt="_images/24.button.png" class="align-center" src="_images/24.button.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>Buttons are essential components used to control electronic devices, typically functioning as switches to either complete or interrupt circuits. Despite their variety in sizes and shapes, the 6mm mini-button depicted in the accompanying images is our focus here. Within this button, pin 1 is connected to pin 2, and pin 3 is connected to pin 4. Therefore, you only need to establish a connection between pin 1 (or pin 2) and pin 3 (or pin 4) to operate it.</p>
+<p>The internal structure of such a button is illustrated below. The symbol shown on the right is commonly used to represent a button in circuit diagrams.</p>
+<a class="reference internal image-reference" href="_images/24.button2.png"><img alt="_images/24.button2.png" class="align-center" src="_images/24.button2.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>Since the pin 1 is connected to pin 2, and pin 3 to pin 4, when the button is pressed, the 4 pins are connected, thus closing the circuit.</p>
+<p>In this kit, we provide two types of buttons. The one mentioned earlier is a small button, and there is also a large button. They have the same principle, only different in size.</p>
+<a class="reference internal image-reference" href="_images/24.button3.png"><img alt="_images/24.button3.png" class="align-center" src="_images/24.button3.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><hr class="docutils" />
+</section>
+<section id="resistor">
+<span id="cpn-resistor"></span><h2>25. Resistor<a class="headerlink" href="#resistor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/25.res.png"><img alt="_images/25.res.png" class="align-center" src="_images/25.res.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>A resistor is an electronic component that restricts the flow of current in a circuit. A fixed resistor has a set resistance value that cannot be altered, whereas a potentiometer or variable resistor has an adjustable resistance.</p>
+<p>There are two commonly used symbols to represent resistors in circuit diagrams. The resistance value is typically indicated on the resistor itself. When you encounter these symbols in a circuit schematic, they denote a resistor.</p>
+<a class="reference internal image-reference" href="_images/25.res2.png"><img alt="_images/25.res2.png" class="align-center" src="_images/25.res2.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Ω</strong> is the unit of resistance and the larger units include KΩ, MΩ, etc.
+Their relationship can be shown as follows: 1 MΩ=1000 KΩ, 1 KΩ = 1000 Ω. Normally, the value of resistance is marked on it.</p>
+<p>When using a resistor, we need to know its resistance first. Here are two methods: you can observe the bands on the resistor, or use a multimeter to measure the resistance. You are recommended to use the first method as it is more convenient and faster.</p>
+<a class="reference internal image-reference" href="_images/25.res3.png"><img alt="_images/25.res3.png" class="align-center" src="_images/25.res3.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>As shown in the card, each color stands for a number.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Black</p></td>
+<td><p>Brown</p></td>
+<td><p>Red</p></td>
+<td><p>Orange</p></td>
+<td><p>Yellow</p></td>
+<td><p>Green</p></td>
+<td><p>Blue</p></td>
+<td><p>Violet</p></td>
+<td><p>Grey</p></td>
+<td><p>White</p></td>
+<td><p>Gold</p></td>
+<td><p>Silver</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+<td><p>0.1</p></td>
+<td><p>0.01</p></td>
+</tr>
+</tbody>
+</table>
+<p>The 4- and 5-band resistors are frequently used, on which there are 4 and 5 chromatic bands.</p>
+<p>Normally, when you get a resistor, you may find it hard to decide which end to start for reading the color.
+The tip is that the gap between the 4th and 5th band will be comparatively larger.</p>
+<p>Therefore, you can observe the gap between the two chromatic bands at one end of the resistor;
+if it’s larger than any other band gaps, then you can read from the opposite side.</p>
+<p>Let’s see how to read the resistance value of a 5-band resistor as shown below.</p>
+<a class="reference internal image-reference" href="_images/25.res4.png"><img alt="_images/25.res4.png" class="align-center" src="_images/25.res4.png" style="width: 300px;" /></a>
+<div style="margin-top: 30px;"></div><p>So for this resistor, the resistance should be read from left to right.
+The value should be in this format: 1st Band 2nd Band 3rd Band x 10^Multiplier (Ω) and the permissible error is ±Tolerance%.
+So the resistance value of this resistor is 2(red) 2(red) 0(black) x 10^0(black) Ω = 220 Ω,
+and the permissible error is ± 1% (brown).</p>
+<p>You can learn more about resistor from Wiki: <a class="reference external" href="https://en.wikipedia.org/wiki/Resistor">Resistor - Wikipedia</a>.</p>
+</section>
+<hr class="docutils" />
+<section id="potentiometer">
+<h2>26. Potentiometer<a class="headerlink" href="#potentiometer" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/26.10K.png"><img alt="_images/26.10K.png" class="align-center" src="_images/26.10K.png" style="width: 100px;" /></a>
+<div style="margin-top: 30px;"></div><p>A potentiometer is another type of resistance component featuring three terminals, with an adjustable resistance value that follows a specific pattern of variation.</p>
+<p>Regardless of their different shapes, sizes, and resistance values, all potentiometers share the following characteristics:</p>
+<ul class="simple">
+<li><p>They possess three terminals (or connection points).</p></li>
+<li><p>They include a knob, screw, or slider that can be adjusted to change the resistance between the middle terminal and either of the outer terminals.</p></li>
+<li><p>As the knob, screw, or slider is moved, the resistance between the middle terminal and either outer terminal can vary from 0 Ω to the potentiometer’s maximum resistance.</p></li>
+</ul>
+<p>Below is the circuit symbol typically used to represent a potentiometer.</p>
+<a class="reference internal image-reference" href="_images/26.10K2.png"><img alt="_images/26.10K2.png" class="align-center" src="_images/26.10K2.png" style="width: 100px;" /></a>
+<div style="margin-top: 30px;"></div><p>The functions of a potentiometer in a circuit include:</p>
+<ul>
+<li><p><strong>Serving as a Voltage Divider</strong></p>
+<blockquote>
+<div><p>A potentiometer acts as a continuously adjustable resistor. When you adjust the shaft or sliding handle, the movable contact slides along the resistor. This allows the output voltage to vary depending on the applied voltage and the position of the movable arm. This function is commonly used to derive a specific voltage from a larger range.</p>
+</div></blockquote>
+</li>
+<li><p><strong>Serving as a Rheostat</strong></p>
+<blockquote>
+<div><p>When used as a rheostat, the potentiometer can be connected to the circuit by using the middle pin and one of the other two pins. This configuration enables you to obtain a smoothly and continuously variable resistance value within the range of the moving contact’s travel. This function is often used for adjusting current or resistance in a circuit.</p>
+</div></blockquote>
+</li>
+<li><p><strong>Serving as a Current Controller</strong></p>
+<blockquote>
+<div><p>For a potentiometer to function as a current controller, the sliding contact terminal must be used as one of the output terminals. This setup allows for the regulation of the current flowing through the circuit by adjusting the position of the sliding contact.</p>
+<p>If you want to know more about potentiometer, refer to: <a class="reference external" href="https://en.wikipedia.org/wiki/Potentiometer">Potentiometer Wiki</a></p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="tilt-switch">
+<h2>27. Tilt Switch<a class="headerlink" href="#tilt-switch" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/27.TILT.png"><img alt="_images/27.TILT.png" class="align-center" src="_images/27.TILT.png" style="width: 100px;" /></a>
+<div style="margin-top: 30px;"></div><p>The tilt switch used here is a ball-type switch containing a metal ball inside. It is designed to detect slight inclinations.</p>
+<p>The operating principle is straightforward. When the switch is tilted at a specific angle, the internal ball rolls and makes contact with the two terminals connected to the external pins, thereby completing the circuit. If the switch is not tilted, the ball stays away from the contacts, breaking the circuit.</p>
+<a class="reference internal image-reference" href="_images/27.TILT2.png"><img alt="_images/27.TILT2.png" class="align-center" src="_images/27.TILT2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div></section>
+<hr class="docutils" />
+<section id="hc595">
+<h2>28. 74HC595<a class="headerlink" href="#hc595" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/28.74hc.png"><img alt="_images/28.74hc.png" class="align-center" src="_images/28.74hc.png" style="width: 200px;" /></a>
+<div style="margin-top: 30px;"></div><p>The 74HC595 consists of an 8−bit shift register and a storage register with three−state parallel outputs. It converts serial input into parallel output so you can save IO ports of an MCU.</p>
+<ul class="simple">
+<li><p>When MR (pin10) is high level and OE (pin13) is low level, data is input in the rising edge of SHcp and goes to the memory register through the rising edge of SHcp.</p></li>
+<li><p>If the two clocks are connected together, the shift register is always one pulse earlier than the memory register.</p></li>
+<li><p>There is a serial shift input pin (Ds), a serial output pin (Q) and an asynchronous reset button (low level) in the memory register.</p></li>
+<li><p>The memory register outputs a Bus with a parallel 8-bit and in three states.</p></li>
+<li><p>When OE is enabled (low level), the data in memory register is output to the bus(Q0 ~ Q7).</p></li>
+<li><p><a class="reference external" href="https://www.ti.com/lit/ds/symlink/cd74hc595.pdf?ts=1617341564801">74HC595 Datasheet</a></p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/28.74hc2.png"><img alt="_images/28.74hc2.png" class="align-center" src="_images/28.74hc2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>Pins of 74HC595 and their functions:</p>
+<ul class="simple">
+<li><p><strong>Q0-Q7</strong>: 8-bit parallel data output pins, able to control 8 LEDs or 8 pins of 7-segment display directly.</p></li>
+<li><p><strong>Q7’</strong>: Series output pin, connected to DS of another 74HC595 to connect multiple 74HC595s in series</p></li>
+<li><p><strong>MR</strong>: Reset pin, active at low level;</p></li>
+<li><p><strong>SHcp</strong>: Time sequence input of shift register. On the rising edge, the data in shift register moves successively one bit, i.e. data in Q1 moves to Q2, and so forth. While on the falling edge, the data in shift register remain unchanged.</p></li>
+<li><p><strong>STcp</strong>: Time sequence input of storage register. On the rising edge, data in the shift register moves into memory register.</p></li>
+<li><p><strong>CE</strong>: Output enable pin, active at low level.</p></li>
+<li><p><strong>DS</strong>: Serial data input pin</p></li>
+<li><p><strong>VCC</strong>: Positive supply voltage.</p></li>
+<li><p><strong>GND</strong>: Ground.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="l293d">
+<h2>28. L293D<a class="headerlink" href="#l293d" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/30.L293D3.png"><img alt="_images/30.L293D3.png" class="align-center" src="_images/30.L293D3.png" style="width: 200px;" /></a>
+<div style="margin-top: 30px;"></div><p>The L293D is a dual H-bridge motor driver chip commonly used with platforms like Arduino and ESP32 to control DC motors and stepper motors.</p>
+<p>It integrates two sets of H-bridge driver circuits, allowing it to independently drive two DC motors or one four-phase stepper motor. Featuring built-in flyback protection diodes, it eliminates the need for external protection diodes and offers ease of use, making it a widely adopted motor driver chip in electronics education and robotics projects.</p>
+<a class="reference internal image-reference" href="_images/30.L293D.png"><img alt="_images/30.L293D.png" class="align-center" src="_images/30.L293D.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><p>The L293D has three important types of pins:
+- Enable pins (EN): Turn the motor control on/off
+- Input pins (A): Control the direction (forward/reverse)
+- Output pins (Y): Connect to the motor</p>
+<p>When EN is HIGH: - If input A is HIGH → output Y is HIGH - If input A is LOW → output Y is LOW.</p>
+<a class="reference internal image-reference" href="_images/30.L293D2.png"><img alt="_images/30.L293D2.png" class="align-center" src="_images/30.L293D2.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div></section>
+<hr class="docutils" />
+<section id="thermistor">
+<h2>29. Thermistor<a class="headerlink" href="#thermistor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/29.the.png"><img alt="_images/29.the.png" class="align-center" src="_images/29.the.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><p>A <strong>thermistor</strong> is a temperature-sensitive resistor whose resistance changes significantly with temperature. The component shown above is a typical <strong>NTC (Negative Temperature Coefficient) thermistor</strong>, which is widely used for temperature measurement and environmental monitoring in embedded systems.</p>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>High sensitivity to temperature changes</p></li>
+<li><p>Fast response time</p></li>
+<li><p>Compact size and lightweight</p></li>
+<li><p>Low cost and easy to use</p></li>
+<li><p>Compatible with Arduino, ESP32, STM32, and other microcontrollers</p></li>
+</ul>
+<p><strong>Working Principle</strong></p>
+<p>An NTC thermistor decreases its resistance as the surrounding temperature increases. By measuring the voltage across the thermistor in a voltage divider circuit, a microcontroller can calculate the ambient temperature.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Temperature</span> <span class="pre">↑</span> <span class="pre">→</span> <span class="pre">Resistance</span> <span class="pre">↓</span>
+<span class="pre">Temperature</span> <span class="pre">↓</span> <span class="pre">→</span> <span class="pre">Resistance</span> <span class="pre">↑</span>
+<span class="pre">`</span></code></p>
+<p>The NTC thermistor is one of the most widely used temperature sensors in embedded electronics. It offers a simple, low-cost solution for temperature monitoring and is ideal for projects based on ESP32, Arduino, and other microcontroller platforms.</p>
+</section>
+<hr class="docutils" />
+<section id="pn2222-transistor">
+<h2>30. PN2222 Transistor<a class="headerlink" href="#pn2222-transistor" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/31.pn222.png"><img alt="_images/31.pn222.png" class="align-center" src="_images/31.pn222.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><p>The <strong>PN2222</strong> is a general-purpose <strong>NPN bipolar junction transistor (BJT)</strong> widely used for electronic switching and signal amplification. It can be controlled by a microcontroller such as an ESP32 or Arduino to drive devices that require more current, such as LEDs, relays, buzzers, and small DC motors.</p>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>NPN bipolar junction transistor</p></li>
+<li><p>Fast switching speed</p></li>
+<li><p>Low cost and widely available</p></li>
+<li><p>Suitable for switching and amplification</p></li>
+<li><p>Compatible with Arduino, ESP32, STM32, and other microcontrollers</p></li>
+</ul>
+<p><strong>Pin Configuration</strong></p>
+<p>Viewed from the flat side with the leads pointing downward:</p>
+<a class="reference internal image-reference" href="_images/31.pn2222.png"><img alt="_images/31.pn2222.png" class="align-center" src="_images/31.pn2222.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Working Principle</strong></p>
+<p>A small current applied to the <strong>Base (B)</strong> controls a much larger current flowing from the <strong>Collector (C)</strong> to the <strong>Emitter (E)</strong>, allowing the transistor to operate as an electronic switch or amplifier.</p>
+<p>The PN2222 is one of the most popular NPN transistors for embedded electronics. Its simple operation, reliable performance, and ability to control higher-current loads make it an excellent choice for ESP32, Arduino, and other microcontroller-based projects.</p>
+</section>
+<hr class="docutils" />
+<section id="n4007-diode">
+<h2>31. 1N4007 Diode<a class="headerlink" href="#n4007-diode" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/32.dio.png"><img alt="_images/32.dio.png" class="align-center" src="_images/32.dio.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><p>The <strong>1N4007</strong> is a general-purpose <strong>silicon rectifier diode</strong> widely used for converting AC to DC and protecting electronic circuits from reverse voltage. It is one of the most commonly used diodes in power supply and embedded electronics projects.</p>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>General-purpose rectifier diode</p></li>
+<li><p>Maximum repetitive reverse voltage: <strong>1000 V</strong></p></li>
+<li><p>Maximum average forward current: <strong>1 A</strong></p></li>
+<li><p>Low cost and highly reliable</p></li>
+<li><p>Easy to use in power and protection circuits</p></li>
+</ul>
+<p><strong>Working Principle</strong></p>
+<p>A diode allows current to flow in only one direction.</p>
+<a class="reference internal image-reference" href="_images/32.dio2.png"><img alt="_images/32.dio2.png" class="align-center" src="_images/32.dio2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><ul class="simple">
+<li><p><strong>Forward Bias:</strong> Conducts current with a forward voltage drop of approximately <strong>0.7 V</strong>.</p></li>
+<li><p><strong>Reverse Bias:</strong> Blocks current until the reverse voltage exceeds its rated limit.</p></li>
+</ul>
+<p>The 1N4007 is a reliable and inexpensive rectifier diode widely used in electronic circuits. Its high reverse voltage rating and simple operation make it an excellent choice for power supplies, circuit protection, and embedded system applications.</p>
+</section>
+<hr class="docutils" />
+<section id="power-supply-module">
+<h2>32. Power Supply Module<a class="headerlink" href="#power-supply-module" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/33.power.png"><img alt="_images/33.power.png" class="align-center" src="_images/33.power.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>Power Supply Module</p>
+<p>Modules such as motors require additional power, especially during startup and shutdown. Using a dedicated power supply module can:</p>
+<ul class="simple">
+<li><p>Protect the ESP32 from voltage spikes</p></li>
+<li><p>Provide a stable 5V power supply for the motors</p></li>
+<li><p>Enhance the safety and reliability of the project</p></li>
+</ul>
+<p>This power supply module operates using a 9V battery and provides both 3.3V and 5V outputs.</p>
+<a class="reference internal image-reference" href="_images/33.power2.png"><img alt="_images/33.power2.png" class="align-center" src="_images/33.power2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div></section>
+<hr class="docutils" />
+<section id="battery-clip-and-battery-box">
+<h2>33. Battery Clip And Battery Box<a class="headerlink" href="#battery-clip-and-battery-box" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/34.battery.png"><img alt="_images/34.battery.png" class="align-center" src="_images/34.battery.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_images/34.battery2.png"><img alt="_images/34.battery2.png" class="align-center" src="_images/34.battery2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>This kit includes <strong>two battery power options</strong> for use with the breadboard power supply module. You can choose the appropriate power source based on your project requirements.</p>
+<ul class="simple">
+<li><p><strong>9V Battery Clip</strong>: Designed for a standard <strong>9V battery</strong>.</p></li>
+<li><p><strong>6×AA Battery Holder</strong>: Designed for <strong>six AA batteries</strong>.</p></li>
+</ul>
+<p>&gt; <strong>Note:</strong> Batteries are <strong>not included</strong> in this kit and must be purchased separately.</p>
+</section>
+<hr class="docutils" />
+<section id="breadboard">
+<h2>34. Breadboard<a class="headerlink" href="#breadboard" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/35.BOARD.png"><img alt="_images/35.BOARD.png" class="align-center" src="_images/35.BOARD.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div><p>A breadboard is a construction base for prototyping of electronics. Originally the word referred to a literal bread board, a polished piece of wood used for slicing bread. In the 1970s the solderless breadboard (a.k.a. plugboard, a terminal array board) became available and nowadays the term “breadboard” is commonly used to refer to these.</p>
+<p>It is used to build and test circuits quickly before finishing any circuit design. And it has many holes into which components mentioned above can be inserted like ICs and resistors as well as jumper wires. The breadboard allows you to plug in and remove components easily.</p>
+<p>The picture shows the internal structure of a breadboard. Although these holes on the breadboard appear to be independent of each other, they are actually connected to each other through metal strips internally.</p>
+<ul class="simple">
+<li><p>This kit comes with <strong>two 400-point breadboards</strong>. If a project requires more space for circuit assembly, simply connect the two breadboards together using the side interlocking tabs, as shown below, to create a larger prototyping area.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/35.BOARD2.png"><img alt="_images/35.BOARD2.png" class="align-center" src="_images/35.BOARD2.png" style="width: 500px;" /></a>
+<div style="margin-top: 30px;"></div></section>
+<hr class="docutils" />
+<section id="jumper-wires">
+<h2>35. Jumper Wires<a class="headerlink" href="#jumper-wires" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/36.wiring.png"><img alt="_images/36.wiring.png" class="align-center" src="_images/36.wiring.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><a class="reference internal image-reference" href="_images/36.wiring2.png"><img alt="_images/36.wiring2.png" class="align-center" src="_images/36.wiring2.png" style="width: 400px;" /></a>
+<div style="margin-top: 30px;"></div><p>Wires that link two terminals are known as jumper wires. There are various types of jumper wires, but here we will focus on those commonly used with breadboards. They serve to transmit electrical signals from any point on the breadboard to the input/output pins of a microcontroller.</p>
+<p>Jumper wires are connected by inserting their “end connectors” into the slots of the breadboard. Underneath the breadboard’s surface, there are sets of parallel plates that connect these slots in groups of rows or columns, depending on the section of the board. The “end connectors” are placed into the desired slots on the breadboard without soldering, making connections as needed for the specific prototype.</p>
+<p>There are three main types of jumper wires: Female-to-Female, Male-to-Male, and Male-to-Female. The names describe the connectors on each end. Male-to-Female wires have a protruding pin on one end and a recessed female connector on the other. Male-to-Male wires have pins on both ends, while Female-to-Female wires have sockets on both ends.</p>
 <hr class="docutils" />
 </section>
 </section>

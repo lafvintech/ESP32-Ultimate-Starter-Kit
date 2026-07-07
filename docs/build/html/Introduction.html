@@ -8,22 +8,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Introduction &mdash; ESP32 Ultimate Starter Kit  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fa446fe1" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=1e9b122a" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Arduino IDE User Guide" href="Arduino.html" />
+    <link rel="next" title="Arduino IDE Getting Started Tutorial" href="ArduinoTutorial.html" />
     <link rel="prev" title="ESP32 Ultimate Starter Kit" href="index.html" /> 
 </head>
 
@@ -57,17 +57,101 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Pre-Class Preparation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Arduino.html">Arduino IDE User Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#install-arduino-ide">1. Install Arduino IDE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#add-esp8266-board-manager">2. Add ESP8266 Board Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#download-esp8266-core-package">3. Download  ESP8266 Core Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#add-libraries">4. Add Libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#install-serial-port-tool">5. Install Serial Port Tool</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Arduino.html#upload-test-code">6. Upload Test Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArduinoTutorial.html">Arduino IDE Getting Started Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#install-arduino-ide">1. Install Arduino IDE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#install-arduino-ide-on-windows">Install Arduino IDE on Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#install-arduino-ide-on-macos">Install Arduino IDE on MacOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#install-arduino-ide-on-linux">Install Arduino IDE on Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#open-the-arduino-ide">Open the Arduino IDE</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#install-serial-port-tool">2. Install Serial Port Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#install-esp32-core-board">3. Install ESP32 Core Board</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#add-additional-boards-manager-url">Add Additional Boards Manager URL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#download-the-esp32-core-package">Download the  ESP32 Core Package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ArduinoTutorial.html#add-libraries">4. Add Libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#download-libraries">Download Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#import-libraries">Import Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ArduinoTutorial.html#download-libraries-using-arduino-ide">Download Libraries Using Arduino IDE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="HowtouploadcodetoESP32.html">How To Upload Code To ESP32</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Components.html">Components Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Components.html#esp32-development-board">1. ESP32 Development Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#mpu6050-attitude-sensor">2. MPU6050 Attitude Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#dht11-sensor">3. DHT11 Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#pir-motion-sensor">4. PIR Motion Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#light-sensor">5. Light Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#water-level-sensor">6. Water Level Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ultrasonic-distance-sensor">7. Ultrasonic Distance Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ir-receiver-module-and-remote-control">8. IR Receiver Module And Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#joystick-module">9. Joystick Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#rc522-rfid-module">10. RC522 RFID Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#inch-oled-display">11. 0.96-inch OLED Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#x4-keypad">12. 4x4 Keypad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#relay">15. Relay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#segment-display">16. 7-segment Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#digit-7-segment-display">17. 4-Digit 7-Segment Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#ws2812-rgb-8-leds-strip">18. WS2812 RGB 8 LEDs Strip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#active-passive-buzzer">19. Active/Passive Buzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#servo-motor">20. Servo Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#dc-motor">21. DC Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#stepper-motor-and-uln2003-driver-board">22. Stepper Motor And ULN2003 Driver Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#led">23. LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#button">24. Button</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#resistor">25. Resistor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#potentiometer">26. Potentiometer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#tilt-switch">27. Tilt Switch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#hc595">28. 74HC595</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#l293d">28. L293D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#thermistor">29. Thermistor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#pn2222-transistor">30. PN2222 Transistor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#n4007-diode">31. 1N4007 Diode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#power-supply-module">32. Power Supply Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#battery-clip-and-battery-box">33. Battery Clip And Battery Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#breadboard">34. Breadboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#jumper-wires">35. Jumper Wires</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental Course</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicExperiments.html">Basic Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#led-blinking">1. LED Blinking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#pwm-led">2. PWM LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#button-led">3. Button LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#thermometer">4. Thermometer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#temp-and-humi-detection">5. TEMP And HUMI Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#scan-rfid">6. Scan RFID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#passive-buzzer">7. Passive Buzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#tilt-alarm">8. Tilt Alarm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#inch-display">9. 0.96 Inch Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#keyboard-display">10. Keyboard Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#human-body-detection">11. Human Body Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#segment-display">12. 7-Segment Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#digit-counter">13. 4-Digit Counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#ntp-clock">14. NTP Clock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#simple-level">15. Simple Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#variable-speed-fan">16. Variable Speed Fan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#stepper-motor-drive-and-control">17. Stepper Motor Drive And Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#rfid-door-lock-system">18. RFID Door Lock System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#mini-game-snake">19. Mini Game: Snake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#weather-desk">20. Weather Desk</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedExperiment.html">Advanced Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP And HUMI Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">2. Ultrasonic Distance Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-servo">3. Web-Control Servo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#colorful-rgb">4. Colorful RGB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ir-display">5. IR Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#custom-display">6. Custom Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-fan">7. Web control Fan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#d-attitude-monitor">8. 3D Attitude Monitor</a></li>
 </ul>
 </li>
 </ul>
@@ -287,7 +371,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="ESP32 Ultimate Starter Kit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Arduino.html" class="btn btn-neutral float-right" title="Arduino IDE User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ArduinoTutorial.html" class="btn btn-neutral float-right" title="Arduino IDE Getting Started Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
