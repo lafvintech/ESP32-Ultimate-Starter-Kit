@@ -79,7 +79,17 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How To Upload Code To ESP32</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How To Upload Code To ESP32</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-the-hardware">1. Prepare the Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-serial-driver">2. Install the Serial Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#open-arduino-ide-and-select-the-board">3. Open Arduino IDE and Select the Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verify-the-program">4. Verify the Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upload-the-program">5. Upload the Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#open-the-serial-monitor">6. Open the Serial Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-troubleshooting">7. Common Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Components.html">Components Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Components.html#esp32-development-board">1. ESP32 Development Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Components.html#mpu6050-attitude-sensor">2. MPU6050 Attitude Sensor</a></li>
@@ -127,7 +137,7 @@
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#thermometer">4. Thermometer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#temp-and-humi-detection">5. TEMP And HUMI Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#scan-rfid">6. Scan RFID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#passive-buzzer">7. Passive Buzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#music-player">7. Music Player</a></li>
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#tilt-alarm">8. Tilt Alarm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#inch-display">9. 0.96 Inch Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="BasicExperiments.html#keyboard-display">10. Keyboard Display</a></li>
@@ -144,14 +154,16 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedExperiment.html">Advanced Experiments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">1. TEMP And HUMI Meter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">2. Ultrasonic Distance Meter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-servo">3. Web-Control Servo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#colorful-rgb">4. Colorful RGB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ir-display">5. IR Display</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#custom-display">6. Custom Display</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-fan">7. Web control Fan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#d-attitude-monitor">8. 3D Attitude Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#led-control">1. LED_Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#temp-and-humi-meter">2. TEMP And HUMI Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ultrasonic-distance-meter">3. Ultrasonic Distance Meter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-servo">4. Web-Control Servo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#colorful-rgb">5. Colorful RGB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#ir-display">6. IR Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#custom-display">7. Custom Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-control-fan">8. Web Control Fan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#d-attitude-monitor">9. 3D Attitude Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AdvancedExperiment.html#web-weather-station">10. WEB Weather Station</a></li>
 </ul>
 </li>
 </ul>
@@ -182,6 +194,112 @@
              
   <section id="how-to-upload-code-to-esp32">
 <h1>How To Upload Code To ESP32<a class="headerlink" href="#how-to-upload-code-to-esp32" title="Link to this heading"></a></h1>
+<p>This guide explains how to upload a program to the ESP32 development board using the Arduino IDE. The steps below cover hardware connection, driver installation, board configuration, uploading firmware, and serial monitoring.</p>
+<hr class="docutils" />
+<section id="prepare-the-hardware">
+<h2>1. Prepare the Hardware<a class="headerlink" href="#prepare-the-hardware" title="Link to this heading"></a></h2>
+<p>Before uploading code, connect the ESP32 board to your computer using a USB cable.</p>
+<ul class="simple">
+<li><p>Connect the ESP32 board to the PC with a USB cable.</p></li>
+<li><p>Make sure the board is powered on and the USB cable is not loose.</p></li>
+<li><p>If the board is not detected, check the USB cable and the driver installation.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/upload_hardware.svg"><img alt="_images/upload_hardware.svg" class="align-center" src="_images/upload_hardware.svg" width="800" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Some ESP32 boards have a BOOT or EN button. If the board is not responding, press and hold BOOT while clicking Upload, then release it when the upload begins.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="install-the-serial-driver">
+<h2>2. Install the Serial Driver<a class="headerlink" href="#install-the-serial-driver" title="Link to this heading"></a></h2>
+<p>This kit uses a USB-to-UART bridge chip. If the driver is missing, the board may not appear in the port list.</p>
+<ul class="simple">
+<li><p>Open Device Manager and check whether the <strong>CP2102</strong> or a similar USB serial device is installed.</p></li>
+<li><p>If it is not installed, download the driver from the official Silicon Labs website.</p></li>
+<li><p>After installation, reconnect the board and verify that a serial port appears.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/upload_driver.svg"><img alt="_images/upload_driver.svg" class="align-center" src="_images/upload_driver.svg" width="800" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>On Windows, a new COM port usually appears after the driver is installed successfully.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="open-arduino-ide-and-select-the-board">
+<h2>3. Open Arduino IDE and Select the Board<a class="headerlink" href="#open-arduino-ide-and-select-the-board" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Launch the Arduino IDE.</p></li>
+<li><p>Open the example sketch or your own program.</p></li>
+<li><p>In the menu bar, click <strong>Tools → Board</strong> and select the correct ESP32 board model.</p></li>
+<li><p>In <strong>Tools → Port</strong>, choose the COM port that belongs to your ESP32 board.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/upload_board_port.svg"><img alt="_images/upload_board_port.svg" class="align-center" src="_images/upload_board_port.svg" width="800" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If multiple COM ports appear, unplug and reconnect the board to identify the correct one.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="verify-the-program">
+<h2>4. Verify the Program<a class="headerlink" href="#verify-the-program" title="Link to this heading"></a></h2>
+<p>Before uploading, you should verify that the sketch compiles.</p>
+<ul class="simple">
+<li><p>Click <strong>Verify</strong> in the Arduino IDE.</p></li>
+<li><p>If there are no errors, the compilation will finish successfully.</p></li>
+<li><p>If errors appear, check the code, library version, and board selection.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/upload_verify_upload.svg"><img alt="_images/upload_verify_upload.svg" class="align-center" src="_images/upload_verify_upload.svg" width="800" /></a>
+</section>
+<hr class="docutils" />
+<section id="upload-the-program">
+<h2>5. Upload the Program<a class="headerlink" href="#upload-the-program" title="Link to this heading"></a></h2>
+<p>After the sketch compiles successfully, upload it to the ESP32.</p>
+<ul class="simple">
+<li><p>Click <strong>Upload</strong> in the Arduino IDE.</p></li>
+<li><p>Wait until the progress bar reaches the end.</p></li>
+<li><p>If upload fails, hold <strong>BOOT</strong> while clicking <strong>Upload</strong>, then release it when the upload starts.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/upload_verify_upload.svg"><img alt="_images/upload_verify_upload.svg" class="align-center" src="_images/upload_verify_upload.svg" width="800" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The upload process may take 10 to 30 seconds depending on the size of the sketch and the board model.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="open-the-serial-monitor">
+<h2>6. Open the Serial Monitor<a class="headerlink" href="#open-the-serial-monitor" title="Link to this heading"></a></h2>
+<p>After the upload finishes, you can view the program output through the serial monitor.</p>
+<ul class="simple">
+<li><p>Click <strong>Tools → Serial Monitor</strong>.</p></li>
+<li><p>Set the baud rate to match the program, commonly <strong>115200</strong> or <strong>9600</strong>.</p></li>
+<li><p>Observe the debug output and sensor data printed by the board.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/upload_monitor.svg"><img alt="_images/upload_monitor.svg" class="align-center" src="_images/upload_monitor.svg" width="800" /></a>
+</section>
+<hr class="docutils" />
+<section id="common-troubleshooting">
+<h2>7. Common Troubleshooting<a class="headerlink" href="#common-troubleshooting" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>If the board is not detected, check the USB cable, driver, and port selection.</p></li>
+<li><p>If the upload fails, try a different USB cable or press and hold <strong>BOOT</strong> during upload.</p></li>
+<li><p>If the program runs incorrectly, verify the correct board type and baud rate.</p></li>
+<li><p>If the serial monitor is empty, make sure the baud rate matches the sketch.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<p>With the steps above, you can successfully upload programs to the ESP32 using the Arduino IDE. After the upload is complete, you can test your project, debug its behavior, and further expand its functions.</p>
+</section>
 </section>
 
 

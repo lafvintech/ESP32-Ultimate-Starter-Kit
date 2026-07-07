@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+  <rect width="800" height="420" fill="#f5f7fa"/>
+  <rect x="110" y="90" width="580" height="240" rx="24" fill="#ffffff" stroke="#2f80ed" stroke-width="3"/>
+  <rect x="150" y="130" width="500" height="150" rx="14" fill="#eef5ff"/>
+  <text x="400" y="330" text-anchor="middle" font-family="Segoe UI, Arial" font-size="32" fill="#2c3e50">Serial monitor placeholder</text>
+</svg>
