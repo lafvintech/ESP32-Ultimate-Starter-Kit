@@ -151,6 +151,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#custom-display">6. Custom Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#web-control-fan">7. Web control Fan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#d-attitude-monitor">8. 3D Attitude Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#web-weather-station">9. WEB Weather Station</a></li>
 </ul>
 </li>
 </ul>
@@ -2414,13 +2415,15 @@ function toggleCode(containerId, buttonId) {
 <section id="custom-display">
 <h2>6. Custom Display<a class="headerlink" href="#custom-display" title="Link to this heading"></a></h2>
 <p>This experiment is a comprehensive project integrating web interaction with OLED display functionality, designed to teach you how to remotely edit text displayed on an OLED screen via a webpage. You will master the following core skills:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>SSD1306 OLED Display Driver: Controlling a 128×64 pixel OLED screen using the Adafruit_SSD1306 library and mastering display functions such as <strong>clearDisplay()</strong>, <strong>setCursor()</strong>, <strong>println()</strong>, and <strong>display()</strong>.</p></li>
 <li><p>Web Forms and HTTP POST Requests: Designing HTML forms to capture user input and submitting data via POST requests, allowing the server to parse form parameters and update the displayed content.</p></li>
 <li><p>String Array Management: Using <strong>String lines[4]</strong> to store four lines of text and utilizing array indexing to update each line independently.</p></li>
 <li><p>Automatic Form Pre-filling: Automatically populating input fields with the currently displayed content upon page load, making it easier for users to edit existing text.</p></li>
 <li><p>Page Redirection: Automatically redirecting the user back to the homepage after form submission using <strong>server.sendHeader(“Location”, “/”)</strong> to ensure a smooth user experience.</p></li>
 </ul>
+</div></blockquote>
 <p><strong>Materials Needed:</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -3230,7 +3233,8 @@ function toggleCode(containerId, buttonId) {
 <section id="d-attitude-monitor">
 <h2>8. 3D Attitude Monitor<a class="headerlink" href="#d-attitude-monitor" title="Link to this heading"></a></h2>
 <p>This experiment is an advanced integrated project combining 3D pose visualization with real-time sensor data streaming. It aims to teach you how to push real-time data from an MPU6050 6-axis sensor to a web interface using Server-Sent Events (SSE) and render the 3D pose using Three.js. You will master the following core skills:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>MPU6050 Sensor Integration: Reading acceleration, angular velocity, and temperature data via the <strong>Adafruit_MPU6050</strong> library, and configuring measurement ranges and filter bandwidths.</p></li>
 <li><p>Asynchronous Web Server: Implementing a non-blocking HTTP service using <strong>AsyncWebServer</strong> to support high-concurrency connections.</p></li>
 <li><p>Server-Sent Events (SSE): Enabling one-way, real-time data streaming from server to client via <strong>EventSource</strong>—replacing traditional polling to reduce latency and resource consumption.</p></li>
@@ -3238,6 +3242,7 @@ function toggleCode(containerId, buttonId) {
 <li><p>Sensor-to-3D Synchronization: Mapping MPU6050 gyroscope angular velocity data to the rotation angles of a 3D object, ensuring real-time synchronization between the physical device and the 3D model.</p></li>
 <li><p>Multi-Stream Data Pushing: Streaming gyroscope (50ms), accelerometer (200ms), and temperature (1000ms) data at distinct intervals to optimize bandwidth usage and response speed.</p></li>
 </ul>
+</div></blockquote>
 <p><strong>Materials Needed:</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -3886,6 +3891,498 @@ function toggleCode(containerId, buttonId) {
 </ul>
 </div></blockquote>
 <p>As you tilt or rotate the development board, the 3D cube rotates and the numerical data on the right refreshes simultaneously, delivering an immersive, “what-you-see-is-what-you-get” interactive experience.</p>
+</section>
+<hr class="docutils" />
+<section id="web-weather-station">
+<h2>9. WEB Weather Station<a class="headerlink" href="#web-weather-station" title="Link to this heading"></a></h2>
+<p>This experiment is a comprehensive project involving an IoT-based environmental monitoring and intelligent alarm system. It aims to teach the integration of multi-sensor data acquisition, a web server, and a real-time alarm mechanism into a complete IoT application. You will master the following core skills:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Collaborative Multi-Sensor Data Acquisition: Simultaneously reading digital signals from DHT11 (temperature/humidity) and light sensors, along with analog signals from a water level sensor, to achieve multidimensional environmental sensing.</p></li>
+<li><p>Web Control via Wi-Fi AP Mode: Configuring the ESP32 as a wireless access point (AP), allowing users to directly access the web monitoring page without a router.</p></li>
+<li><p>Dynamic JSON Data Interface: Exposing a <cite>/data</cite> endpoint that returns all sensor data and alarm statuses in JSON format, with the frontend polling for updates every 2 seconds.</p></li>
+<li><p>Compound Alarm Logic: Automatically triggering a buzzer alarm—and logging the specific cause—when ambient light is too low (DARK), the temperature exceeds 40°C, or the water level drops below 10%.</p></li>
+<li><p>Responsive Web Dashboard: Visually displaying temperature, humidity, light levels, water levels, and alarm statuses using progress bars and status cards, featuring a layout that adapts to mobile devices.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Materials Needed:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ESP32 Development Board</p></li>
+<li><p>DHT11  Sensor</p></li>
+<li><p>Light Sensor</p></li>
+<li><p>Water Level Sensor</p></li>
+<li><p>Active Buzzer</p></li>
+<li><p>Breadboard and Jumper Wires</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Wiring Diagram:</strong></p>
+<a class="reference internal image-reference" href="_images/8.WEATHER.png"><img alt="_images/8.WEATHER.png" class="align-center" src="_images/8.WEATHER.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><p><strong>Wiring Table</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13.3%" />
+<col style="width: 26.7%" />
+<col style="width: 26.7%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>No.</p></th>
+<th class="head"><p>Component</p></th>
+<th class="head"><p>Pin</p></th>
+<th class="head"><p>Connect to</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>DHT11 Sensor</p></td>
+<td><p>VCC</p></td>
+<td><p>3.3V</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>DHT11 Sensor</p></td>
+<td><p>GND</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>DHT11 Sensor</p></td>
+<td><p>DATA</p></td>
+<td><p>GPIO 27</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Light Sensor</p></td>
+<td><p>VCC</p></td>
+<td><p>3.3V</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Light Sensor</p></td>
+<td><p>GND</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Light Sensor</p></td>
+<td><p>DO</p></td>
+<td><p>GPIO 35</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Water Level Sensor</p></td>
+<td><p>VCC</p></td>
+<td><p>3.3V</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Water Level Sensor</p></td>
+<td><p>GND</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Water Level Sensor</p></td>
+<td><p>S(Signal)</p></td>
+<td><p>GPIO 34</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Active Buzzer</p></td>
+<td><p>Positive (+)</p></td>
+<td><p>GPIO 4</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Active Buzzer</p></td>
+<td><p>Negative (-)</p></td>
+<td><p>GND</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example code:</strong></p>
+<div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+<div id="code-container-WEATHER" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;WiFi.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;WebServer.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;DHT.h&gt;</span>
+
+<span class="c1">// ------- Pin Definitions -------</span>
+<span class="cp">#define DHTPIN 27</span>
+<span class="cp">#define DHTTYPE DHT11</span>
+<span class="n">DHT</span><span class="w"> </span><span class="nf">dht</span><span class="p">(</span><span class="n">DHTPIN</span><span class="p">,</span><span class="w"> </span><span class="n">DHTTYPE</span><span class="p">);</span>
+
+<span class="cp">#define LIGHT_SENSOR_DO 35</span>
+<span class="cp">#define WATER_SENSOR_AO 34</span>
+<span class="cp">#define BUZZER_PIN 4</span>
+
+<span class="c1">//  WiFi AP Settings</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">ssid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;WEB_Weather_Station&quot;</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w">  </span><span class="c1">// No password</span>
+
+<span class="c1">// ------- Web Server -------</span>
+<span class="n">WebServer</span><span class="w"> </span><span class="nf">server</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
+
+<span class="c1">// ------- Global Variables -------</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">humi</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">isDark</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">waterPercent</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">alarmTriggered</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">alarmReason</span><span class="p">;</span><span class="w">  </span><span class="c1">// Track why alarm is triggered</span>
+
+<span class="c1">// ------- HTML Page -------</span>
+<span class="n">String</span><span class="w"> </span><span class="nf">getHTML</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">String</span><span class="w"> </span><span class="n">html</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">rawliteral(</span>
+<span class="s">&lt;!DOCTYPE html&gt;</span>
+<span class="s">&lt;html&gt;</span>
+<span class="s">&lt;head&gt;</span>
+<span class="s">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+<span class="s">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
+<span class="s">  &lt;title&gt;Weather Station&lt;/title&gt;</span>
+<span class="s">  &lt;style&gt;</span>
+<span class="s">    * {</span>
+<span class="s">      margin: 0;</span>
+<span class="s">      padding: 0;</span>
+<span class="s">      box-sizing: border-box;</span>
+<span class="s">    }</span>
+<span class="s">    body {</span>
+<span class="s">      font-family: &#39;Segoe UI&#39;, Tahoma, Geneva, Verdana, sans-serif;</span>
+<span class="s">      background: #ffffff;</span>
+<span class="s">      padding: 20px;</span>
+<span class="s">      min-height: 100vh;</span>
+<span class="s">      display: flex;</span>
+<span class="s">      justify-content: center;</span>
+<span class="s">      align-items: center;</span>
+<span class="s">    }</span>
+<span class="s">    .container {</span>
+<span class="s">      max-width: 600px;</span>
+<span class="s">      width: 100%;</span>
+<span class="s">      background: #ffffff;</span>
+<span class="s">      border-radius: 20px;</span>
+<span class="s">      padding: 30px 25px;</span>
+<span class="s">      box-shadow: 0 10px 40px rgba(0,0,0,0.08);</span>
+<span class="s">    }</span>
+<span class="s">    h1 {</span>
+<span class="s">      text-align: center;</span>
+<span class="s">      color: #2c3e50;</span>
+<span class="s">      font-weight: 300;</span>
+<span class="s">      font-size: 28px;</span>
+<span class="s">      letter-spacing: 2px;</span>
+<span class="s">      margin-bottom: 30px;</span>
+<span class="s">    }</span>
+<span class="s">    .card {</span>
+<span class="s">      margin-bottom: 25px;</span>
+<span class="s">    }</span>
+<span class="s">    .label {</span>
+<span class="s">      display: flex;</span>
+<span class="s">      justify-content: space-between;</span>
+<span class="s">      font-size: 16px;</span>
+<span class="s">      color: #34495e;</span>
+<span class="s">      font-weight: 500;</span>
+<span class="s">      margin-bottom: 6px;</span>
+<span class="s">    }</span>
+<span class="s">    .label span:last-child {</span>
+<span class="s">      font-weight: 600;</span>
+<span class="s">    }</span>
+<span class="s">    .progress-bar {</span>
+<span class="s">      width: 100%;</span>
+<span class="s">      height: 28px;</span>
+<span class="s">      background: #f0f0f0;</span>
+<span class="s">      border-radius: 14px;</span>
+<span class="s">      overflow: hidden;</span>
+<span class="s">      position: relative;</span>
+<span class="s">      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);</span>
+<span class="s">    }</span>
+<span class="s">    .progress-fill {</span>
+<span class="s">      height: 100%;</span>
+<span class="s">      width: 0%;</span>
+<span class="s">      border-radius: 14px;</span>
+<span class="s">      transition: width 0.5s ease;</span>
+<span class="s">      display: flex;</span>
+<span class="s">      align-items: center;</span>
+<span class="s">      justify-content: flex-end;</span>
+<span class="s">      padding-right: 12px;</span>
+<span class="s">      font-size: 13px;</span>
+<span class="s">      font-weight: 600;</span>
+<span class="s">      color: #ffffff;</span>
+<span class="s">      min-width: 40px;</span>
+<span class="s">    }</span>
+<span class="s">    .temp-fill { background: linear-gradient(90deg, #3498db, #e74c3c); }</span>
+<span class="s">    .humi-fill { background: linear-gradient(90deg, #74b9ff, #0984e3); }</span>
+<span class="s">    .light-fill { background: linear-gradient(90deg, #fdcb6e, #f39c12); }</span>
+<span class="s">    .water-fill { background: linear-gradient(90deg, #55efc4, #00b894); }</span>
+<span class="s">    .alarm-card {</span>
+<span class="s">      margin-top: 10px;</span>
+<span class="s">      padding: 15px;</span>
+<span class="s">      border-radius: 12px;</span>
+<span class="s">      text-align: center;</span>
+<span class="s">      font-weight: 600;</span>
+<span class="s">      font-size: 18px;</span>
+<span class="s">      transition: all 0.3s ease;</span>
+<span class="s">    }</span>
+<span class="s">    .alarm-safe {</span>
+<span class="s">      background: #e8f8f5;</span>
+<span class="s">      color: #00b894;</span>
+<span class="s">      border: 2px solid #55efc4;</span>
+<span class="s">    }</span>
+<span class="s">    .alarm-trigger {</span>
+<span class="s">      background: #fde8e8;</span>
+<span class="s">      color: #e74c3c;</span>
+<span class="s">      border: 2px solid #ff7675;</span>
+<span class="s">      animation: pulse 1.5s ease-in-out infinite;</span>
+<span class="s">    }</span>
+<span class="s">    @keyframes pulse {</span>
+<span class="s">      0%, 100% { opacity: 1; }</span>
+<span class="s">      50% { opacity: 0.6; }</span>
+<span class="s">    }</span>
+<span class="s">    .footer {</span>
+<span class="s">      text-align: center;</span>
+<span class="s">      margin-top: 20px;</span>
+<span class="s">      color: #bdc3c7;</span>
+<span class="s">      font-size: 12px;</span>
+<span class="s">    }</span>
+<span class="s">  &lt;/style&gt;</span>
+<span class="s">&lt;/head&gt;</span>
+<span class="s">&lt;body&gt;</span>
+<span class="s">  &lt;div class=&quot;container&quot;&gt;</span>
+<span class="s">    &lt;h1&gt;🌤 Weather Station&lt;/h1&gt;</span>
+
+<span class="s">    &lt;!-- Temperature --&gt;</span>
+<span class="s">    &lt;div class=&quot;card&quot;&gt;</span>
+<span class="s">      &lt;div class=&quot;label&quot;&gt;</span>
+<span class="s">        &lt;span&gt;🌡 Temperature&lt;/span&gt;</span>
+<span class="s">        &lt;span id=&quot;tempValue&quot;&gt;-- °C&lt;/span&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">      &lt;div class=&quot;progress-bar&quot;&gt;</span>
+<span class="s">        &lt;div class=&quot;progress-fill temp-fill&quot; id=&quot;tempBar&quot; style=&quot;width:0%&quot;&gt;0%&lt;/div&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">    &lt;/div&gt;</span>
+
+<span class="s">    &lt;!-- Humidity --&gt;</span>
+<span class="s">    &lt;div class=&quot;card&quot;&gt;</span>
+<span class="s">      &lt;div class=&quot;label&quot;&gt;</span>
+<span class="s">        &lt;span&gt;💧 Humidity&lt;/span&gt;</span>
+<span class="s">        &lt;span id=&quot;humiValue&quot;&gt;-- %&lt;/span&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">      &lt;div class=&quot;progress-bar&quot;&gt;</span>
+<span class="s">        &lt;div class=&quot;progress-fill humi-fill&quot; id=&quot;humiBar&quot; style=&quot;width:0%&quot;&gt;0%&lt;/div&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">    &lt;/div&gt;</span>
+
+<span class="s">    &lt;!-- Light --&gt;</span>
+<span class="s">    &lt;div class=&quot;card&quot;&gt;</span>
+<span class="s">      &lt;div class=&quot;label&quot;&gt;</span>
+<span class="s">        &lt;span&gt;☀️ Light&lt;/span&gt;</span>
+<span class="s">        &lt;span id=&quot;lightValue&quot;&gt;--&lt;/span&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">      &lt;div class=&quot;progress-bar&quot;&gt;</span>
+<span class="s">        &lt;div class=&quot;progress-fill light-fill&quot; id=&quot;lightBar&quot; style=&quot;width:0%&quot;&gt;0%&lt;/div&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">    &lt;/div&gt;</span>
+
+<span class="s">    &lt;!-- Water Level --&gt;</span>
+<span class="s">    &lt;div class=&quot;card&quot;&gt;</span>
+<span class="s">      &lt;div class=&quot;label&quot;&gt;</span>
+<span class="s">        &lt;span&gt;🌊 Water Level&lt;/span&gt;</span>
+<span class="s">        &lt;span id=&quot;waterValue&quot;&gt;-- %&lt;/span&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">      &lt;div class=&quot;progress-bar&quot;&gt;</span>
+<span class="s">        &lt;div class=&quot;progress-fill water-fill&quot; id=&quot;waterBar&quot; style=&quot;width:0%&quot;&gt;0%&lt;/div&gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+<span class="s">    &lt;/div&gt;</span>
+
+<span class="s">    &lt;!-- Alarm Status --&gt;</span>
+<span class="s">    &lt;div class=&quot;alarm-card alarm-safe&quot; id=&quot;alarmCard&quot;&gt;</span>
+<span class="s">      🔔 SAFE</span>
+<span class="s">    &lt;/div&gt;</span>
+
+<span class="s">    &lt;div class=&quot;footer&quot;&gt;</span>
+<span class="s">      ESP32 Weather Station • Auto-refresh every 2s</span>
+<span class="s">    &lt;/div&gt;</span>
+<span class="s">  &lt;/div&gt;</span>
+
+<span class="s">  &lt;script&gt;</span>
+<span class="s">    function fetchData() {</span>
+<span class="s">      fetch(&#39;/data&#39;)</span>
+<span class="s">        .then(response =&gt; response.json())</span>
+<span class="s">        .then(data =&gt; {</span>
+<span class="s">          document.getElementById(&#39;tempValue&#39;).textContent = data.temp + &#39; °C&#39;;</span>
+<span class="s">          document.getElementById(&#39;tempBar&#39;).style.width = data.tempPercent + &#39;%&#39;;</span>
+<span class="s">          document.getElementById(&#39;tempBar&#39;).textContent = data.tempPercent + &#39;%&#39;;</span>
+
+<span class="s">          document.getElementById(&#39;humiValue&#39;).textContent = data.humi + &#39; %&#39;;</span>
+<span class="s">          document.getElementById(&#39;humiBar&#39;).style.width = data.humi + &#39;%&#39;;</span>
+<span class="s">          document.getElementById(&#39;humiBar&#39;).textContent = data.humi + &#39;%&#39;;</span>
+
+<span class="s">          document.getElementById(&#39;lightValue&#39;).textContent = data.lightStatus;</span>
+<span class="s">          document.getElementById(&#39;lightBar&#39;).style.width = data.lightPercent + &#39;%&#39;;</span>
+<span class="s">          document.getElementById(&#39;lightBar&#39;).textContent = data.lightPercent + &#39;%&#39;;</span>
+
+<span class="s">          document.getElementById(&#39;waterValue&#39;).textContent = data.water + &#39; %&#39;;</span>
+<span class="s">          document.getElementById(&#39;waterBar&#39;).style.width = data.water + &#39;%&#39;;</span>
+<span class="s">          document.getElementById(&#39;waterBar&#39;).textContent = data.water + &#39;%&#39;;</span>
+
+<span class="s">          const alarmCard = document.getElementById(&#39;alarmCard&#39;);</span>
+<span class="s">          if (data.alarm) {</span>
+<span class="s">            alarmCard.className = &#39;alarm-card alarm-trigger&#39;;</span>
+<span class="s">            alarmCard.textContent = &#39;🚨 &#39; + data.alarmReason;</span>
+<span class="s">          } else {</span>
+<span class="s">            alarmCard.className = &#39;alarm-card alarm-safe&#39;;</span>
+<span class="s">            alarmCard.textContent = &#39;🔔 SAFE&#39;;</span>
+<span class="s">          }</span>
+<span class="s">        })</span>
+<span class="s">        .catch(error =&gt; console.log(&#39;Error:&#39;, error));</span>
+<span class="s">    }</span>
+
+<span class="s">    fetchData();</span>
+<span class="s">    setInterval(fetchData, 2000);</span>
+<span class="s">  &lt;/script&gt;</span>
+<span class="s">&lt;/body&gt;</span>
+<span class="s">&lt;/html&gt;</span>
+<span class="s">  </span><span class="dl">)rawliteral</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">html</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ------- JSON Data Endpoint -------</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">sendJSON</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">String</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">temp</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">tempPercent</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">map</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">humi</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">humi</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">lightStatus</span><span class="se">\&quot;</span><span class="s">:</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">isDark</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;DARK&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;BRIGHT&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">lightPercent</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">isDark</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">water</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">waterPercent</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">alarm</span><span class="se">\&quot;</span><span class="s">:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">alarmTriggered</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">alarmReason</span><span class="se">\&quot;</span><span class="s">:</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">json</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;}&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;application/json&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">json</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ------- Root Page -------</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">handleRoot</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;text/html&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">getHTML</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// ------- Setup -------</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">dht</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">LIGHT_SENSOR_DO</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Start AP mode without password</span>
+<span class="w">  </span><span class="n">WiFi</span><span class="p">.</span><span class="n">softAP</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w">  </span><span class="c1">// NULL means no password</span>
+<span class="w">  </span><span class="c1">// Alternative: WiFi.softAP(ssid); // This also works with no password</span>
+
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;WiFi AP Started (No Password)&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;SSID: &quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;IP Address: &quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">softAPIP</span><span class="p">());</span>
+
+<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">handleRoot</span><span class="p">);</span>
+<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="s">&quot;/data&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sendJSON</span><span class="p">);</span>
+<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Web Server Started&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ------- Main Loop -------</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">server</span><span class="p">.</span><span class="n">handleClient</span><span class="p">();</span>
+
+<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">lastRead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lastRead</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">2000</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">lastRead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// 1. Read DHT11</span>
+<span class="w">    </span><span class="n">humi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dht</span><span class="p">.</span><span class="n">readHumidity</span><span class="p">();</span>
+<span class="w">    </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dht</span><span class="p">.</span><span class="n">readTemperature</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isnan</span><span class="p">(</span><span class="n">humi</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">isnan</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;DHT11 read failed!&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 2. Read light sensor</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">lightState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">LIGHT_SENSOR_DO</span><span class="p">);</span>
+<span class="w">    </span><span class="n">isDark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">lightState</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 3. Read water level</span>
+<span class="w">    </span><span class="n">waterLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">WATER_SENSOR_AO</span><span class="p">);</span>
+<span class="w">    </span><span class="n">waterPercent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4095</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+<span class="w">    </span><span class="n">waterPercent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">waterPercent</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 4. Alarm logic with reason tracking</span>
+<span class="w">    </span><span class="n">alarmTriggered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isDark</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">alarmTriggered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">      </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Dark&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">40.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">alarmTriggered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">alarmReason</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot; + &quot;</span><span class="p">;</span>
+<span class="w">      </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;Overheat&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterPercent</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">alarmTriggered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">alarmReason</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot; + &quot;</span><span class="p">;</span>
+<span class="w">      </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;Low Water&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// If no alarm</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">alarmTriggered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">alarmReason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SAFE&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 5. Control buzzer</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">alarmTriggered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 6. Serial debug</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Temp: &quot;</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;  Humi: &quot;</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">humi</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;  Light: &quot;</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">isDark</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;DARK&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;BRIGHT&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;  Water: &quot;</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">waterPercent</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;%  Alarm: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">alarmTriggered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;TRIGGERED (&quot;</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">alarmReason</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;)&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;SAFE&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+  <button id="expand-btn-WEATHER" onclick="toggleCode('code-container-WEATHER', 'expand-btn-WEATHER')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+</div>
+</div>
+
+<style>
+#code-container-WEATHER { transition: max-height 0.4s ease-in-out; }
+</style>
+
+<script>
+function toggleCode(containerId, buttonId) {
+  const container = document.getElementById(containerId);
+  const btn = document.getElementById(buttonId);
+  if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+    container.style.maxHeight = 'none';
+    btn.textContent = '✕ Collapse Code';
+  } else {
+    container.style.maxHeight = '420px';
+    btn.textContent = '▼ Expand All Code';
+  }
+}
+</script><div style="margin-top: 30px;"></div><p><strong>Display Effect:</strong></p>
+<a class="reference internal image-reference" href="_static/project/IOT/8.WEATHER2.png"><img alt="_static/project/IOT/8.WEATHER2.png" class="align-center" src="_static/project/IOT/8.WEATHER2.png" style="width: 600px;" /></a>
+<div style="margin-top: 30px;"></div><p>After flashing the program, the ESP32 creates a password-free Wi-Fi hotspot named <strong>WEB_Weather_Station</strong>. Once connected to this Wi-Fi via a smartphone or computer, access <strong>192.168.4.1</strong> to open the web-based dashboard:</p>
+<ul class="simple">
+<li><p>Temperature: A progress bar displays the current temperature (mapped from 0–50°C to 0–100%), with real-time value updates.</p></li>
+<li><p>Humidity: A progress bar displays the current humidity percentage.</p></li>
+<li><p>Light: Displays “BRIGHT” or “DARK,” with a progress bar providing a visual indication of the status.</p></li>
+<li><p>Water Level: A progress bar displays the current water level percentage (0–100%).</p></li>
+<li><p>Alarm Card: Displays a green “🔔 SAFE” status when conditions are normal; displays a red “🚨 Trigger Reason” (e.g., “Dark + Overheat + Low Water”) accompanied by a pulsing animation when an alarm is triggered.</p></li>
+</ul>
+<p>Additionally, the buzzer operates automatically based on the alarm status: it sounds if any alarm condition is triggered and turns off once all conditions return to a safe state.</p>
 <hr class="docutils" />
 </section>
 </section>

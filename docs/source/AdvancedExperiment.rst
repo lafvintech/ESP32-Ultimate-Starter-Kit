@@ -2325,15 +2325,15 @@ This experiment is an integrated project combining infrared (IR) remote control 
 
 This experiment is a comprehensive project integrating web interaction with OLED display functionality, designed to teach you how to remotely edit text displayed on an OLED screen via a webpage. You will master the following core skills:
 
-- SSD1306 OLED Display Driver: Controlling a 128×64 pixel OLED screen using the Adafruit_SSD1306 library and mastering display functions such as **clearDisplay()**, **setCursor()**, **println()**, and **display()**.
+ - SSD1306 OLED Display Driver: Controlling a 128×64 pixel OLED screen using the Adafruit_SSD1306 library and mastering display functions such as **clearDisplay()**, **setCursor()**, **println()**, and **display()**.
 
-- Web Forms and HTTP POST Requests: Designing HTML forms to capture user input and submitting data via POST requests, allowing the server to parse form parameters and update the displayed content.
+ - Web Forms and HTTP POST Requests: Designing HTML forms to capture user input and submitting data via POST requests, allowing the server to parse form parameters and update the displayed content.
 
-- String Array Management: Using **String lines[4]** to store four lines of text and utilizing array indexing to update each line independently.
+ - String Array Management: Using **String lines[4]** to store four lines of text and utilizing array indexing to update each line independently.
 
-- Automatic Form Pre-filling: Automatically populating input fields with the currently displayed content upon page load, making it easier for users to edit existing text.
+ - Automatic Form Pre-filling: Automatically populating input fields with the currently displayed content upon page load, making it easier for users to edit existing text.
 
-- Page Redirection: Automatically redirecting the user back to the homepage after form submission using **server.sendHeader("Location", "/")** to ensure a smooth user experience.
+ - Page Redirection: Automatically redirecting the user back to the homepage after form submission using **server.sendHeader("Location", "/")** to ensure a smooth user experience.
 
 **Materials Needed:**
 
@@ -3183,17 +3183,17 @@ When the switch is turned on, the relay engages (GPIO27 outputs a high level), p
 
 This experiment is an advanced integrated project combining 3D pose visualization with real-time sensor data streaming. It aims to teach you how to push real-time data from an MPU6050 6-axis sensor to a web interface using Server-Sent Events (SSE) and render the 3D pose using Three.js. You will master the following core skills:
 
-- MPU6050 Sensor Integration: Reading acceleration, angular velocity, and temperature data via the **Adafruit_MPU6050** library, and configuring measurement ranges and filter bandwidths.
+ - MPU6050 Sensor Integration: Reading acceleration, angular velocity, and temperature data via the **Adafruit_MPU6050** library, and configuring measurement ranges and filter bandwidths.
 
-- Asynchronous Web Server: Implementing a non-blocking HTTP service using **AsyncWebServer** to support high-concurrency connections.
+ - Asynchronous Web Server: Implementing a non-blocking HTTP service using **AsyncWebServer** to support high-concurrency connections.
 
-- Server-Sent Events (SSE): Enabling one-way, real-time data streaming from server to client via **EventSource**—replacing traditional polling to reduce latency and resource consumption.
+ - Server-Sent Events (SSE): Enabling one-way, real-time data streaming from server to client via **EventSource**—replacing traditional polling to reduce latency and resource consumption.
 
-- Three.js 3D Engine: Constructing a browser-based 3D scene featuring a cube, particle system, starry background, and grid helpers to dynamically render the device's pose.
+ - Three.js 3D Engine: Constructing a browser-based 3D scene featuring a cube, particle system, starry background, and grid helpers to dynamically render the device's pose.
 
-- Sensor-to-3D Synchronization: Mapping MPU6050 gyroscope angular velocity data to the rotation angles of a 3D object, ensuring real-time synchronization between the physical device and the 3D model.
+ - Sensor-to-3D Synchronization: Mapping MPU6050 gyroscope angular velocity data to the rotation angles of a 3D object, ensuring real-time synchronization between the physical device and the 3D model.
 
-- Multi-Stream Data Pushing: Streaming gyroscope (50ms), accelerometer (200ms), and temperature (1000ms) data at distinct intervals to optimize bandwidth usage and response speed.
+ - Multi-Stream Data Pushing: Streaming gyroscope (50ms), accelerometer (200ms), and temperature (1000ms) data at distinct intervals to optimize bandwidth usage and response speed.
 
 **Materials Needed:**
 
@@ -3862,6 +3862,512 @@ As you tilt or rotate the development board, the 3D cube rotates and the numeric
 
 ----
 
+9. WEB Weather Station
+----------------------
 
+This experiment is a comprehensive project involving an IoT-based environmental monitoring and intelligent alarm system. It aims to teach the integration of multi-sensor data acquisition, a web server, and a real-time alarm mechanism into a complete IoT application. You will master the following core skills:
 
+ - Collaborative Multi-Sensor Data Acquisition: Simultaneously reading digital signals from DHT11 (temperature/humidity) and light sensors, along with analog signals from a water level sensor, to achieve multidimensional environmental sensing.
 
+ - Web Control via Wi-Fi AP Mode: Configuring the ESP32 as a wireless access point (AP), allowing users to directly access the web monitoring page without a router.
+
+ - Dynamic JSON Data Interface: Exposing a `/data` endpoint that returns all sensor data and alarm statuses in JSON format, with the frontend polling for updates every 2 seconds.
+
+ - Compound Alarm Logic: Automatically triggering a buzzer alarm—and logging the specific cause—when ambient light is too low (DARK), the temperature exceeds 40°C, or the water level drops below 10%.
+
+ - Responsive Web Dashboard: Visually displaying temperature, humidity, light levels, water levels, and alarm statuses using progress bars and status cards, featuring a layout that adapts to mobile devices.
+
+**Materials Needed:**
+
+ - ESP32 Development Board
+ - DHT11  Sensor
+ - Light Sensor 
+ - Water Level Sensor
+ - Active Buzzer
+ - Breadboard and Jumper Wires
+
+**Wiring Diagram:**
+
+.. image:: _static/project/IOT/8.WEATHER.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+    <div style="margin-top: 30px;"></div>
+
+**Wiring Table**
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 10 20 20 25
+
+   * - No.
+     - Component
+     - Pin
+     - Connect to
+   * - 1
+     - DHT11 Sensor
+     - VCC
+     - 3.3V
+   * - 1
+     - DHT11 Sensor
+     - GND
+     - GND
+   * - 1
+     - DHT11 Sensor
+     - DATA
+     - GPIO 27
+   * - 2
+     - Light Sensor 
+     - VCC
+     - 3.3V
+   * - 2
+     - Light Sensor 
+     - GND
+     - GND
+   * - 2
+     - Light Sensor 
+     - DO
+     - GPIO 35
+   * - 3
+     - Water Level Sensor
+     - VCC
+     - 3.3V
+   * - 3
+     - Water Level Sensor
+     - GND
+     - GND
+   * - 3
+     - Water Level Sensor
+     - S(Signal) 
+     - GPIO 34
+   * - 4
+     - Active Buzzer
+     - Positive (+)
+     - GPIO 4
+   * - 4
+     - Active Buzzer
+     - Negative (-)
+     - GND
+
+**Example code:**
+
+.. raw:: html
+
+   <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+   <div id="code-container-WEATHER" style="max-height: 420px; overflow: hidden; position: relative; background: #f5f5f0;">
+
+.. code-block:: cpp
+
+ #include <WiFi.h>
+ #include <WebServer.h>
+ #include <DHT.h>
+
+ // ------- Pin Definitions -------
+ #define DHTPIN 27
+ #define DHTTYPE DHT11
+ DHT dht(DHTPIN, DHTTYPE);
+
+ #define LIGHT_SENSOR_DO 35
+ #define WATER_SENSOR_AO 34
+ #define BUZZER_PIN 4
+
+ //  WiFi AP Settings
+ const char* ssid = "WEB_Weather_Station";
+ const char* password = NULL;  // No password
+
+ // ------- Web Server -------
+ WebServer server(80);
+
+ // ------- Global Variables -------
+ float temp, humi;
+ bool isDark;
+ int waterLevel;
+ int waterPercent;
+ bool alarmTriggered;
+ String alarmReason;  // Track why alarm is triggered
+
+ // ------- HTML Page -------
+ String getHTML() {
+   String html = R"rawliteral(
+ <!DOCTYPE html>
+ <html>
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Weather Station</title>
+   <style>
+     * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+     }
+     body {
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       background: #ffffff;
+       padding: 20px;
+       min-height: 100vh;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+     }
+     .container {
+       max-width: 600px;
+       width: 100%;
+       background: #ffffff;
+       border-radius: 20px;
+       padding: 30px 25px;
+       box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+     }
+     h1 {
+       text-align: center;
+       color: #2c3e50;
+       font-weight: 300;
+       font-size: 28px;
+       letter-spacing: 2px;
+       margin-bottom: 30px;
+     }
+     .card {
+       margin-bottom: 25px;
+     }
+     .label {
+       display: flex;
+       justify-content: space-between;
+       font-size: 16px;
+       color: #34495e;
+       font-weight: 500;
+       margin-bottom: 6px;
+     }
+     .label span:last-child {
+       font-weight: 600;
+     }
+     .progress-bar {
+       width: 100%;
+       height: 28px;
+       background: #f0f0f0;
+       border-radius: 14px;
+       overflow: hidden;
+       position: relative;
+       box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+     }
+     .progress-fill {
+       height: 100%;
+       width: 0%;
+       border-radius: 14px;
+       transition: width 0.5s ease;
+       display: flex;
+       align-items: center;
+       justify-content: flex-end;
+       padding-right: 12px;
+       font-size: 13px;
+       font-weight: 600;
+       color: #ffffff;
+       min-width: 40px;
+     }
+     .temp-fill { background: linear-gradient(90deg, #3498db, #e74c3c); }
+     .humi-fill { background: linear-gradient(90deg, #74b9ff, #0984e3); }
+     .light-fill { background: linear-gradient(90deg, #fdcb6e, #f39c12); }
+     .water-fill { background: linear-gradient(90deg, #55efc4, #00b894); }
+     .alarm-card {
+       margin-top: 10px;
+       padding: 15px;
+       border-radius: 12px;
+       text-align: center;
+       font-weight: 600;
+       font-size: 18px;
+       transition: all 0.3s ease;
+     }
+     .alarm-safe {
+       background: #e8f8f5;
+       color: #00b894;
+       border: 2px solid #55efc4;
+     }
+     .alarm-trigger {
+       background: #fde8e8;
+       color: #e74c3c;
+       border: 2px solid #ff7675;
+       animation: pulse 1.5s ease-in-out infinite;
+     }
+     @keyframes pulse {
+       0%, 100% { opacity: 1; }
+       50% { opacity: 0.6; }
+     }
+     .footer {
+       text-align: center;
+       margin-top: 20px;
+       color: #bdc3c7;
+       font-size: 12px;
+     }
+   </style>
+ </head>
+ <body>
+   <div class="container">
+     <h1>🌤 Weather Station</h1>
+
+     <!-- Temperature -->
+     <div class="card">
+       <div class="label">
+         <span>🌡 Temperature</span>
+         <span id="tempValue">-- °C</span>
+       </div>
+       <div class="progress-bar">
+         <div class="progress-fill temp-fill" id="tempBar" style="width:0%">0%</div>
+       </div>
+     </div>
+
+     <!-- Humidity -->
+     <div class="card">
+       <div class="label">
+         <span>💧 Humidity</span>
+         <span id="humiValue">-- %</span>
+       </div>
+       <div class="progress-bar">
+         <div class="progress-fill humi-fill" id="humiBar" style="width:0%">0%</div>
+       </div>
+     </div>
+
+     <!-- Light -->
+     <div class="card">
+       <div class="label">
+         <span>☀️ Light</span>
+         <span id="lightValue">--</span>
+       </div>
+       <div class="progress-bar">
+         <div class="progress-fill light-fill" id="lightBar" style="width:0%">0%</div>
+       </div>
+     </div>
+
+     <!-- Water Level -->
+     <div class="card">
+       <div class="label">
+         <span>🌊 Water Level</span>
+         <span id="waterValue">-- %</span>
+       </div>
+       <div class="progress-bar">
+         <div class="progress-fill water-fill" id="waterBar" style="width:0%">0%</div>
+       </div>
+     </div>
+
+     <!-- Alarm Status -->
+     <div class="alarm-card alarm-safe" id="alarmCard">
+       🔔 SAFE
+     </div>
+
+     <div class="footer">
+       ESP32 Weather Station • Auto-refresh every 2s
+     </div>
+   </div>
+
+   <script>
+     function fetchData() {
+       fetch('/data')
+         .then(response => response.json())
+         .then(data => {
+           document.getElementById('tempValue').textContent = data.temp + ' °C';
+           document.getElementById('tempBar').style.width = data.tempPercent + '%';
+           document.getElementById('tempBar').textContent = data.tempPercent + '%';
+
+           document.getElementById('humiValue').textContent = data.humi + ' %';
+           document.getElementById('humiBar').style.width = data.humi + '%';
+           document.getElementById('humiBar').textContent = data.humi + '%';
+
+           document.getElementById('lightValue').textContent = data.lightStatus;
+           document.getElementById('lightBar').style.width = data.lightPercent + '%';
+           document.getElementById('lightBar').textContent = data.lightPercent + '%';
+
+           document.getElementById('waterValue').textContent = data.water + ' %';
+           document.getElementById('waterBar').style.width = data.water + '%';
+           document.getElementById('waterBar').textContent = data.water + '%';
+
+           const alarmCard = document.getElementById('alarmCard');
+           if (data.alarm) {
+             alarmCard.className = 'alarm-card alarm-trigger';
+             alarmCard.textContent = '🚨 ' + data.alarmReason;
+           } else {
+             alarmCard.className = 'alarm-card alarm-safe';
+             alarmCard.textContent = '🔔 SAFE';
+           }
+         })
+         .catch(error => console.log('Error:', error));
+     }
+
+     fetchData();
+     setInterval(fetchData, 2000);
+   </script>
+ </body>
+ </html>
+   )rawliteral";
+   return html;
+ }
+
+ // ------- JSON Data Endpoint -------
+ void sendJSON() {
+   String json = "{";
+   json += "\"temp\":" + String(temp) + ",";
+   json += "\"tempPercent\":" + String(map(temp, 0, 50, 0, 100)) + ",";
+   json += "\"humi\":" + String(humi) + ",";
+   json += "\"lightStatus\":\"" + String(isDark ? "DARK" : "BRIGHT") + "\",";
+   json += "\"lightPercent\":" + String(isDark ? 20 : 80) + ",";
+   json += "\"water\":" + String(waterPercent) + ",";
+   json += "\"alarm\":" + String(alarmTriggered ? "true" : "false") + ",";
+   json += "\"alarmReason\":\"" + alarmReason + "\"";
+   json += "}";
+   server.send(200, "application/json", json);
+ }
+
+ // ------- Root Page -------
+ void handleRoot() {
+   server.send(200, "text/html", getHTML());
+ }
+
+ // ------- Setup -------
+ void setup() {
+   Serial.begin(115200);
+
+   dht.begin();
+   pinMode(LIGHT_SENSOR_DO, INPUT);
+   pinMode(BUZZER_PIN, OUTPUT);
+   digitalWrite(BUZZER_PIN, LOW);
+
+   // Start AP mode without password
+   WiFi.softAP(ssid, NULL);  // NULL means no password
+   // Alternative: WiFi.softAP(ssid); // This also works with no password
+   
+   Serial.println("WiFi AP Started (No Password)");
+   Serial.print("SSID: ");
+   Serial.println(ssid);
+   Serial.print("IP Address: ");
+   Serial.println(WiFi.softAPIP());
+
+   server.on("/", handleRoot);
+   server.on("/data", sendJSON);
+   server.begin();
+   Serial.println("Web Server Started");
+ }
+
+ // ------- Main Loop -------
+ void loop() {
+   server.handleClient();
+
+   static unsigned long lastRead = 0;
+   if (millis() - lastRead >= 2000) {
+     lastRead = millis();
+
+     // 1. Read DHT11
+     humi = dht.readHumidity();
+     temp = dht.readTemperature();
+     if (isnan(humi) || isnan(temp)) {
+       Serial.println("DHT11 read failed!");
+       return;
+     }
+
+     // 2. Read light sensor
+     int lightState = digitalRead(LIGHT_SENSOR_DO);
+     isDark = (lightState == HIGH);
+
+     // 3. Read water level
+     waterLevel = analogRead(WATER_SENSOR_AO);
+     waterPercent = map(waterLevel, 0, 4095, 0, 100);
+     waterPercent = constrain(waterPercent, 0, 100);
+
+     // 4. Alarm logic with reason tracking
+     alarmTriggered = false;
+     alarmReason = "";
+
+     if (isDark) {
+       alarmTriggered = true;
+       alarmReason = "Dark";
+     }
+     if (temp > 40.0) {
+       alarmTriggered = true;
+       if (alarmReason.length() > 0) alarmReason += " + ";
+       alarmReason += "Overheat";
+     }
+     if (waterPercent < 10) {
+       alarmTriggered = true;
+       if (alarmReason.length() > 0) alarmReason += " + ";
+       alarmReason += "Low Water";
+     }
+
+     // If no alarm
+     if (!alarmTriggered) {
+       alarmReason = "SAFE";
+     }
+
+     // 5. Control buzzer
+     if (alarmTriggered) {
+       digitalWrite(BUZZER_PIN, HIGH);
+     } else {
+       digitalWrite(BUZZER_PIN, LOW);
+     }
+
+     // 6. Serial debug
+     Serial.print("Temp: "); Serial.print(temp);
+     Serial.print("  Humi: "); Serial.print(humi);
+     Serial.print("  Light: "); Serial.print(isDark ? "DARK" : "BRIGHT");
+     Serial.print("  Water: "); Serial.print(waterPercent);
+     Serial.print("%  Alarm: ");
+     if (alarmTriggered) {
+       Serial.print("TRIGGERED ("); Serial.print(alarmReason); Serial.println(")");
+     } else {
+       Serial.println("SAFE");
+     }
+   }
+ }
+
+.. raw:: html
+
+   </div>
+   <div style="display: flex; gap: 10px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd;">
+     <button id="expand-btn-WEATHER" onclick="toggleCode('code-container-WEATHER', 'expand-btn-WEATHER')" style="flex: 1; padding: 10px 16px; background: #2980B9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">▼ Expand All Code</button>
+   </div>
+   </div>
+
+   <style>
+   #code-container-WEATHER { transition: max-height 0.4s ease-in-out; }
+   </style>
+
+   <script>
+   function toggleCode(containerId, buttonId) {
+     const container = document.getElementById(containerId);
+     const btn = document.getElementById(buttonId);
+     if (container.style.maxHeight === '420px' || container.style.maxHeight === '') {
+       container.style.maxHeight = 'none';
+       btn.textContent = '✕ Collapse Code';
+     } else {
+       container.style.maxHeight = '420px';
+       btn.textContent = '▼ Expand All Code';
+     }
+   }
+   </script>
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+**Display Effect:**
+
+.. image:: _static/project/IOT/8.WEATHER2.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+After flashing the program, the ESP32 creates a password-free Wi-Fi hotspot named **WEB_Weather_Station**. Once connected to this Wi-Fi via a smartphone or computer, access **192.168.4.1** to open the web-based dashboard:
+
+- Temperature: A progress bar displays the current temperature (mapped from 0–50°C to 0–100%), with real-time value updates.
+
+- Humidity: A progress bar displays the current humidity percentage.
+
+- Light: Displays "BRIGHT" or "DARK," with a progress bar providing a visual indication of the status.
+
+- Water Level: A progress bar displays the current water level percentage (0–100%).
+
+- Alarm Card: Displays a green "🔔 SAFE" status when conditions are normal; displays a red "🚨 Trigger Reason" (e.g., "Dark + Overheat + Low Water") accompanied by a pulsing animation when an alarm is triggered.
+
+Additionally, the buzzer operates automatically based on the alarm status: it sounds if any alarm condition is triggered and turns off once all conditions return to a safe state.
+
+----
