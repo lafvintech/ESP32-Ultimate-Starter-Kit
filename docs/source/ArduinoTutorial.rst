@@ -337,7 +337,9 @@ Download the  ESP32 Core Package
 Download Libraries
 ~~~~~~~~~~~~~~~~~~
 
-- We've compiled all the libraries necessary to run this suite. Please click the link below to download them and follow the instructions to complete the installation:  `Download libraries <https://www.dropbox.com/scl/fo/syf1zstu58f4xlcld2nss/ACJOi93PcIafo5yGabrprDA?rlkey=hoc2undykymrxac7z8nclpk9u&st=el86zaw9&dl=1>`_
+- We've compiled all the libraries necessary to run this suite. 
+
+- Please click the link below to download them and follow the instructions to complete the installation:  `Download libraries <https://www.dropbox.com/scl/fo/syf1zstu58f4xlcld2nss/ACJOi93PcIafo5yGabrprDA?rlkey=hoc2undykymrxac7z8nclpk9u&st=el86zaw9&dl=1>`_
 
 - Unzip the downloaded library file. The library file storage path is **Code and Libraries** → **Libraries** . Open it and confirm that it contains the library file shown in the figure below. 
 
@@ -345,7 +347,7 @@ Download Libraries
 
    <div style="margin-top: 30px;"></div>
 
-.. image:: _static/arduino/26.lib2.png
+.. image:: _static/arduino/26.lib.png
    :width: 700
    :align: center
 
@@ -361,7 +363,7 @@ Import Libraries
    <div style="margin-top: 30px;"></div>
 
 .. image:: _static/arduino/27.lib.png
-   :width: 600
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -374,8 +376,8 @@ Import Libraries
 
    <div style="margin-top: 30px;"></div>
 
-.. image:: _static/arduino/28.lib2.png
-   :width: 600
+.. image:: _static/arduino/28.lib.png
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -422,16 +424,65 @@ Import Libraries
 
    <div style="margin-top: 30px;"></div>
 
-   .. image:: _static/arduino/30.lib.png
-      :width: 600
-      :align: center
+.. image:: _static/arduino/28.lib3.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
 ----
 
 Download Libraries Using Arduino IDE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also download required libraries directly using the Arduino IDE.  
+- You can also download required libraries directly using the Arduino IDE.  
+
+.. list-table:: Third-party Arduino Libraries Requiring Manual Installation
+   :widths: 30 40 30
+   :header-rows: 1
+
+   * - Library Header
+     - Description / Purpose
+     - Installation Method
+   * - ``#include <DHT.h>``
+     - Driver for DHT11/DHT22 temperature and humidity sensors
+     - Library Manager: search ``DHT sensor library`` (by Adafruit)
+   * - ``#include <ESP32Servo.h>``
+     - Servo control library optimized for ESP32 (replaces standard Servo library)
+     - Library Manager: search ``ESP32Servo``
+   * - ``#include <FastLED.h>``
+     - High-performance library for controlling LED strips and matrices
+     - Library Manager: search ``FastLED``
+   * - ``#include <IRremote.h>``
+     - Infrared signal sending and receiving library
+     - Library Manager: search ``IRremote`` (check ESP32 compatibility)
+   * - ``#include <Adafruit_GFX.h>``
+     - Universal graphics rendering library for OLED/LCD displays
+     - Library Manager: search ``Adafruit GFX Library``
+   * - ``#include <Adafruit_SSD1306.h>``
+     - Driver library for SSD1306 OLED displays
+     - Library Manager: search ``Adafruit SSD1306``
+   * - ``#include <AsyncTCP.h>``
+     - Asynchronous TCP communication library for ESP32
+     - Library Manager: search ``AsyncTCP``
+   * - ``#include <ESPAsyncWebServer.h>``
+     - Asynchronous web server library for ESP32
+     - Library Manager: search ``ESPAsyncWebServer``
+   * - ``#include <Adafruit_MPU6050.h>``
+     - Driver for MPU6050 6-axis sensor (accelerometer + gyroscope)
+     - Library Manager: search ``Adafruit MPU6050``
+   * - ``#include <Adafruit_Sensor.h>``
+     - Unified sensor abstraction layer for Adafruit sensors (dependency)
+     - Automatically installed as a dependency with Adafruit sensor libraries
+   * - ``#include <Arduino_JSON.h>``
+     - Library for parsing and generating JSON data
+     - Library Manager: search ``Arduino_JSON``
+   * - ``#include <MFRC522.h>``
+     - Driver library for MFRC522 RFID reader/writer module
+     - Library Manager: search ``MFRC522`` (by miguelbalboa)
+
 
 - On the right side of the Arduino IDE interface, click the **Library Manager** icon.  
 
