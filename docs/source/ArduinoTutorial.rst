@@ -439,7 +439,7 @@ Download Libraries Using Arduino IDE
 
 - You can also download required libraries directly using the Arduino IDE.  
 
-.. list-table:: Third-party Arduino Libraries Requiring Manual Installation
+.. list-table::
    :widths: 30 40 30
    :header-rows: 1
 
@@ -502,8 +502,8 @@ Download Libraries Using Arduino IDE
 
 ----
 
-Summary
-~~~~~~~
+5. Summary
+-----------
 
 In this chapter, you learned how to set up the Arduino IDE for ESP32 development。
 
