@@ -3544,7 +3544,7 @@ This experiment is a comprehensive project combining PWM-based motor speed contr
  #define SPEED_MID   180
  #define SPEED_HIGH  230
 
- #define DEBOUNCE_DELAY  50
+ #define DEBOUNCE_DELAY  100
 
  int currentSpeed = SPEED_OFF;
  int speedLevel = 0;
