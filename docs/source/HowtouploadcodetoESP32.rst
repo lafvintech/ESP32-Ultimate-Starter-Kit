@@ -24,7 +24,7 @@ Before uploading code, connect the ESP32 board to your computer using a USB cabl
 - If the board is not detected, check the USB cable and the driver installation.
 
 .. image:: _static/arduino/70.connect.png
-   :width: 800
+   :width: 600
    :align: center
 
 .. raw:: html
