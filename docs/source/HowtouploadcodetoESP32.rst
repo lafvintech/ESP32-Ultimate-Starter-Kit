@@ -126,7 +126,15 @@ After the sketch compiles successfully, upload it to the ESP32.
 - Wait until the progress bar reaches the end.
 - If upload fails, hold **BOOT** while clicking **Upload**, then release it when the upload starts.
 
-.. image:: _static/arduino/73.upload.png
+.. image:: _static/arduino/76.up.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+.. image:: _static/arduino/77.up.png
    :width: 800
    :align: center
 
