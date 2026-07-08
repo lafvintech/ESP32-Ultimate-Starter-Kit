@@ -134,7 +134,7 @@ Bill of Materials
      - x1
    * - Tilt Switch
      - x1
-   * - LEDs (Red, Yellow, Green, Blue, White)
+   * - LED (Red, Yellow, Green, Blue, White)
      - x5
    * - Push-buttons
      - x4
@@ -151,7 +151,7 @@ Bill of Materials
    * - Male-to-Female Dupont Wires
      - x20
    * - Through-hole Resistors (10 resistance values)
-     - x10
+     - x100
 
 **Upon receiving the kit, please first check all components against the above bill of materials. If you find any missing or damaged items, please contact our technical support team immediately.**
 
