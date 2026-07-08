@@ -82,7 +82,7 @@ Before uploading code, connect the ESP32 board to your computer using a USB cabl
 
 .. note::
 
-   - If you cannot find the development board or the port does not appear, please first check whether the ESP32 core package and the corresponding serial port driver are installed. Click `here <Install Serial Port Tool_>`_ to go to the installation tutorial.
+   - If you cannot find the development board or the port does not appear, please first check whether the ESP32 core package and the corresponding serial port driver are installed. Click :ref:`Install Serial Port Tool` to go to the installation tutorial.
 
    - If multiple COM ports appear, unplug and reconnect the board to identify the correct one.
 
