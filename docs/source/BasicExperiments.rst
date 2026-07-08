@@ -1376,8 +1376,8 @@ This experiment is a practical project applying embedded state machines. It aims
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/4.tilt.png
-   :width: 500
+.. image:: _static/project/BASIC/4.tilt2.gif
+   :width: 700
    :align: center
 
 .. raw:: html
