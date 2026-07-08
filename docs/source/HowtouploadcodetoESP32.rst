@@ -7,7 +7,7 @@ This guide explains how to upload a program to the ESP32 development board using
 
 **The video below demonstrates how to upload code to an ESP32 development board using the Arduino IDE：**
 
-.. video:: _static/arduino/driver_ins.mp4
+.. video:: _static/arduino/upcode2.mp4
     :width: 100%
 
 ----
