@@ -450,3 +450,16 @@ You can also download required libraries directly using the Arduino IDE.
    <div style="margin-top: 30px;"></div>
 
 ----
+
+Summary
+~~~~~~~
+
+In this chapter, you learned how to set up the Arduino IDE for ESP32 development。
+
+- Install the necessary board package
+- Configure the correct board and port
+- Add the serial port driver, and manage libraries for your projects. 
+
+These steps provide a solid foundation for writing, compiling, uploading, and debugging ESP32 programs successfully.
+
+----
