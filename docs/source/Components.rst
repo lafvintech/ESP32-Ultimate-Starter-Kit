@@ -1012,8 +1012,6 @@ This continuous reversal essentially converts the DC power from the battery to A
 22. Stepper Motor And ULN2003 Driver Board
 ------------------------------------------
 
-**Stepper Motor**
-
 .. image:: _static/Component/22.stepper.png
    :width: 500
    :align: center
@@ -1093,7 +1091,7 @@ The bipolar stepper motor usually has four wires coming out of it. Unlike unipol
 **ULN2003 Driver Board**
 
 .. image:: _static/Component/22.stepper3.png
-   :width: 500
+   :width: 300
    :align: center
 
 .. raw:: html
@@ -1652,7 +1650,7 @@ The 1N4007 is a reliable and inexpensive rectifier diode widely used in electron
 ----
 
 32. Power Supply Module
--------------------
+-----------------------
 
 .. image:: _static/Component/33.power.png
    :width: 500
@@ -1662,7 +1660,6 @@ The 1N4007 is a reliable and inexpensive rectifier diode widely used in electron
 
    <div style="margin-top: 30px;"></div>
 
-Power Supply Module
 
 Modules such as motors require additional power, especially during startup and shutdown. Using a dedicated power supply module can:
 

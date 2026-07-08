@@ -164,8 +164,6 @@ All the necessary code and library files for this course are provided. You can o
 
 `Code and Libraries <https://www.dropbox.com/scl/fo/a6ho5cf95ha65esq2odw6/AJXY-Am6qb03g0PRiQOCCNQ?rlkey=hmndkdpv0zjwaymovmp16hevn&st=n1o5zzxr&dl=1>`_
 
-`Flash Download Tool <https://www.dropbox.com/scl/fo/r81afjixw65y88jikwxno/AM8XTGDtfcEJDgN0jHyMbRY?rlkey=4lvaoh0axd9nhvk9al7qukoi5&st=1hqtehms&dl=1>`_
-
 ----
 
 **Next, we will delve into the core content of the course and help you gradually understand the relevant concepts and master the operation procedures.**
