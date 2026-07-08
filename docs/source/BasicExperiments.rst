@@ -3660,7 +3660,7 @@ This experiment is a comprehensive project combining PWM-based motor speed contr
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/16.FAN3.png
+.. image:: _static/project/BASIC/16.FAN3.gif
    :width: 700
    :align: center
 
@@ -3996,7 +3996,7 @@ This experiment is a comprehensive project involving an RFID access control syst
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/18.RFIDDOOR2.png
+.. image:: _static/project/BASIC/18.RFIDDOOR2.gif
    :width: 700
    :align: center
 
@@ -4512,7 +4512,7 @@ This experiment is a comprehensive embedded game development project designed to
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/19.game2.png
+.. image:: _static/project/BASIC/19.game2.gif
    :width: 700
    :align: center
 
@@ -5037,7 +5037,7 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/20.weather2.png
+.. image:: _static/project/BASIC/20.weather2.gif
    :width: 700
    :align: center
 

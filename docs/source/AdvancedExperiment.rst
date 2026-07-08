@@ -2920,7 +2920,7 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
  #include <WebServer.h>
 
  // ========== WiFi AP Configuration ==========
- const char* ap_ssid = "ESP32_Motor_Control";
+ const char* ap_ssid = "Web_Control_Fan";
  const char* ap_password = NULL;               
 
  // ========== Pin Definition ==========
@@ -3446,7 +3446,7 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
     <div style="margin-top: 30px;"></div>
 
 
-After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_Motor_Control**. Once a smartphone or computer connects to this network, accessing **192.168.4.1** opens the control page. The page features:
+After flashing the program, the ESP32 creates a Wi-Fi hotspot named **Web_Control_Fan**. Once a smartphone or computer connects to this network, accessing **192.168.4.1** opens the control page. The page features:
 
  - Fan animation: The blades spin when running and turn gray and stationary when stopped.
 
@@ -3539,7 +3539,7 @@ This experiment is an advanced integrated project combining 3D pose visualizatio
  #include <Wire.h>
 
  // ================= WIFI HOTSPOT =================
- const char* ssid = "ESP32_MPU6050";
+ const char* ssid = "3D_Attitude_Monitor";
  const char* password = NULL;  
 
  // ================= MPU6050 =================
@@ -4134,7 +4134,7 @@ This experiment is an advanced integrated project combining 3D pose visualizatio
 
    <div style="margin-top: 30px;"></div>
 
-After flashing the program, the ESP32 creates a Wi-Fi hotspot named **ESP32_MPU6050**. Connect your smartphone or computer to this network and visit **192.168.4.1** to access the monitoring page:
+After flashing the program, the ESP32 creates a Wi-Fi hotspot named **3D_Attitude_Monitor**. Connect your smartphone or computer to this network and visit **192.168.4.1** to access the monitoring page:
 
  - It displays a dynamic cube—featuring a glowing core, orbiting particles, and a starry background—whose rotation synchronizes in real-time with the physical orientation of the MPU6050 sensor. A "Reset Orientation" button allows you to reset the 3D model to its default position.
 
