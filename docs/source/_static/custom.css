@@ -90,6 +90,76 @@ table.docutils {
 }
 
 /*==============================
+  H1 Title
+==============================*/
+
+h1{
+
+    background:#f4a300;
+
+    color:white !important;
+
+    padding:14px 22px;
+
+    margin-top:45px;
+
+    margin-bottom:22px;
+
+    border:none !important;
+
+    border-radius:10px;
+
+    box-shadow:
+
+        0 4px 10px rgba(0,0,0,.12);
+
+    font-size:28px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+h1:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+        0 8px 20px rgba(0,0,0,.18);
+
+}
+
+h1 .headerlink{
+
+    color:white !important;
+
+    opacity:0;
+
+    transition:.2s;
+
+}
+
+h1:hover .headerlink{
+
+    opacity:1;
+
+}
+
+@media (max-width:768px){
+
+    h1{
+
+        font-size:22px;
+
+        padding:12px 18px;
+
+    }
+
+}
+
+/*==============================
   H2 Title
 ==============================*/
 
