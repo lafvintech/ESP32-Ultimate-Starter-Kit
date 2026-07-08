@@ -1526,7 +1526,7 @@ This experiment is an introductory project for OLED display and scrolling specia
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/10.OLED.png
+.. image:: _static/project/BASIC/10.OLED2.gif
    :width: 700
    :align: center
 
