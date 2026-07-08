@@ -3102,7 +3102,7 @@ You will master the following core skills:
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/14.clock4.png
+.. image:: _static/project/BASIC/14.clock4.gif
    :width: 700
    :align: center
 
@@ -3402,7 +3402,7 @@ This experiment is a comprehensive project covering sensor fusion and attitude e
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/15.SPY2.png
+.. image:: _static/project/BASIC/15.SPY2.gif
    :width: 700
    :align: center
 
@@ -3766,7 +3766,7 @@ This experiment serves as an introductory project for stepper motor driving and 
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/17.Stepper2.png
+.. image:: _static/project/BASIC/17.Stepper2.gif
    :width: 700
    :align: center
 
