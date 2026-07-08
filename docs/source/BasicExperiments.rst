@@ -608,7 +608,7 @@ This experiment is an advanced project on analog sensor signal acquisition and m
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/7.Thermometer.png
+.. image:: _static/project/BASIC/7.Thermometer2.png
    :width: 700
    :align: center
 
