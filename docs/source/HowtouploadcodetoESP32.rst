@@ -42,7 +42,16 @@ Before uploading code, connect the ESP32 board to your computer using a USB cabl
 
 - Launch the Arduino IDE.
 - Open the example sketch or your own program.
-- In the menu bar, click **Tools → Board** and select the correct ESP32 board model.
+- In the menu bar, click **Tools → Board → esp32** and select the correct **ESP32 Dev Model**.
+
+.. image:: _static/arduino/73.board.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
 - In **Tools → Port**, choose the COM port that belongs to your ESP32 board.
 
 .. image:: _static/arduino/71.port.png
@@ -53,7 +62,27 @@ Before uploading code, connect the ESP32 board to your computer using a USB cabl
 
    <div style="margin-top: 30px;"></div>
 
+**You can also select the development board and port in the top-left corner of the interface; the specific steps are shown in the image.**
+
+.. image:: _static/arduino/74.port.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+.. image:: _static/arduino/75.port.png
+   :width: 800
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
 .. note::
+
+   - If you cannot find the development board or the port does not appear, please first check whether the ESP32 core package and the corresponding serial port driver are installed. Click `here <Install Serial Port Tool_>`_ to go to the installation tutorial.
 
    - If multiple COM ports appear, unplug and reconnect the board to identify the correct one.
 
