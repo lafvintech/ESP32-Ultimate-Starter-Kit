@@ -1769,7 +1769,7 @@ This experiment is a comprehensive project of human-computer interaction and mul
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/9.keyboard.png
+.. image:: _static/project/BASIC/9.keyboard2.gif
    :width: 700
    :align: center
 
@@ -2058,7 +2058,7 @@ This experiment serves as an introductory project for digital display and segmen
 
 .. code-block:: cpp
 
- int segmentPins[] = {13, 12, 5, 25, 27, 14, 26};
+ int segmentPins[] = {26, 25, 23, 19, 18, 27, 14};
 
  byte digits[10][7] = {
    {1,1,1,1,1,1,0}, // 0
@@ -2125,7 +2125,7 @@ This experiment serves as an introductory project for digital display and segmen
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/12.SMG3.png
+.. image:: _static/project/BASIC/12.SMG3.gif
    :width: 700
    :align: center
 
@@ -2467,7 +2467,7 @@ This experiment is a comprehensive project involving digital circuit expansion a
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/13.jsq4.gif
+.. image:: _static/project/BASIC/13.jsq.gif
    :width: 700
    :align: center
 
