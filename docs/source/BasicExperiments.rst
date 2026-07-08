@@ -62,11 +62,11 @@ This introductory chapter guides you through the process of building fun, intera
 .. code-block:: cpp
 
  // Define the LED connection pin
- #define LED_PIN 2
+ #define LED_PIN 4
 
  void setup()
  {
- // Set GPIO2 to output mode
+ // Set GPIO4 to output mode
  pinMode(LED_PIN, OUTPUT);
  }
 
@@ -89,7 +89,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Display Effect:**
 
 .. image:: _static/project/BASIC/1.blinking.gif
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -198,7 +198,7 @@ This introductory chapter guides you through the process of building fun, intera
 **Display Effect:**
 
 .. image:: _static/project/BASIC/3.PWM_LED.gif
-   :width: 500
+   :width: 700
    :align: center
 
 .. raw:: html
