@@ -199,7 +199,16 @@ Add Additional Boards Manager URL
 
 - Copy and paste the following link into it:
 
-  ``https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json``
+.. raw:: html
+
+   <div style="margin-top: 10px; margin-bottom: 15px;">
+     <div style="margin-bottom: 6px;"><code>https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json</code></div>
+     <button type="button"
+             onclick="navigator.clipboard.writeText('https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json').then(() => alert('链接已复制！')).catch(() => alert('复制失败，请手动复制'))"
+             style="padding: 6px 12px; cursor: pointer; border: 1px solid #d0d7de; border-radius: 4px; background: #f6f8fa;">
+       一键复制链接
+     </button>
+   </div>
 
 .. raw:: html
 
