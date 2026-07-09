@@ -15,31 +15,27 @@ Advanced Experiments
 
 - Covering everything from TCP/IP fundamentals and HTTP request parsing to HTML page design and real-time status feedback, you will build a complete web-based control system—enabling your sensors and actuators to transcend physical distance and advance to a new level of smart connectivity.
 
+
 ----
 
 How To Control Use a Mobile Phone
 ---------------------------------
 
-All experimental projects in this chapter involve smartphone control; please watch the video below to learn how to use this feature:
+**All experimental projects in this chapter involve smartphone control; please watch the video below to learn how to use this feature:**
 
-Here is the illustrated tutorial:
+.. video:: _static/project/IOT/10.app.mp4
+    :width: 100%
+
+**Here is the illustrated tutorial:**
 
 A. After flashing the corresponding program, press the RST button on the development board to start the system.
 
 B. The ESP32 development board will generate a Wi-Fi hotspot; please refer to the example program in the specific section for the hotspot name.
 
-.. image:: _static/project/IOT/10.app1.png
-   :width: 600
-   :align: center
-
-.. raw:: html
-
-   <div style="margin-top: 30px;"></div>
-
 C. After connecting to the hotspot, open any web browser and enter the IP address **192.168.4.1** to access the control interface.
 
-.. image:: _static/project/IOT/10.app2.png
-   :width: 600
+.. image:: _static/project/IOT/10.app.png
+   :width: 800
    :align: center
 
 .. raw:: html
