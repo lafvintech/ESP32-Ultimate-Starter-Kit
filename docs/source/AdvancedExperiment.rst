@@ -9,7 +9,42 @@ Advanced Experiments
 
    <div style="margin-top: 30px;"></div>
 
-While foundational experiments taught you the basics of hands-on hardware interaction, this chapter introduces you to network connectivity. Centered on the Internet of Things (IoT), we will guide you in equipping your development board with Wi-Fi capabilities and implementing remote control via a web interface. Covering everything from TCP/IP fundamentals and HTTP request parsing to HTML page design and real-time status feedback, you will build a complete web-based control system—enabling your sensors and actuators to transcend physical distance and advance to a new level of smart connectivity.
+- While foundational experiments taught you the basics of hands-on hardware interaction, this chapter introduces you to network connectivity. 
+
+- Centered on the Internet of Things (IoT), we will guide you in equipping your development board with Wi-Fi capabilities and implementing remote control via a web interface. 
+
+- Covering everything from TCP/IP fundamentals and HTTP request parsing to HTML page design and real-time status feedback, you will build a complete web-based control system—enabling your sensors and actuators to transcend physical distance and advance to a new level of smart connectivity.
+
+----
+
+How To Control Use a Mobile Phone
+---------------------------------
+
+All experimental projects in this chapter involve smartphone control; please watch the video below to learn how to use this feature:
+
+Here is the illustrated tutorial:
+
+A. After flashing the corresponding program, press the RST button on the development board to start the system.
+
+B. The ESP32 development board will generate a Wi-Fi hotspot; please refer to the example program in the specific section for the hotspot name.
+
+.. image:: _static/project/IOT/10.app1.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
+
+C. After connecting to the hotspot, open any web browser and enter the IP address **192.168.4.1** to access the control interface.
+
+.. image:: _static/project/IOT/10.app2.png
+   :width: 600
+   :align: center
+
+.. raw:: html
+
+   <div style="margin-top: 30px;"></div>
 
 ----
 
