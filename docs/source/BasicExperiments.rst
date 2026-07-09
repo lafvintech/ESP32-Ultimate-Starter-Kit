@@ -4789,7 +4789,7 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/20.weather2.gif
+.. image:: _static/project/BASIC/20.weather.gif
    :width: 700
    :align: center
 
