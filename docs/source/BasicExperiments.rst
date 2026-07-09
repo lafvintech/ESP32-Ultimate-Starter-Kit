@@ -3996,7 +3996,7 @@ This experiment is a comprehensive project involving an RFID access control syst
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/18.RFIDDOOR2.gif
+.. image:: _static/project/BASIC/18.rfiddoor.gif
    :width: 700
    :align: center
 

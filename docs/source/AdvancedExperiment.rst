@@ -277,8 +277,8 @@ This experiment is a comprehensive project focusing on hybrid control and state 
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/9.LED2.png
-   :width: 600
+.. image:: _static/project/IOT/9.LED.gif
+   :width: 700
    :align: center
 
 .. raw:: html
