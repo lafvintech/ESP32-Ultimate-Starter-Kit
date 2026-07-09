@@ -2817,8 +2817,8 @@ This experiment is a comprehensive project integrating web interaction with OLED
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/6.ir.png
-   :width: 600
+.. image:: _static/project/IOT/7.OLED.gif
+   :width: 700
    :align: center
 
 .. raw:: html
