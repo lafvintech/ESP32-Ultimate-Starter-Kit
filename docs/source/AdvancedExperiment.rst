@@ -673,7 +673,7 @@ This experiment is a core project in our introductory practical course on the In
 **Display Effect:**
 
 .. image:: _static/project/IOT/1.dht112.png
-   :width: 600
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -3437,8 +3437,8 @@ This experiment is a comprehensive IoT project focused on remote motor control. 
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/6.FAN2.png
-   :width: 600
+.. image:: _static/project/IOT/6.FAN.gif
+   :width: 700
    :align: center
 
 .. raw:: html
