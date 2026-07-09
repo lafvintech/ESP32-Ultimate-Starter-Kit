@@ -24,7 +24,7 @@ How To Control Use a Mobile Phone
 **All experimental projects in this chapter involve smartphone control; please watch the video below to learn how to use this feature:**
 
 .. video:: _static/project/IOT/10.app.mp4
-    :width: 100%
+    :width: 60%
 
 **Here is the illustrated tutorial:**
 
