@@ -324,6 +324,7 @@ After flashing the program, the ESP32 creates a password-free Wi-Fi hotspot name
 
  - Real-time status synchronization: Regardless of whether control is via the web page or the physical button, the LED state remains synchronized, ensuring consistency among the web page status, the LED icon, and the actual hardware state.
 
+----
 
 2. TEMP And HUMI Meter
 ----------------------
