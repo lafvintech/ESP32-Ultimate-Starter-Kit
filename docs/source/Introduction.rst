@@ -162,7 +162,7 @@ Resource Download
 
 All the necessary code and library files for this course are provided. You can obtain all the resources through the following link.
 
-`Code and Libraries <https://www.dropbox.com/scl/fo/a6ho5cf95ha65esq2odw6/AJXY-Am6qb03g0PRiQOCCNQ?rlkey=hmndkdpv0zjwaymovmp16hevn&st=n1o5zzxr&dl=1>`_
+`Download Code And Libraries <../_static/Code_Libraries.zip>`
 
 ----
 
