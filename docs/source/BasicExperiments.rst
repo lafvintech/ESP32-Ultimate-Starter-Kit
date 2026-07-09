@@ -4636,126 +4636,126 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
 .. code-block:: cpp
 
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include <DHT.h>
+ #include <Wire.h>
+ #include <Adafruit_GFX.h>
+ #include <Adafruit_SSD1306.h>
+ #include <DHT.h>
 
-//Pin Definitions
-#define OLED_RESET    -1
-#define SCREEN_WIDTH  128
-#define SCREEN_HEIGHT 64
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+ //Pin Definitions
+ #define OLED_RESET    -1
+ #define SCREEN_WIDTH  128
+ #define SCREEN_HEIGHT 64
+ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-#define DHTPIN 27
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+ #define DHTPIN 27
+ #define DHTTYPE DHT11
+ DHT dht(DHTPIN, DHTTYPE);
 
-#define LIGHT_SENSOR_DO 35
-#define BUZZER_PIN 4
+ #define LIGHT_SENSOR_DO 35
+ #define BUZZER_PIN 4
 
-//Global Variables 
-float temp, humi;
-bool isDark;
-bool isHot;
-unsigned long previousMillis = 0;
-const unsigned long interval = 2000;
+ //Global Variables 
+ float temp, humi;
+ bool isDark;
+ bool isHot;
+ unsigned long previousMillis = 0;
+ const unsigned long interval = 2000;
 
-//Setup 
-void setup() {
-  Serial.begin(115200);
+ //Setup 
+ void setup() {
+   Serial.begin(115200);
 
-  // Initialize OLED
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
-    Serial.println(F("SSD1306 initialization failed!"));
-    for(;;);
-  }
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.display();
+   // Initialize OLED
+   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
+     Serial.println(F("SSD1306 initialization failed!"));
+     for(;;);
+   }
+   display.clearDisplay();
+   display.setTextSize(1);
+   display.setTextColor(SSD1306_WHITE);
+   display.display();
 
-  dht.begin();
-  pinMode(BUZZER_PIN, OUTPUT);
-  pinMode(LIGHT_SENSOR_DO, INPUT);
-  digitalWrite(BUZZER_PIN, LOW);
+   dht.begin();
+   pinMode(BUZZER_PIN, OUTPUT);
+   pinMode(LIGHT_SENSOR_DO, INPUT);
+   digitalWrite(BUZZER_PIN, LOW);
 
-  // Boot screen
-  display.setCursor(10, 20);
-  display.println("Weather Station");
-  display.setCursor(20, 40);
-  display.println("Starting...");
-  display.display();
-  delay(1500);
-}
+   // Boot screen
+   display.setCursor(10, 20);
+   display.println("Weather Station");
+   display.setCursor(20, 40);
+   display.println("Starting...");
+   display.display();
+   delay(1500);
+ }
 
-// ------- Main Loop -------
-void loop() {
-  unsigned long currentMillis = millis();
+ // ------- Main Loop -------
+ void loop() {
+   unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
+   if (currentMillis - previousMillis >= interval) {
+     previousMillis = currentMillis;
 
-    // 1. Read temperature and humidity
-    humi = dht.readHumidity();
-    temp = dht.readTemperature();
-    if (isnan(humi) || isnan(temp)) {
-      Serial.println("DHT11 read failed!");
-      return;
-    }
+     // 1. Read temperature and humidity
+     humi = dht.readHumidity();
+     temp = dht.readTemperature();
+     if (isnan(humi) || isnan(temp)) {
+       Serial.println("DHT11 read failed!");
+       return;
+     }
 
-    // 2. Read digital light sensor (0=light, 1=dark)
-    int lightState = digitalRead(LIGHT_SENSOR_DO);
-    isDark = (lightState == HIGH);
+     // 2. Read digital light sensor (0=light, 1=dark)
+     int lightState = digitalRead(LIGHT_SENSOR_DO);
+     isDark = (lightState == HIGH);
 
-    // 3. Check if temperature exceeds 40°C
-    isHot = (temp > 40.0);
+     // 3. Check if temperature exceeds 40°C
+     isHot = (temp > 40.0);
 
-    // 4. Alarm logic: dark OR temperature > 40°C
-    if (isDark || isHot) {
-      digitalWrite(BUZZER_PIN, HIGH);  // Buzzer ON
-    } else {
-      digitalWrite(BUZZER_PIN, LOW);   // Buzzer OFF
-    }
+     // 4. Alarm logic: dark OR temperature > 40°C
+     if (isDark || isHot) {
+       digitalWrite(BUZZER_PIN, HIGH);  // Buzzer ON
+     } else {
+       digitalWrite(BUZZER_PIN, LOW);   // Buzzer OFF
+     }
 
-    // 5. Display on OLED
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.println("=== Weather Desk ===");
+     // 5. Display on OLED
+     display.clearDisplay();
+     display.setCursor(0, 0);
+     display.println("=== Weather Desk ===");
 
-    display.setCursor(0, 20);
-    display.print("Temp: ");
-    display.print(temp);
-    display.println(" C");
+     display.setCursor(0, 20);
+     display.print("Temp: ");
+     display.print(temp);
+     display.println(" C");
 
-    display.setCursor(0, 35);
-    display.print("Humi: ");
-    display.print(humi);
-    display.println(" %");
+     display.setCursor(0, 35);
+     display.print("Humi: ");
+     display.print(humi);
+     display.println(" %");
 
-    display.setCursor(0, 50);
-    display.print("Light: ");
-    display.print(isDark ? "DARK " : "BRIGHT");
-    display.println("   ");
+     display.setCursor(0, 50);
+     display.print("Light: ");
+     display.print(isDark ? "DARK " : "BRIGHT");
+     display.println("   ");
 
-    display.display();
+     display.display();
 
-    // 6. Serial monitor output
-    Serial.print("Temp: "); Serial.print(temp); Serial.print(" C  ");
-    Serial.print("Humi: "); Serial.print(humi); Serial.print("%  ");
-    Serial.print("Light: "); Serial.print(isDark ? "DARK" : "BRIGHT");
-    Serial.print("  Alarm: ");
-    if (isDark || isHot) {
-      Serial.print("TRIGGERED (");
-      if (isDark) Serial.print("Dark");
-      if (isDark && isHot) Serial.print(" + ");
-      if (isHot) Serial.print("Overheat");
-      Serial.println(")");
-    } else {
-      Serial.println("SAFE");
-    }
-  }
-}
+     // 6. Serial monitor output
+     Serial.print("Temp: "); Serial.print(temp); Serial.print(" C  ");
+     Serial.print("Humi: "); Serial.print(humi); Serial.print("%  ");
+     Serial.print("Light: "); Serial.print(isDark ? "DARK" : "BRIGHT");
+     Serial.print("  Alarm: ");
+     if (isDark || isHot) {
+       Serial.print("TRIGGERED (");
+       if (isDark) Serial.print("Dark");
+       if (isDark && isHot) Serial.print(" + ");
+       if (isHot) Serial.print("Overheat");
+       Serial.println(")");
+     } else {
+       Serial.println("SAFE");
+     }
+   }
+ }
 
 .. raw:: html
 
