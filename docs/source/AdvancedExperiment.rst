@@ -1875,8 +1875,8 @@ This experiment is a comprehensive project integrating IoT remote control and se
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/3.SG902.png
-   :width: 600
+.. image:: _static/project/IOT/3.SG90.gif
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -2587,8 +2587,8 @@ This experiment is an integrated project combining infrared (IR) remote control 
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/5.IR2.png
-   :width: 600
+.. image:: _static/project/IOT/5.IR.gif
+   :width: 700
    :align: center
 
 .. raw:: html
