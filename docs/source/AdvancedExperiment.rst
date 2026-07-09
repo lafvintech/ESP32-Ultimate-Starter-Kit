@@ -1244,8 +1244,8 @@ This experiment is an advanced project for IoT sensor applications, aiming to le
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/2.hcsr042.png
-   :width: 500
+.. image:: _static/project/IOT/2.hcsr04.gif
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -4126,8 +4126,8 @@ This experiment is an advanced integrated project combining 3D pose visualizatio
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/7.MPU60502.png
-   :width: 600
+.. image:: _static/project/IOT/7.MPU6050.gif
+   :width: 700
    :align: center
 
 .. raw:: html
@@ -4630,8 +4630,8 @@ This experiment is a comprehensive project involving an IoT-based environmental 
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/8.WEATHER2.png
-   :width: 600
+.. image:: _static/project/IOT/8.WEATHER.gif
+   :width: 700
    :align: center
 
 .. raw:: html
