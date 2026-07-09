@@ -88,7 +88,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/1.blinking.gif
+.. image:: _static/project/BASIC/1.blinking2.gif
    :width: 700
    :align: center
 
@@ -197,7 +197,7 @@ This introductory chapter guides you through the process of building fun, intera
 
 **Display Effect:**
 
-.. image:: _static/project/BASIC/3.PWM_LED.gif
+.. image:: _static/project/BASIC/3.PWM_LED2.gif
    :width: 700
    :align: center
 
