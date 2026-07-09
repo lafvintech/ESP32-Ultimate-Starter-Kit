@@ -162,8 +162,10 @@ Resource Download
 
 All the necessary code and library files for this course are provided. You can obtain all the resources through the following link.
 
-`Download Code And Libraries <../_static/Code_Libraries.zip>`_
+.. raw:: html
 
+    <a href="../_static/Code_Libraries.zip" class="btn btn-primary">📥 Download Code And Libraries</a>
+    
 ----
 
 **Next, we will delve into the core content of the course and help you gradually understand the relevant concepts and master the operation procedures.**
