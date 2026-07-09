@@ -197,9 +197,9 @@ Add Additional Boards Manager URL
 
    <div style="margin-top: 30px;"></div>
 
-- Copy and paste the following link into it: 
+- Copy and paste the following link into it:
 
- - **https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json**
+  ``https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json``
 
 .. raw:: html
 
