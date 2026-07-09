@@ -4636,375 +4636,127 @@ This experiment involves an integrated environmental monitoring and intelligent 
 
 .. code-block:: cpp
 
- #include <Wire.h>
- #include <Adafruit_GFX.h>
- #include <Adafruit_SSD1306.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <DHT.h>
 
- // OLED configuration
- #define SCREEN_WIDTH 128
- #define SCREEN_HEIGHT 64
- #define OLED_RESET -1
- #define SCREEN_ADDRESS 0x3C
- Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+//Pin Definitions
+#define OLED_RESET    -1
+#define SCREEN_WIDTH  128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
- // Joystick pins
- #define JOYSTICK_X_PIN    34
- #define JOYSTICK_Y_PIN    35
- #define JOYSTICK_SW_PIN   32
+#define DHTPIN 27
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
 
- // Buzzer pin
- #define BUZZER_PIN        33
+#define LIGHT_SENSOR_DO 35
+#define BUZZER_PIN 4
 
- // Direction inversion
- #define INVERT_UP_DOWN true    
- #define INVERT_LEFT_RIGHT false 
+//Global Variables 
+float temp, humi;
+bool isDark;
+bool isHot;
+unsigned long previousMillis = 0;
+const unsigned long interval = 2000;
 
- // Game configuration
- #define GRID_SIZE 8
- #define GRID_WIDTH 16
- #define GRID_HEIGHT 8
- #define GAME_START_ROW 1
- #define GAME_END_ROW 7
- #define GAME_HEIGHT 7
- #define MAX_SNAKE_LENGTH 112
+//Setup 
+void setup() {
+  Serial.begin(115200);
 
- // Game state
- enum GameState { STATE_TITLE, STATE_PLAYING, STATE_GAME_OVER };
+  // Initialize OLED
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
+    Serial.println(F("SSD1306 initialization failed!"));
+    for(;;);
+  }
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.display();
 
- // Snake structure
- struct Snake {
-   int x[MAX_SNAKE_LENGTH];
-   int y[MAX_SNAKE_LENGTH];
-   int length;
-   int direction;      
-   int nextDirection;
- } snake;
+  dht.begin();
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LIGHT_SENSOR_DO, INPUT);
+  digitalWrite(BUZZER_PIN, LOW);
 
- // Food
- struct Food {
-   int x;
-   int y;
- } food;
+  // Boot screen
+  display.setCursor(10, 20);
+  display.println("Weather Station");
+  display.setCursor(20, 40);
+  display.println("Starting...");
+  display.display();
+  delay(1500);
+}
 
- // Game variables
- GameState gameState = STATE_TITLE;
- int score = 0;
- int highScore = 0;
- unsigned long lastMoveTime = 0;
- int moveDelay = 200;
+// ------- Main Loop -------
+void loop() {
+  unsigned long currentMillis = millis();
 
- // Joystick parameters
- const int JOYSTICK_DEADZONE = 800;
- const int JOYSTICK_CENTER = 2048;
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
 
- // Buzzer control variables
- unsigned long buzzerStartTime = 0;
- int buzzerDuration = 0;
- int buzzerFrequency = 0;
- bool buzzerActive = false;
+    // 1. Read temperature and humidity
+    humi = dht.readHumidity();
+    temp = dht.readTemperature();
+    if (isnan(humi) || isnan(temp)) {
+      Serial.println("DHT11 read failed!");
+      return;
+    }
 
- // Function declarations
- void initGame();
- void generateFood();
- void handleJoystick();
- void updateGame();
- void moveSnake();
- void wrapPosition(int &x, int &y);
- bool checkSelfCollision();
- void drawTitle();
- void drawGame();
- void drawGameOver();
- void playBuzzer(int frequency, int duration);
- void updateBuzzer();
+    // 2. Read digital light sensor (0=light, 1=dark)
+    int lightState = digitalRead(LIGHT_SENSOR_DO);
+    isDark = (lightState == HIGH);
 
- void setup() {
-   pinMode(JOYSTICK_SW_PIN, INPUT_PULLUP);
-   pinMode(BUZZER_PIN, OUTPUT);
-   
-   display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
-   display.clearDisplay();
-   display.display();
-   
-   randomSeed(analogRead(34) + analogRead(35));
-   
-   drawTitle();
- }
+    // 3. Check if temperature exceeds 40°C
+    isHot = (temp > 40.0);
 
- void loop() {
-   handleJoystick();
-   
-   if(gameState == STATE_PLAYING) {
-     updateGame();
-   }
-   
-   updateBuzzer();  // Update buzzer state
-   delay(10);
- }
+    // 4. Alarm logic: dark OR temperature > 40°C
+    if (isDark || isHot) {
+      digitalWrite(BUZZER_PIN, HIGH);  // Buzzer ON
+    } else {
+      digitalWrite(BUZZER_PIN, LOW);   // Buzzer OFF
+    }
 
- void initGame() {
-   snake.length = 3;
-   snake.direction = 0;
-   snake.nextDirection = 0;
-   
-   int startX = GRID_WIDTH / 2;
-   int startY = GAME_START_ROW + (GAME_HEIGHT / 2);
-   
-   for(int i = 0; i < snake.length; i++) {
-     snake.x[i] = startX - i;
-     snake.y[i] = startY;
-   }
-   
-   generateFood();
-   
-   score = 0;
-   moveDelay = 200;
- }
+    // 5. Display on OLED
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("=== Weather Desk ===");
 
- void generateFood() {
-   bool validPosition = false;
-   
-   while(!validPosition) {
-     food.x = random(0, GRID_WIDTH);
-     food.y = random(GAME_START_ROW, GAME_END_ROW + 1);
-     
-     validPosition = true;
-     for(int i = 0; i < snake.length; i++) {
-       if(snake.x[i] == food.x && snake.y[i] == food.y) {
-         validPosition = false;
-         break;
-       }
-     }
-   }
- }
+    display.setCursor(0, 20);
+    display.print("Temp: ");
+    display.print(temp);
+    display.println(" C");
 
- void handleJoystick() {
-   int xValue = analogRead(JOYSTICK_X_PIN);
-   int yValue = analogRead(JOYSTICK_Y_PIN);
-   int swValue = digitalRead(JOYSTICK_SW_PIN);
-   
-   if(gameState == STATE_PLAYING) {
-     // Left/right control
-     int leftRight = 0;
-     if(yValue < JOYSTICK_CENTER - JOYSTICK_DEADZONE) leftRight = -1;
-     else if(yValue > JOYSTICK_CENTER + JOYSTICK_DEADZONE) leftRight = 1;
-     
-     // Up/down control
-     int upDown = 0;
-     if(xValue < JOYSTICK_CENTER - JOYSTICK_DEADZONE) upDown = -1;
-     else if(xValue > JOYSTICK_CENTER + JOYSTICK_DEADZONE) upDown = 1;
-     
-     // Apply inversion settings
-     if(INVERT_UP_DOWN) upDown = -upDown;
-     if(INVERT_LEFT_RIGHT) leftRight = -leftRight;
-     
-     // Execute left/right movement
-     if(leftRight == -1) {
-       if(snake.direction != 0) snake.nextDirection = 2;
-     }
-     else if(leftRight == 1) {
-       if(snake.direction != 2) snake.nextDirection = 0;
-     }
-     
-     // Execute up/down movement
-     if(upDown == -1) {
-       if(snake.direction != 1) snake.nextDirection = 3;
-     }
-     else if(upDown == 1) {
-       if(snake.direction != 3) snake.nextDirection = 1;
-     }
-   }
-   
-   // Button control
-   if(swValue == LOW) {
-     delay(200);
-     if(gameState == STATE_TITLE) {
-       initGame();
-       gameState = STATE_PLAYING;
-       lastMoveTime = millis();
-     }
-     else if(gameState == STATE_GAME_OVER) {
-       gameState = STATE_TITLE;
-       drawTitle();
-     }
-   }
- }
+    display.setCursor(0, 35);
+    display.print("Humi: ");
+    display.print(humi);
+    display.println(" %");
 
- void updateGame() {
-   if(millis() - lastMoveTime >= moveDelay) {
-     moveSnake();
-     lastMoveTime = millis();
-   }
-   drawGame();
- }
+    display.setCursor(0, 50);
+    display.print("Light: ");
+    display.print(isDark ? "DARK " : "BRIGHT");
+    display.println("   ");
 
- void moveSnake() {
-   snake.direction = snake.nextDirection;
-   
-   int newHeadX = snake.x[0];
-   int newHeadY = snake.y[0];
-   
-   switch(snake.direction) {
-     case 0: newHeadX++; break;
-     case 1: newHeadY++; break;
-     case 2: newHeadX--; break;
-     case 3: newHeadY--; break;
-   }
-   
-   wrapPosition(newHeadX, newHeadY);
-   
-   bool ateFood = (newHeadX == food.x && newHeadY == food.y);
-   
-   for(int i = snake.length; i > 0; i--) {
-     snake.x[i] = snake.x[i-1];
-     snake.y[i] = snake.y[i-1];
-   }
-   
-   snake.x[0] = newHeadX;
-   snake.y[0] = newHeadY;
-   
-   if(ateFood) {
-     snake.length++;
-     score++;
-     
-     // Play food sound (ascending tone)
-     playBuzzer(1200, 80);  // Higher pitch, short duration
-     
-     if(score > highScore) {
-       highScore = score;
-     }
-     
-     if(moveDelay > 80) {
-       moveDelay -= 2;
-     }
-     
-     generateFood();
-   }
-   
-   if(checkSelfCollision()) {
-     gameState = STATE_GAME_OVER;
-     drawGameOver();
-     
-     // Play death sound (descending tone)
-     playDeathSound();
-   }
- }
+    display.display();
 
- void wrapPosition(int &x, int &y) {
-   if(x < 0) x = GRID_WIDTH - 1;
-   if(x >= GRID_WIDTH) x = 0;
-   if(y < GAME_START_ROW) y = GAME_END_ROW;
-   if(y > GAME_END_ROW) y = GAME_START_ROW;
- }
+    // 6. Serial monitor output
+    Serial.print("Temp: "); Serial.print(temp); Serial.print(" C  ");
+    Serial.print("Humi: "); Serial.print(humi); Serial.print("%  ");
+    Serial.print("Light: "); Serial.print(isDark ? "DARK" : "BRIGHT");
+    Serial.print("  Alarm: ");
+    if (isDark || isHot) {
+      Serial.print("TRIGGERED (");
+      if (isDark) Serial.print("Dark");
+      if (isDark && isHot) Serial.print(" + ");
+      if (isHot) Serial.print("Overheat");
+      Serial.println(")");
+    } else {
+      Serial.println("SAFE");
+    }
+  }
+}
 
- bool checkSelfCollision() {
-   for(int i = 1; i < snake.length; i++) {
-     if(snake.x[0] == snake.x[i] && snake.y[0] == snake.y[i]) {
-       return true;
-     }
-   }
-   return false;
- }
-
- // Buzzer functions
- void playBuzzer(int frequency, int duration) {
-   buzzerFrequency = frequency;
-   buzzerDuration = duration;
-   buzzerStartTime = millis();
-   buzzerActive = true;
-   tone(BUZZER_PIN, frequency);
- }
-
- void playDeathSound() {
-   // Play descending tone effect for death
-   // We'll use a sequence of decreasing frequencies
-   int deathNotes[] = {800, 600, 400, 200, 100};
-   int noteDuration = 150;
-   
-   for(int i = 0; i < 5; i++) {
-     tone(BUZZER_PIN, deathNotes[i], noteDuration);
-     delay(noteDuration + 20);
-   }
-   noTone(BUZZER_PIN);
-   buzzerActive = false;
- }
-
- void updateBuzzer() {
-   if(buzzerActive) {
-     if(millis() - buzzerStartTime >= buzzerDuration) {
-       noTone(BUZZER_PIN);
-       buzzerActive = false;
-     }
-   }
- }
-
- void drawTitle() {
-   display.clearDisplay();
-   
-   display.setTextSize(2);
-   display.setTextColor(SSD1306_WHITE);
-   display.setCursor(28, 15);
-   display.println("SNAKE");
-   
-   display.setTextSize(1);
-   display.setCursor(35, 38);
-   display.print("BEST: ");
-   display.print(highScore);
-   
-   display.setCursor(25, 52);
-   display.print("PRESS TO START");
-   
-   display.display();
- }
-
- void drawGame() {
-   display.clearDisplay();
-   
-   // Draw food (8x8 block)
-   display.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, 
-                    GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_WHITE);
-   
-   // Draw snake
-   for(int i = 0; i < snake.length; i++) {
-     if(i == 0) {
-       // Snake head (filled + border, more prominent)
-       display.fillRect(snake.x[i] * GRID_SIZE, snake.y[i] * GRID_SIZE,
-                       GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_WHITE);
-       display.drawRect(snake.x[i] * GRID_SIZE, snake.y[i] * GRID_SIZE,
-                       GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_BLACK);
-     } else {
-       // Snake body (filled block)
-       display.fillRect(snake.x[i] * GRID_SIZE, snake.y[i] * GRID_SIZE,
-                       GRID_SIZE - 1, GRID_SIZE - 1, SSD1306_WHITE);
-     }
-   }
-   
-   // Display current score
-   display.setTextSize(1);
-   display.setTextColor(SSD1306_WHITE);
-   display.setCursor(2, 0);
-   display.print("SCORE:");
-   display.print(score);
-   
-   display.display();
- }
-
- void drawGameOver() {
-   display.clearDisplay();
-   
-   display.setTextSize(2);
-   display.setCursor(15, 12);
-   display.println("GAME OVER");
-   
-   display.setTextSize(1);
-   display.setCursor(35, 35);
-   display.print("SCORE: ");
-   display.print(score);
-   
-   display.setCursor(20, 52);
-   display.print("PRESS TO RETURN");
-   
-   display.display();
- }
 .. raw:: html
 
    </div>
