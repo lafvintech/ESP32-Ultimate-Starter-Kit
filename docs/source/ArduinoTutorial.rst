@@ -205,7 +205,7 @@ Add Additional Boards Manager URL
      <div style="margin-bottom: 6px; font-size: 18px;"><code>https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json</code></div>
      <button type="button"
              onclick="navigator.clipboard.writeText('https://espressif.github.io/arduino-esp32/package_esp32_index_cn.json').then(() => alert('Link copied!')).catch(() => alert('Copy failed, please copy manually'))"
-             style="padding: 6px 12px; cursor: pointer; border: 1px solid #2779d6; border-radius: 4px; background: rgb(39, 150, 214); color: #ffffff;">
+             style="padding: 3px 8px; cursor: pointer; border: 1px solid #2779d6; border-radius: 4px; background: rgb(39, 150, 214); color: #ffffff;">
        Copy Link
      </button>
    </div>
