@@ -2235,8 +2235,8 @@ This experiment is a comprehensive project on IoT-based smart lighting control. 
 
 **Display Effect:**
 
-.. image:: _static/project/IOT/4.rgb2.png
-   :width: 600
+.. image:: _static/project/IOT/4.RGB.gif
+   :width: 700
    :align: center
 
 .. raw:: html
