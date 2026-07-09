@@ -162,7 +162,7 @@ Resource Download
 
 All the necessary code and library files for this course are provided. You can obtain all the resources through the following link.
 
-`Download Code And Libraries <../_static/Code_Libraries.zip>`
+`Download Code And Libraries <../_static/Code_Libraries.zip>`_
 
 ----
 
