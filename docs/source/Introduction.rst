@@ -164,7 +164,7 @@ All the necessary code and library files for this course are provided. You can o
 
 .. raw:: html
 
-    <a href="../_static/Code_Libraries.zip" class="btn btn-primary">📥 Download Code And Libraries</a>
+    <a href="_static/Code_Libraries.zip" class="btn btn-primary" download>📥 Download Code And Libraries</a>
     
 ----
 
